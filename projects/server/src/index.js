@@ -2,7 +2,19 @@ require("dotenv/config");
 const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
-
+const {
+  adminRouter,
+  authRouter,
+  userOrderRouter,
+  rajaongkirRouter,
+  userProfileRouter,
+  reportRouter,
+  warehouseRouter,
+  transactionRouter,
+  addressRouter,
+  productRouter,
+} = require("./routes");
+const path = require("path");
 const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(
@@ -15,11 +27,24 @@ app.use(
 );
 
 app.use(express.json());
+// const db = require("./database");
+// db.sequelize.sync({ alter: true });
 
 //#region API ROUTES
 
 // ===========================
 // NOTE : Add your routes here
+app.use("/api/order", userOrderRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/rajaongkir", rajaongkirRouter);
+app.use("/api/user", userProfileRouter);
+app.use("/api/public", express.static(path.resolve(__dirname, "../public")));
+app.use("/api/transaction", transactionRouter);
+app.use("/api/address", addressRouter);
+app.use("/api/product", productRouter);
+app.use("/api/report", reportRouter);
+app.use("/api/warehouse", warehouseRouter);
+app.use("/api/admin", adminRouter);
 
 app.get("/api", (req, res) => {
   res.send(`Hello, this is my API`);
@@ -36,7 +61,7 @@ app.get("/api/greetings", (req, res, next) => {
 // not found
 app.use((req, res, next) => {
   if (req.path.includes("/api/")) {
-    res.status(404).send("Not found !");
+    res.status(404).send("Route Not found !");
   } else {
     next();
   }
@@ -55,13 +80,13 @@ app.use((err, req, res, next) => {
 //#endregion
 
 //#region CLIENT
-const clientPath = "../../client/build";
-app.use(express.static(join(__dirname, clientPath)));
+// const clientPath = "../../client/build";
+// app.use(express.static(join(__dirname, clientPath)));
 
 // Serve the HTML page
-app.get("*", (req, res) => {
-  res.sendFile(join(__dirname, clientPath, "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(join(__dirname, clientPath, "index.html"));
+// });
 
 //#endregion
 

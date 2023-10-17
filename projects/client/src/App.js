@@ -1,27 +1,103 @@
-import axios from "axios";
-import logo from "./logo.svg";
-import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import { Flex, useToast } from "@chakra-ui/react";
+import Registration from "./pages/Registration";
+import HomePage from "./pages/HomePage";
+import NavUser from "./components/Navbar/NavUser";
+import Profile from "./pages/Profile";
+import Footer from "./components/Footer/Footer";
+import ResetPassword from "./pages/ResetPassword";
+import CartPage from "./pages/CartPage";
+import Checkout from "./pages/Checkout";
+import UserAddress from "./pages/UserAddress";
+import AdminDashboard from "./pages/AdminDashboard";
+import { getRole } from "./helpers/Roles";
 import { useEffect, useState } from "react";
+import UserProfile from "./components/Profile/UpdateProfile";
+import { getUser } from "./api/profile";
+import Transaction from "./components/Profile/Transaction";
+import ProductDetail from "./pages/ProductDetail";
+
+const ADMIN = ["admin", "admin warehouse"];
+const ADMIN_PATH = ["/", "/profile"];
+
+const mainContainerAttr = {
+  w: "100vw",
+  pt: "64px",
+  color: "textPrimary",
+  direction: "column",
+};
+
+const contentContainerAttr = {
+  w: "100vw",
+  minH: "calc(100vh - 64px - 187px)",
+};
+
+function setPage() {
+  if (ADMIN.includes(getRole())) return <AdminDashboard />;
+  return <HomePage />;
+}
+
+function adminPath() {
+  const role = getRole();
+  const currentPath = document.location.pathname;
+  if (ADMIN.includes(role) && !ADMIN_PATH.includes(currentPath))
+    document.location.href = "/";
+}
 
 function App() {
-  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    adminPath();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 10);
+  }, []);
+
+  // Bisa taruh di redux
+  const [userData, setUserData] = useState({
+    name: '',
+    username: '',
+    email: '',
+    phone: '',
+    is_verified: false,
+    role: '',
+    current_password: '',
+    new_password: '',
+    confirm_password: '',
+    avatar: '',
+  });
+  const toast = useToast()
+  const token = localStorage.getItem('token')
+  const fetchUserData = async () => {
+    if(token) await getUser(token, setUserData, toast);
+  };
 
   useEffect(() => {
-    (async () => {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/greetings`
-      );
-      setMessage(data?.message || "");
-    })();
+    fetchUserData();
   }, []);
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {message}
-      </header>
-    </div>
-  );
+
+  if (!isLoading)
+    return (
+      <Flex {...mainContainerAttr}>
+        <NavUser />
+        <Flex {...contentContainerAttr}>
+          <Routes>
+            <Route path="/" element={setPage()} />
+            <Route path="/registration/:token" element={<Registration />} />
+            <Route path="/profile" element={<Profile userData={userData} />}>
+              <Route path="" element={<UserProfile userData={userData} setUserData={setUserData} />} />
+              <Route path="address" element={<UserAddress />} />
+              <Route path="transaction" element={<Transaction />} />
+            </Route>
+            <Route path="/reset/:token" element={<ResetPassword />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+          </Routes>
+        </Flex>
+        <Footer />
+      </Flex>
+    );
 }
 
 export default App;
