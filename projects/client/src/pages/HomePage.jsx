@@ -5,6 +5,7 @@ import LineBreak from "../components/Custom/LineBreak";
 import ProductList from "../components/Homepage/ProductList";
 import CategoryList from "../components/Homepage/CategoryList";
 import Filter from "../components/Homepage/Filter";
+import Banner from "../components/Homepage/Banner";
 
 const container = {
   direction: "column",
@@ -17,13 +18,14 @@ const container = {
 
 const HomePage = () => {
   return (
-    <Flex {...container}>
-      <LineBreak data="Category" />
-      <CategoryList />
-      <LineBreak data="Product" />
-      <Filter />
-      <ProductList />
-    </Flex>
+      <Flex {...container}>
+        <Banner />
+        <LineBreak data="Category" />
+        <CategoryList />
+        <LineBreak data="Product" />
+        <Filter />
+        <ProductList />
+      </Flex>
   );
 };
 

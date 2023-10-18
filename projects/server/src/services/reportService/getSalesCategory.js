@@ -95,6 +95,7 @@ const getSalesCategory = async (
           include: [
             {
               model: category,
+              as: "_category",
               attributes: [],
               as: "_category",
             },

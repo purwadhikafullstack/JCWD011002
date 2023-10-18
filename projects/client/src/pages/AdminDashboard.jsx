@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import SideMenu from "../components/AdminDashboard/SideMenu";
 import { useState } from "react";
 import {
@@ -12,9 +12,7 @@ import {
 } from "react-icons/pi";
 import { TbCategory as IcCategory, TbUsers as IcUser } from "react-icons/tb";
 import { SlGraph as IcReport } from "react-icons/sl";
-import Dashboard from "../components/AdminDashboard/Menu/Dashboard";
-import ManageUsers from "../components/AdminDashboard/Menu/ManageUser";
-import Report from "../pages/Report";
+import { Outlet } from "react-router-dom";
 
 const ACCESS_ADMIN = ["admin"];
 const ACCESS_ALL_ADMIN = ["admin", "admin warehouse"];
@@ -30,43 +28,20 @@ const contentContainer = {
   flexGrow: 1,
 };
 
-function createMenuSet(name, logo, access, page) {
-  return { name, logo, access, page };
+function createMenuSet(name, logo, access, url) {
+  return { name, logo, access, url };
 }
 
-function dummyPage(name) {
-  return <Text>{name}</Text>;
-}
 
 const menuList = [
-  createMenuSet("Dashboard", <IcHome />, ACCESS_ALL_ADMIN, <Dashboard />),
-  createMenuSet("Users", <IcUser />, ACCESS_ADMIN, <ManageUsers />),
-  createMenuSet(
-    "Warehouses",
-    <IcWarehouse />,
-    ACCESS_ADMIN,
-    dummyPage("Manage Warehouses")
-  ),
-  createMenuSet(
-    "Categories",
-    <IcCategory />,
-    ACCESS_ADMIN,
-    dummyPage("Manage Categories")
-  ),
-  createMenuSet(
-    "Products",
-    <IcProduct />,
-    ACCESS_ADMIN,
-    dummyPage("Manage Products")
-  ),
-  createMenuSet(
-    "Mutations",
-    <IcMutation />,
-    ACCESS_ALL_ADMIN,
-    dummyPage("Manage Mutation")
-  ),
-  createMenuSet("Orders", <IcOrder />, ACCESS_ADMIN, dummyPage("Manage Order")),
-  createMenuSet("Reports", <IcReport />, ACCESS_ALL_ADMIN, <Report />),
+  createMenuSet("Dashboard", <IcHome />, ACCESS_ALL_ADMIN, ""),
+  createMenuSet("Users", <IcUser />, ACCESS_ADMIN, "/user"),
+  createMenuSet("Warehouses", <IcWarehouse />, ACCESS_ADMIN, "/warehouse"),
+  createMenuSet("Categories", <IcCategory />, ACCESS_ALL_ADMIN, "/category"),
+  createMenuSet("Products", <IcProduct />, ACCESS_ALL_ADMIN, "/product"),
+  createMenuSet("Mutations", <IcMutation />, ACCESS_ALL_ADMIN, "/stockmutation"),
+  createMenuSet("Orders", <IcOrder />, ACCESS_ALL_ADMIN, "/order"),
+  createMenuSet("Reports", <IcReport />, ACCESS_ALL_ADMIN, "/report"),
 ];
 
 function AdminDashboard() {
@@ -77,10 +52,13 @@ function AdminDashboard() {
     menuList,
   };
   return (
-    <Flex {...container}>
-      <SideMenu {...sideMenuAttr} />
-      <Flex {...contentContainer}>{menuList[selected]["page"]}</Flex>
-    </Flex>
+    <>
+      <Flex {...container}>
+        <SideMenu {...sideMenuAttr} />
+        <Flex {...contentContainer}>{menuList[selected]["page"]}</Flex>
+        <Outlet />
+      </Flex>
+    </>
   );
 }
 

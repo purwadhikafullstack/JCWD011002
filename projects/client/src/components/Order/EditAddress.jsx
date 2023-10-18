@@ -16,12 +16,14 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { getCityByProvince, getProvince, updateAddressUser } from "../../api/address";
+import Loading from "../Utility/Loading";
 
-const EditAddress = ({ isOpen, onClose, onEditAddress, addressData }) => {
+const EditAddress = ({ isOpen, onClose, onEditAddress, addressData, fetchAddressUser }) => {
   const [city, setCity] = useState([]);
   const [province, setProvince] = useState([]);
   const [selectedProvinceId, setSelectedProvinceId] = useState("");
   const [selectedProvinceName, setSelectedProvinceName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const fetchProvince = async () => {
     await getProvince(setProvince, toast)
   }
@@ -67,6 +69,7 @@ const EditAddress = ({ isOpen, onClose, onEditAddress, addressData }) => {
     city_name: addressData.city_name || "",
     postal_code: addressData.postal_code || "",
     full_address: addressData.full_address || "",
+    is_default: addressData.is_default || false,
   };
   const [formData, setFormData] = useState(initialFormData);
   const toast = useToast();
@@ -77,9 +80,9 @@ const EditAddress = ({ isOpen, onClose, onEditAddress, addressData }) => {
       city_name: addressData.city_name || "",
       postal_code: addressData.postal_code || "",
       full_address: addressData.full_address || "",
+      is_default: addressData.is_default || false,
     });
   }, [addressData]);
-  console.log("in province edit address", formData)
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -92,9 +95,9 @@ const EditAddress = ({ isOpen, onClose, onEditAddress, addressData }) => {
 
   const handleEditAddress = async () => {
     try {
+      setIsLoading(true);
       await updateAddressUser(addressData, formData, toast, onEditAddress, onClose, selectedProvinceName);
-      console.log("formdata", formData)
-      console.log('selecprovinceedit', selectedProvinceName)
+      fetchAddressUser()
     } catch (error) {
       console.error("Error editing address:", error);
     }
@@ -102,6 +105,7 @@ const EditAddress = ({ isOpen, onClose, onEditAddress, addressData }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
+      {isLoading && <Loading />}
       <ModalOverlay />
       <ModalContent color={"white"} bgColor={"#233947"}>
         <ModalHeader>Edit Address</ModalHeader>

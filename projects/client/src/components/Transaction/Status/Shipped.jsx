@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { Box, Divider, Flex, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Flex,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 import { Badge } from "@chakra-ui/react";
 import Pagination from "../Pagination";
 import SearchBar from "../SearchBar";
@@ -10,6 +16,7 @@ import toRupiah from "@develoka/angka-rupiah-js";
 import SeeDetailTxn from "../SeeDetailTxn";
 import ViewReceipt from "../ViewReceipt";
 import { extendTheme, useMediaQuery } from "@chakra-ui/react";
+import ButtonConfirm from "../ButtonConfirm";
 
 const Shipped = () => {
   const API_URL = process.env.REACT_APP_API_BASE_URL;
@@ -104,9 +111,7 @@ const Shipped = () => {
                 </Flex>
                 <Flex>
                   <ViewReceipt transactionId={item.transactionId} />
-                  <Badge bg={"green"} ml={1} alignSelf={"center"} color={"white"}>
-                    CONFIRM
-                  </Badge>
+                  <ButtonConfirm id_transaction={item.transactionId} />
                 </Flex>
               </Flex>
               <Divider mt={2} mb={2} />

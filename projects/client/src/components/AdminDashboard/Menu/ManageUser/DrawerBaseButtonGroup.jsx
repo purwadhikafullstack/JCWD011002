@@ -2,7 +2,7 @@ import { Button, Flex, useToast, useDisclosure } from "@chakra-ui/react";
 import { updateAdmin } from "../../../../api/admin";
 import { useDispatch } from "react-redux";
 import { setUserTrigger } from "../../../../storage/TriggerReducer";
-import PopoverConfirmation from "./PopoverConfirmation";
+import PopoverConfirmation from "../../../Utility/PopoverConfirmation";
 import { FiEdit as IcEdit } from "react-icons/fi";
 
 const buttonContainer = {

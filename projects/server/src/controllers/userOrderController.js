@@ -227,11 +227,8 @@ async function getTransaction(req, res) {
 
 async function getDetailTransaction(req, res) {
   try {
-    const { userId, transactionId } = req.body;
-    const result = await transactionService.getDetailTransaction(
-      userId,
-      transactionId
-    );
+    const { transactionId } = req.params;
+    const result = await transactionService.getDetailTransaction(transactionId);
     return res.status(200).json(result);
   } catch (error) {
     console.error("Error getting detail transaction:", error);

@@ -1,14 +1,33 @@
 const { category, sequelize } = require('../../database/models');
 const { messages } = require('../../helpers');
+const {Op} = require('sequelize');
 
-const updateProductCategory = async (id, body) => {
+const updateProductCategory = async (id, body, req) => {
   try {
-    console.log("body", body.name)
+    if (body.name) {
+      const isCategoryExist = await category.findOne({
+        where: {
+          name: body.name,
+          id: { [Op.not]: id }
+        }
+      })
+      if (isCategoryExist) {
+        return messages.error(409, 'Category already exist');
+      }
+    }
+    let updateData = {
+      name: body.name,
+    }
+    if (req.file && req.file.path) {
+      updateData.image = req.file.path;
+
+      if (category.image && fs.existsSync(category.image)) {
+        fs.unlinkSync(category.image);
+      }
+    }
     return await sequelize.transaction(async (t) => {
       await category.update(
-        {
-          name: body.name,
-        },
+        updateData,
         { where: { id }, transaction: t }
       );
       return messages.success('successfully updated product category', body);

@@ -5,12 +5,20 @@ const {
   payment_method,
   status,
   product,
+  stock_history,
 } = require("../../database");
 
-const getDetailTransaction = async (userId, transactionId) => {
+function setWarehouse(warehouses, id_product) {
+  const filtered = warehouses.filter(
+    (warehouse) => warehouse.id_product === id_product
+  );
+  return filtered[0]?.id_warehouse_from
+}
+
+const getDetailTransaction = async (transactionId) => {
   try {
     const txn = await transaction.findOne({
-      where: { id: transactionId, id_user: userId },
+      where: { id: transactionId },
       include: [
         {
           model: transaction_product,
@@ -25,6 +33,10 @@ const getDetailTransaction = async (userId, transactionId) => {
         {
           model: status,
           attributes: ["name"],
+        },
+        {
+          model: stock_history,
+          attributes: ["id_product", "id_warehouse_from"],
         },
       ],
     });
@@ -62,6 +74,7 @@ const getDetailTransaction = async (userId, transactionId) => {
         image: item.product.image,
         qty: item.qty,
         price: item.price,
+        warehouse: setWarehouse(txn.stock_histories, item.id_product),
       })),
     };
 

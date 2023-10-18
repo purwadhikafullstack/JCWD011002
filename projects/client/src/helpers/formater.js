@@ -1,3 +1,5 @@
+const DATE_LOCALE = "en-UK";
+
 function formaterPrice(price) {
   let formatted = "";
   price = String(price);
@@ -10,4 +12,13 @@ function formaterPrice(price) {
   return formatted;
 }
 
-export { formaterPrice };
+function formaterDate(date) {
+  date = new Date(date);
+  return date.toLocaleDateString(DATE_LOCALE, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+export { formaterPrice, formaterDate };

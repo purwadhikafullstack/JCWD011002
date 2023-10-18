@@ -6,8 +6,8 @@ import { MdOutlineCancelPresentation } from 'react-icons/md';
 function RenderFieldInput({ handleEditPasswordClick, fieldName, label, type, fieldValue, isEditing, onEditClick, onSaveClick, onCancelClick, onChange }) {
 
   return (
-    <Flex align="center" justify="space-between" w={'100%'}>
-      <FormControl m={4}>
+    <Flex align="center" justify="space-between" direction={{ base: 'column', md: 'row' }}>
+      <FormControl m={4} w={isEditing[fieldName] ? '100%' : 'auto'}>
         <Flex alignItems={isEditing[fieldName] ? 'center' : ''}>
           <FormLabel>{label}: </FormLabel>
           {isEditing[fieldName] ? (

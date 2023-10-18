@@ -4,7 +4,6 @@ import {
   Flex,
   Avatar,
   HStack,
-  IconButton,
   Button,
   Menu,
   MenuButton,
@@ -12,47 +11,24 @@ import {
   MenuItem,
   MenuDivider,
   useDisclosure,
-  useColorModeValue,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Text,
+  Image,
 } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
 import Login from "../Login";
 import Searchbar from "./Searchbar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../../App.css";
 import CartHover from "./CartHover";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import LogoutAlert from "./LogoutAlert";
-const Links = ["ini apa", "ini juga", "apalagi?"];
-
-const NavLink = (props) => {
-  const { children } = props;
-
-  return (
-    <Box
-      as="a"
-      px={2}
-      py={1}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: useColorModeValue("gray.200", "gray.700"),
-      }}
-      href={"#"}
-    >
-      {children}
-    </Box>
-  );
-};
 
 export default function Simple() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const profilePath = location.pathname === "/profile" || location.pathname === "/profile/address" || location.pathname === "/profile/transaction";
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isCartOpen, setCartOpen] = useState(false);
 
@@ -102,24 +78,16 @@ export default function Simple() {
         zIndex={100}
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <IconButton
-            size={"md"}
-            // aria-label={"Open Menu"}
-            display={{ md: "none" }}
-            onClick={isOpen ? onClose : onOpen}
-            className="navbar"
-          />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>Logo</Box>
+            {profilePath ? (
+              <Image src="/logo.png" h="36px" position={{ base: "absolute", md: "static" }} left={16} onClick={() => navigate("/")} />
+            ) : (
+              <Image src="/logo.png" h="36px" onClick={() => navigate("/")} />
+            )}
           </HStack>
-          {/* <InputGroup maxW={"300px"} display={{ base: "none", md: "block" }}>
-            <InputLeftElement
-              pointerEvents="none"
-              children={<SearchIcon color="gray.300" />}
-            />
-            <Input type="text" placeholder="Search" />
-          </InputGroup> */}
-          <Searchbar />
+          {role === "user" && !profilePath && (
+            <Searchbar />
+          )}
           <Flex alignItems={"center"}>
             {isLogin ? (
               <>

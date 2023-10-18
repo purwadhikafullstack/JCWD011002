@@ -18,13 +18,13 @@ function getStatus(status) {
   }
 }
 
-function Notification(toast, { title, description, status }) {
+function Notification(toast, { title, description, status, position = "bottom" }) {
   return toast({
     title,
     status: getStatus(status),
     duration: 3000,
     isCloseable: true,
-    position: "bottom",
+    position,
   });
 }
 

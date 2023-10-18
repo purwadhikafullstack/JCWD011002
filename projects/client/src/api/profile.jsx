@@ -16,10 +16,10 @@ function setHeaders(token) {
   };
 }
 
-const getUser = async (token, setUserData, toast) => {
+const getUser = async (toast) => {
   try {
-    const response = await axios.get(`${USER_URL}/id`, setHeaders(token));
-    setUserData(response.data.data);
+    const response = await axios.get(`${USER_URL}/id`, setHeaders());
+    return (response.data);
   } catch (error) {
     const { response } = error;
     notification(toast, setToastParams(response.status ? response : error));

@@ -57,14 +57,16 @@ function FormLogin() {
     "text",
     "Username or Email",
     <FiUser />,
-    formik
+    formik,
+    "light"
   );
   const passwordAttr = setAttr(
     "password",
     "password",
     "Password",
     <FiUnlock />,
-    formik
+    formik,
+    "light"
   );
   const buttonAttr = {
     type: "submit",

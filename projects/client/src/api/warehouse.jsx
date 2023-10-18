@@ -26,4 +26,24 @@ async function getWarehouses(toast) {
   }
 }
 
-export { getWarehouses };
+const getWarehouseList = async (toast, page, sort, name, search, filterProvince) => {
+  try {
+    const response = await axios.get(`${WAREHOUSE_URL}/admin`, {
+      params: {
+        page,
+        sort,
+        name,
+        search: search || '',
+        province: filterProvince
+      },
+      ...setHeaders()
+    });
+    console.log("api warehouse:", response.data);
+    return response.data;
+  } catch (error) {
+    const { response } = error;
+    notification(toast, setToastParams(response.status ? response : error));
+  }
+}
+
+export { getWarehouses, getWarehouseList };

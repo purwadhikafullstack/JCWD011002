@@ -1,5 +1,5 @@
 import { Flex, GridItem, Text } from "@chakra-ui/react";
-
+import getImage from "../../api/GetImage";
 const backdrop = {
   w: "full",
   h: "full",
@@ -17,9 +17,9 @@ const tittleAttr = {
 function CategoryCard({ category, selected = false, onClick }) {
   const mainContainer = {
     onClick,
-    bgColor: "green",
+    bgColor: "primary",
     bgImage:
-      "https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+      `${getImage(category?.image)}`,
     bgPos: "center",
     bgSize: "cover",
     w: "full",

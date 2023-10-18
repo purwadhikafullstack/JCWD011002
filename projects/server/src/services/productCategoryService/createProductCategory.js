@@ -1,9 +1,9 @@
 const { category, sequelize } = require('../../database/models');
 const { messages } = require('../../helpers');
 
-const createProductCategory = async (body) => {
+const createProductCategory = async (body, req) => {
   try {
-    console.log("body", body.name)
+    const image = req.file.path
     const isCategoryExist = await category.findOne({
       where: {
         name: body.name,
@@ -16,6 +16,7 @@ const createProductCategory = async (body) => {
     return await sequelize.transaction(async (t) => {
       const newCategory = await category.create({
         name: body.name,
+        image: image
       }, { transaction: t });
       return messages.success('successfully created product category', newCategory);
     })

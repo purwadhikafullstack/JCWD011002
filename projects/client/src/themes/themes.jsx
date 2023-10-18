@@ -46,9 +46,9 @@ const themes = extendTheme({
     bgPrimary: "#1C1C1C",
     bgSecondary: "#2D2D2D",
     textPrimary: "#FFFFFF",
-    textSecondary: "#E0E0E0",
+    textSecondary: "#C7C7C7",
     textReversePrimary: "#000000",
-    textReverseSecondary: "gray.500",
+    textReverseSecondary: "#61677A",
     successPrimary: "#2E7D32",
     successSecondary: "#4CAF50",
     errorPrimary: "#D32F2F",
@@ -57,7 +57,7 @@ const themes = extendTheme({
     warningSecondary: "#FF9800",
     editPrimary: "#34638A",
     editSecondary: "#2C4E69",
-    blueCold: "#9E9FA5",
+    blueCold: "#4D5356",
     darkBlue: "#34638A",
   },
   components: {
@@ -91,15 +91,6 @@ const themes = extendTheme({
           h: "60px",
           fontSize:"28px",
           ...successScheme,
-        },
-      },
-    },
-    Table: {
-      parts: ["Thead"],
-      Thead: {
-        baseStyle: {
-          color: "red",
-          bgColor: "yellow",
         },
       },
     },

@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import { passwordValidationSchema } from './Validation';
 
 const ModalChangePassword = ({ isOpen, onClose }) => {
+  
   const [showPassword, setShowPassword] = useState(false);
   const toast = useToast();
   const token = localStorage.getItem('token');

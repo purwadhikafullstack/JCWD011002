@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.product, { foreignKey: "id_product" });
       this.belongsTo(models.user, { foreignKey: "id_user" });
-      this.belongsTo(models.warehouse, { foreignKey: "id_warehouse_from" });
-      this.belongsTo(models.warehouse, { foreignKey: "id_warehouse_to" });
+      this.belongsTo(models.warehouse, { foreignKey: "id_warehouse_from", as: "_warehouse_from" });
+      this.belongsTo(models.warehouse, { foreignKey: "id_warehouse_to", as: "_warehouse_to" });
       this.belongsTo(models.transaction, { foreignKey: "id_transaction" });
       this.belongsTo(models.status, { foreignKey: "id_status" });
     }

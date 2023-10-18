@@ -7,12 +7,10 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 const popoverBodyAttr = {
   bgColor: "bgSecondary",
-  // border: "1px solid",
   w: "fit-content",
 };
 
@@ -22,8 +20,6 @@ const confirmContainerAttr = {
 };
 
 function PopoverConfirmation({ trigger, confirm, isOpen, onClose }) {
-  // const {onOpen, onClose} = useDisclosure();
-
   const popoverAttr = {
     placement: "top",
     isOpen,

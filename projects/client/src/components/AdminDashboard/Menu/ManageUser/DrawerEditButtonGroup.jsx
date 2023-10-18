@@ -1,7 +1,7 @@
 import { FiSave as IcSave } from "react-icons/fi";
 import { GiCancel as IcCancel } from "react-icons/gi";
 import { Button, Flex, useDisclosure } from "@chakra-ui/react";
-import PopoverConfirmation from "./PopoverConfirmation";
+import PopoverConfirmation from "../../../Utility/PopoverConfirmation";
 
 const buttonContainer = {
   direction: "column",

@@ -8,6 +8,7 @@ import {
   Divider,
   useToast,
   Card,
+  Spinner,
 } from "@chakra-ui/react";
 import { FiEdit } from "react-icons/fi";
 import AddAddress from "../components/Order/AddAddress";
@@ -15,12 +16,15 @@ import EditAddress from "../components/Order/EditAddress";
 import DeleteAddress from "../components/Profile/DeleteAddress";
 import { getAddressUser } from "../api/address";
 import axios from "axios";
+import Loading from "../components/Utility/Loading";
 
 const UserAddress = () => {
   const [isAddAddressModalOpen, setIsAddAddressModalOpen] = useState(false);
   const [isEditAddressModalOpen, setIsEditAddressModalOpen] = useState(false);
   const [editAddressData, setEditAddressData] = useState(null);
   const [address, setAddress] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  console.log("address", address)
   const toast = useToast();
   const openAddAddressModal = () => {
     setIsAddAddressModalOpen(true);
@@ -51,19 +55,22 @@ const UserAddress = () => {
   };
 
 
-  const handleDefaultAddress = async (id) => {
+  const handleDefaultAddress = async (address) => {
+    console.log("address handle default", address)
     const reqData = {
       is_default: true,
-      city_name: address[id].city_name,
-      province: address[id].province,
+      city_name: address.city_name,
+      province: address.province,
     }
+    console.log("reqData", reqData)
     const headers = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     }
+    setIsLoading(true)
     try {
-      const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/address/${id}`, reqData, headers);
+      const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/address/${address.id}`, reqData, headers);
       if (response.status === 200) {
         toast({
           title: "Success",
@@ -73,6 +80,7 @@ const UserAddress = () => {
           isClosable: true,
         })
       }
+      fetchAddressUser()
     } catch (error) {
       console.error("Error setting address as default:", error);
       toast({
@@ -82,6 +90,8 @@ const UserAddress = () => {
         duration: 3000,
         isClosable: true,
       });
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -93,6 +103,9 @@ const UserAddress = () => {
   }, [])
   return (
     <Flex justifyContent={"center"} alignItems={"center"}>
+      {isLoading && (
+        <Loading />
+      )}
       <Card w={["100%", "80%"]} bg={"blueCold"} py={10}>
         <Flex alignItems={"center"} justifyContent={"center"}>
           <Box w={["100%", "80%", "50%"]}>
@@ -100,6 +113,7 @@ const UserAddress = () => {
               isOpen={isAddAddressModalOpen}
               onClose={closeAddAddressModal}
               onAddAddress={handleAddAddress}
+              fetchAddressUser={fetchAddressUser}
             />
             {editAddressData && (
               <EditAddress
@@ -107,6 +121,7 @@ const UserAddress = () => {
                 onClose={closeEditAddressModal}
                 onEditAddress={handleEditAddress}
                 addressData={editAddressData}
+                fetchAddressUser={fetchAddressUser}
               />
             )}
             <Button
@@ -125,18 +140,18 @@ const UserAddress = () => {
                   No Address Found!
                 </Text>
               ) : (
-                address.map((address) => (
+                address.sort((a, b) => (a.is_default === b.is_default ? 0 : a.is_default ? -1 : 1)).map((address) => (
                   <Box bgColor={"white"} color={"#34638A"} boxShadow={"xl"} borderRadius={"5px"} mt={3} border={"4px"}
-                    borderColor={address.is_default ? "#C6F7D4" : "white"} key={address.id}>
+                    borderColor={address.is_default ? "primary" : "white"} key={address.id}>
                     <Flex flexDirection={"column"}>
                       <Flex alignItems={"center"} justifyContent={"space-between"} mr={5}>
                         <Text px={3} py={2} fontSize={"md"} fontWeight={"bold"}>
                           {address.name}&nbsp;
                           {address.is_default && (
-                            <Badge colorScheme="green">Default</Badge>
+                            <Badge colorScheme="green.300">Default</Badge>
                           )}
                         </Text>
-                        <DeleteAddress addressData={address} />
+                        <DeleteAddress addressData={address} fetchAddressUser={fetchAddressUser} />
                       </Flex>
                       <Divider />
                       <Text color={"#34638A"} px={3} mt={1} fontSize={"lg"} fontWeight={"bold"}>
@@ -157,7 +172,8 @@ const UserAddress = () => {
                         bgColor={"#34638A"}
                         color={"white"}
                         _hover={{ bgColor: "gray.200", color: "#34638A" }}
-                        onClick={() => handleDefaultAddress(address.id)}
+                        onClick={() => handleDefaultAddress(address)}
+                        isDisabled={address.is_default}
                       >
                         Set as default
                       </Button>

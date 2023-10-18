@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Image, Text } from "@chakra-ui/react";
 import CardAdminMenu from "./CardAdminMenu";
 import { getRole } from "../../helpers/Roles";
 
@@ -14,6 +14,16 @@ const containerAttr = {
   borderRadius: "8px",
   alignItems: "center",
 };
+const iconAttr = {
+  direction: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "8px"
+}
+const logoImg = {
+  src: "/logo.png",
+  w: "128px"
+};
 const logoAttr = {
   variant: "title",
 };
@@ -27,7 +37,10 @@ function SideMenu({ selected, setSelected, menuList }) {
   const role = getRole();
   return (
     <Flex {...containerAttr}>
-      <Text {...logoAttr}>LOGO</Text>
+      <Flex {...iconAttr}>
+        <Image {...logoImg} />
+        <Text {...logoAttr}>NetComp</Text>
+      </Flex>
       <Flex {...menuAttr}>
         {menuList.map((menu, index) => (
           <CardAdminMenu

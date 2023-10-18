@@ -8,8 +8,8 @@ import { registration } from "../../api/auth";
 
 const container = {
   direction: "column",
-  gap: { sm: "4px", md: "8px", lg: "16px" },
-  w: "40vw",
+  gap: { base: "8px", md: "8px", lg: "12px" },
+  px: { base: "16px", md: "48px", lg: "64px", xl: "128px" },
 };
 
 const initialValues = {
@@ -43,28 +43,45 @@ function FormRegistration() {
     onSubmit: (values) => handleSubmit(values),
   });
 
-  const nameAttr = setAttr("name", "text", "Name", <FiUser />, formik);
+  const nameAttr = setAttr(
+    "name",
+    "text",
+    "Name",
+    <FiUser />,
+    formik,
+    "dark"
+  );
   const usernameAttr = setAttr(
     "username",
     "text",
     "Username",
     <FiUser />,
-    formik
+    formik,
+    "dark"
   );
-  const phoneAttr = setAttr("phone", "tel", "Phone", <FiPhone />, formik);
+  const phoneAttr = setAttr(
+    "phone",
+    "tel",
+    "Phone",
+    <FiPhone />,
+    formik,
+    "dark"
+  );
   const passwordAttr = setAttr(
     "password",
     "password",
     "Password",
     <FiUnlock />,
-    formik
+    formik,
+    "dark"
   );
   const confirmPasswordAttr = setAttr(
     "confirmPassword",
     "password",
     "Confirm Password",
     <FiUnlock />,
-    formik
+    formik,
+    "dark"
   );
 
   const buttonAttr = {
@@ -75,7 +92,7 @@ function FormRegistration() {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
       <Flex {...container}>
         <InputTextCustom {...nameAttr} />
         <InputTextCustom {...usernameAttr} />

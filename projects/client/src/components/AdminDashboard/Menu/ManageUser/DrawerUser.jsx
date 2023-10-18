@@ -67,15 +67,6 @@ function DrawerUser({ admin, isOpen, onClose }) {
     editToggle: setIsEdit,
     user,
   };
-  const {
-    isOpen: confirmOpen,
-    onClose: confirmColse,
-    onToggle: confirmToggle,
-  } = useDisclosure();
-
-  function deletePopover() {
-    confirmToggle();
-  }
 
   function setDrawerContent() {
     return isEdit ? (
@@ -92,7 +83,7 @@ function DrawerUser({ admin, isOpen, onClose }) {
       <DrawerBaseButtonGroup {...editButtonAttr} onClose={onClose}/>
     );
   }
-
+  
   return (
     <Drawer {...drawerAttr}>
       <DrawerOverlay />

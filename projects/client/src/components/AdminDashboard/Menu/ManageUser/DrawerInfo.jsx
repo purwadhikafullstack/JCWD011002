@@ -26,8 +26,6 @@ function DrawerInfo({ data }) {
     gap: "12px",
   };
 
-  console.log(data);
-
   const avatarAttr = {
     src: getImage(user?.avatar),
     borderRadius: "8px",

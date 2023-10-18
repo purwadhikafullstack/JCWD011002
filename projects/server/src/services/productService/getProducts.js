@@ -47,6 +47,7 @@ async function getProducts(query) {
       exclude: ["id_category"],
     },
     group: [col("product_warehouses.id_product")],
+    // group: [col("product_warehouses.id_product"), col("product.id")],
     order: [[order, sort]],
     where,
     subQuery: false,

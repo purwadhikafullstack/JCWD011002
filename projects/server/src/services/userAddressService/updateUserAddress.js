@@ -30,10 +30,10 @@ const updateUserAddress = async (addressId, body, id_user) => {
         },
         { transaction: t }
       );
-      return existingAddress; b
+      return existingAddress;
     });
 
-    return messages.success('Alamat pengguna berhasil diperbarui', updatedAddress);
+    return messages.success('successfully updated user address', updatedAddress);
   } catch (error) {
     console.log(error);
     return messages.error(500, error.message);

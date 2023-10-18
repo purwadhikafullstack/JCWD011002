@@ -32,6 +32,8 @@ async function getAdmin(id_user) {
     attributes: [],
     include,
   });
+  console.log(result.user);
+  console.log(result.warehouse);
 
   if (!result) {
     return messages.error(404, "Admin not found");
@@ -39,9 +41,11 @@ async function getAdmin(id_user) {
 
   const data = {
     id_user: result.user.id,
-    id_warehouse: result.warehouse.id,
-    warehouse_name: result.warehouse.name,
+    id_warehouse: result?.warehouse?.id,
+    warehouse_name: result?.warehouse?.name,
   };
+
+  console.log(data);
 
   return messages.success("", data);
 }

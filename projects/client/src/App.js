@@ -15,10 +15,20 @@ import { useEffect, useState } from "react";
 import UserProfile from "./components/Profile/UpdateProfile";
 import { getUser } from "./api/profile";
 import Transaction from "./components/Profile/Transaction";
+import ProductCategory from "./components/AdminDashboard/Menu/ProductCategory/ProductCategory";
+import ProductList from "./components/AdminDashboard/Menu/Product/ProductList";
+import ManageUsers from "./components/AdminDashboard/Menu/ManageUser";
+import WarehouseList from "./components/AdminDashboard/Menu/Warehouse/WarehouseList";
 import ProductDetail from "./pages/ProductDetail";
+import Report from "./pages/Report";
+import Dashboard from "./components/AdminDashboard/Menu/Dashboard";
+import MutationList from "./components/AdminDashboard/Menu/Mutation/MutationList";
+import ManageOrder from "./components/AdminDashboard/Menu/ManageOrder";
+
+
+const ADMIN_PATH = ["/", "/category", "/profile"];
 
 const ADMIN = ["admin", "admin warehouse"];
-const ADMIN_PATH = ["/", "/profile"];
 
 const mainContainerAttr = {
   w: "100vw",
@@ -53,45 +63,32 @@ function App() {
     }, 10);
   }, []);
 
-  // Bisa taruh di redux
-  const [userData, setUserData] = useState({
-    name: '',
-    username: '',
-    email: '',
-    phone: '',
-    is_verified: false,
-    role: '',
-    current_password: '',
-    new_password: '',
-    confirm_password: '',
-    avatar: '',
-  });
-  const toast = useToast()
-  const token = localStorage.getItem('token')
-  const fetchUserData = async () => {
-    if(token) await getUser(token, setUserData, toast);
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
   if (!isLoading)
     return (
       <Flex {...mainContainerAttr}>
         <NavUser />
         <Flex {...contentContainerAttr}>
           <Routes>
-            <Route path="/" element={setPage()} />
+            <Route path="/" element={setPage()}>
+              <Route path="" element={<Dashboard />} />
+              <Route path="user" element={<ManageUsers />} />
+              <Route path="warehouse" element={<WarehouseList />} />
+              <Route path="category" element={<ProductCategory />} />
+              <Route path="product" element={<ProductList />} />
+              <Route path="stockmutation" element={<MutationList />} />
+              <Route path="order" element={<ManageOrder />} />
+              <Route path="report" element={<Report />} />
+            </Route>
             <Route path="/registration/:token" element={<Registration />} />
-            <Route path="/profile" element={<Profile userData={userData} />}>
-              <Route path="" element={<UserProfile userData={userData} setUserData={setUserData} />} />
+            <Route path="/profile" element={<Profile />}>
+              <Route path="" element={<UserProfile />} />
               <Route path="address" element={<UserAddress />} />
               <Route path="transaction" element={<Transaction />} />
             </Route>
             <Route path="/reset/:token" element={<ResetPassword />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/category" element={<ProductCategory />} />
             <Route path="/product/:id" element={<ProductDetail />} />
           </Routes>
         </Flex>

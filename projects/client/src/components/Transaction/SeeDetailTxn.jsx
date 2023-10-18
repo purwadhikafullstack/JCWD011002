@@ -32,10 +32,7 @@ const SeeDetailTxn = ({ transactionId }) => {
   const [datas, setDatas] = useState([]);
   const fetchDetail = async () => {
     try {
-      const response = await axios.post(`${API_URL}/transaction/detail`, {
-        userId: userId,
-        transactionId: transactionId,
-      });
+      const response = await axios.get(`${API_URL}/transaction/detail/${transactionId}`);
       setDatas(response.data.data);
     } catch (error) {
       console.log(error);

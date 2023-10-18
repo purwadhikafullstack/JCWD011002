@@ -26,7 +26,7 @@ const Footer = () => {
             <Icon as={FaInstagram} boxSize={6} />
           </Link>
         </HStack>
-        <Image src="/path/to/logo.png" alt="Logo Perusahaan" boxSize={12} />
+        <Image src="/logo.png" alt="Logo Perusahaan" boxSize={16} />
       </Flex>
     </Box>
   );

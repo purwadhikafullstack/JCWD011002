@@ -4,10 +4,11 @@ import FormRegistration from "../Form/FormRegistration";
 const container = {
   direction: "column",
   alignItems: "center",
-  gap: "24px",
-  w: "full",
+  justifyContent: "center",
+  flex: 1,
   h: "full",
-  py: "64px",
+  py: { base: "32px", lg: "0px" },
+  gap: "32px",
 };
 
 const title = {

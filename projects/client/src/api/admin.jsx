@@ -27,7 +27,6 @@ async function getUsers(toast, attributes) {
   } catch (error) {
     const { response } = error;
     notification(toast, setToastParams(response?.status ? response : error));
-
   }
 }
 
@@ -43,7 +42,11 @@ async function getRoles(toast) {
 
 async function register(toast, attributes) {
   try {
-    const response = await axios.post(`${ADMIN_URL}/user`, attributes, setHeaders());
+    const response = await axios.post(
+      `${ADMIN_URL}/user`,
+      attributes,
+      setHeaders()
+    );
     notification(toast, setToastParams(response));
   } catch (error) {
     const { response } = error;
@@ -65,4 +68,14 @@ async function updateAdmin(toast, id, attributes) {
   }
 }
 
-export { getUsers, getRoles, register, updateAdmin };
+async function getAdminWarehouse(toast) {
+  try {
+    const response = await axios.get(`${ADMIN_URL}/roles/warehouse`, setHeaders());
+    return response.data;
+  } catch (error) {
+    const { response } = error;
+    notification(toast, setToastParams(response.status ? response : error));
+  }
+}
+
+export { getUsers, getRoles, register, updateAdmin, getAdminWarehouse };

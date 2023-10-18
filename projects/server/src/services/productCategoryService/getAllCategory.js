@@ -1,10 +1,42 @@
 const { category, sequelize } = require('../../database/models');
 const { messages } = require('../../helpers');
-
-const getAllCategory = async () => {
+const { Op } = require('sequelize');
+const getAllCategory = async (sort, name, search, page, limit) => {
   try {
-    const result = await category.findAll();
-    return messages.success('successfully get all category', result);
+    const currentPage = parseInt(page) || 1;
+    const itemsPerPage = parseInt(limit) || 10;
+    const orderBy = (field, order) => {
+      return order === "desc" ? [field, "DESC"] : [field, "ASC"];
+    }
+    let order = [];
+    if (sort) {
+      order.push(orderBy("updated_at", sort));
+    } else if (name) {
+      order.push(orderBy("name", name));
+    } else {
+      order.push(orderBy("updated_at", "desc"));
+    }
+    const whereCondition = {};
+    if (search) {
+      whereCondition[Op.or] = [
+        {
+          name: {
+            [Op.like]: `%${search}%`,
+          },
+        }
+      ]
+    }
+    const totalCount = await category.count({
+      where: whereCondition,
+    })
+    const totalPages = Math.ceil(totalCount / itemsPerPage);
+    const result = await category.findAll({
+      where: whereCondition,
+      order: order,
+      limit: itemsPerPage,
+      offset: (currentPage - 1) * itemsPerPage,
+    })
+    return messages.success({ messages: "successfully get all category", totalRows: totalCount, totalPages, currentPage, itemsPerPage }, result);
   } catch (error) {
     console.log(error);
     return messages.error(500, error.message);

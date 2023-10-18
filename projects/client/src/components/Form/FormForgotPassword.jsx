@@ -11,7 +11,7 @@ const container = {
   gap: "8px",
 };
 
-function FormForgotPassword({onClose}) {
+function FormForgotPassword({ onClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const initialValues = {
@@ -31,7 +31,14 @@ function FormForgotPassword({onClose}) {
     onSubmit: (values) => handleSubmit(values),
   });
 
-  const emailAttr = setAttr("email", "email", "Email", <FiMail />, formik);
+  const emailAttr = setAttr(
+    "email",
+    "email",
+    "Email",
+    <FiMail />,
+    formik,
+    "light"
+  );
   const buttonAttr = {
     type: "submit",
     variant: "capsuleSuccess",

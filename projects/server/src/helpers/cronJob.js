@@ -1,24 +1,27 @@
 const cron = require("node-cron");
 const { transaction } = require("../database");
 const cancelOrder = require("../services/transactionService/cancelOrder");
+const { Op } = require("sequelize");
 let scheduled;
 
 const cronJob = async (userId) => {
   try {
     const transactions = await transaction.findAll({
       where: {
-        id_status: 1,
-        id_user: userId,
+        id_status: { [Op.in]: [1, 4] },
+        // id_user: userId,
       },
     });
 
     for (const txn of transactions) {
       const expired = new Date(new Date() - 10 * 60 * 1000); // 10 menit
+      const expired_week = new Date(new Date() - 7 * 24 * 60 * 60 * 1000); // 7 days
 
-      if (txn.created_at <= expired) {
-        // await txn.update({ id_status: 6 });
+      if (txn.id_status == 1 && txn.updated_at <= expired) {
         await cancelOrder(userId, txn.id);
         console.log(`Updated transaction ID ${txn.id}.`);
+      } else if (txn.id_status == 4 && txn.updated_at <= expired_week) {
+        txn.update({ id_status: 5, is_confirm: true });
       } else {
         console.log(
           `TXN ${txn.id} with User ${txn.id_user} is not yet eligible for update.`
@@ -38,6 +41,7 @@ const cronJob = async (userId) => {
 
 module.exports = {
   startCronJob: (userId) => {
+    console.log("START CRON JOB");
     scheduled = cron.schedule("* * * * * *", () => {
       cronJob(userId);
     });

@@ -8,8 +8,8 @@ import { resetPasswordSchema } from "../../helpers/FormikSchema";
 
 const container = {
   direction: "column",
-  gap: { sm: "4px", md: "8px", lg: "16px" },
-  w: "40vw",
+  gap: { base: "8px", md: "8px", lg: "12px" },
+  px: { base: "16px", md: "48px", lg: "64px", xl: "128px" },
 };
 
 const initialValues = {
@@ -45,14 +45,16 @@ function FormResetPassword() {
     "password",
     "Password",
     <FiUnlock />,
-    formik
+    formik,
+    "dark"
   );
   const confirmPasswordAttr = setAttr(
     "confirmPassword",
     "password",
     "Confirm Password",
     <FiUnlock />,
-    formik
+    formik,
+    "dark"
   );
 
   const buttonAttr = {
@@ -62,7 +64,7 @@ function FormResetPassword() {
     isLoading,
   };
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
       <Flex {...container}>
         <InputTextCustom {...passwordAttr} />
         <InputTextCustom {...confirmPasswordAttr} />

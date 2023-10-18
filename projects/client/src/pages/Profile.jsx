@@ -12,38 +12,41 @@ import {
   DrawerContent,
   useDisclosure,
   Avatar,
-  useToast,
-} from "@chakra-ui/react";
-import { FiHome, FiTrendingUp, FiCompass, FiMenu } from "react-icons/fi";
-import UserProfile from "../components/Profile/UpdateProfile";
-import { getUser } from "../api/profile";
-import UserAddress from "./UserAddress";
-import { Link, Outlet } from "react-router-dom";
+  useToast
+} from "@chakra-ui/react"
+import {
+  FiHome,
+  FiTrendingUp,
+  FiCompass,
+  FiMenu
+} from "react-icons/fi"
 import jwt_decode from "jwt-decode";
+import { Link, Outlet, useLocation } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchUserData } from "../storage/userReducer"
 
 export default function Profile() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [userData, setUserData] = useState({
-    name: "",
-    username: "",
-    email: "",
-    phone: "",
-    is_verified: false,
-    role: "",
-    current_password: "",
-    new_password: "",
-    confirm_password: "",
-    avatar: "",
-  });
-  const toast = useToast();
-  const token = localStorage.getItem("token");
-  const fetchUserData = async () => {
-    await getUser(token, setUserData, toast);
-  };
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const toast = useToast()
+
+  const dispatch = useDispatch()
+  const userData = useSelector((state) => state.user.userData)
+
+  const token = localStorage.getItem('token');
+  console.log("token", token)
+  console.log("userData", userData)
 
   useEffect(() => {
-    fetchUserData();
-  }, []);
+    if (token) {
+      dispatch(fetchUserData(toast));
+    }
+  }, [dispatch]);
+
+  const location = useLocation();
+  console.log("location", location)
+  const profilePath = location.pathname === "/profile" || location.pathname === "/profile/address" || location.pathname === "/profile/transaction";
+  console.log("profilePath", profilePath)
 
   return (
     <Box w={"full"} mx="auto">
@@ -172,7 +175,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue("gray.200", "gray.700")}
       justifyContent="flex-start"
-      {...rest}
+      display={{ base: "block", md: "none" }}
+
+    // {...rest}
     >
       <IconButton
         position={"absolute"}
