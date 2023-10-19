@@ -39,7 +39,12 @@ const SalesCard = () => {
   const fetchSalesMonth = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/report/sales/product/permonth`
+        `${API_URL}/report/sales/product/permonth`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       const currentDate = new Date();
       const currentYear = currentDate.getFullYear();
@@ -60,7 +65,11 @@ const SalesCard = () => {
 
   const fetchBestSeller = async () => {
     try {
-      const response = await axios.get(`${API_URL}/report/summary`);
+      const response = await axios.get(`${API_URL}/report/summary-card`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setBestSeller(response.data.data[0]);
     } catch (error) {
       console.log(error);
@@ -74,7 +83,12 @@ const SalesCard = () => {
   const fetchCatBestSeller = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/report/sales/category?orderBy=total_qty_sold desc`
+        `${API_URL}/report/sales/category?orderBy=total_qty_sold desc`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       setCatBestSeller(response.data.categories[0]);
     } catch (error) {
@@ -88,7 +102,11 @@ const SalesCard = () => {
 
   const fetchAllTimeSales = async () => {
     try {
-      const response = await axios.get(`${API_URL}/report/sales/monthly`);
+      const response = await axios.get(`${API_URL}/report/sales/monthly`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       const allTimeTotalSales = response.data.data.reduce(
         (total, monthData) =>
           total + parseInt(monthData.total_sales_per_month, 10),
@@ -103,7 +121,11 @@ const SalesCard = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${API_URL}/report/summary`);
+      const response = await axios.get(`${API_URL}/report/summary-card`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setData(response.data.data[0]);
     } catch (error) {
       console.log(error);

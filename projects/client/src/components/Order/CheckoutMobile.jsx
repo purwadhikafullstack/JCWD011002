@@ -69,10 +69,18 @@ const CheckoutMobile = () => {
   }, []);
 
   useEffect(() => {
-    viewCart();
-    getTotal();
-    fetchAddress();
-    getPayment();
+    const fetchData = async () => {
+      try {
+        await fetchAddress();
+        viewCart();
+        getTotal();
+        getPayment();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const fetchAddress = async () => {
@@ -89,37 +97,46 @@ const CheckoutMobile = () => {
   };
 
   const viewCart = async () => {
-    const response = await axios.get(`${API_URL}/order/cart/${userId}`);
+    const response = await axios.get(`${API_URL}/order/cart/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setCart(response.data.data);
   };
   const getTotal = async () => {
-    const response = await axios.get(`${API_URL}/order/${userId}`);
+    const response = await axios.get(`${API_URL}/order/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setTotal(response.data.data.total);
   };
-  const emptyAddress = `{
-    "name": "",
-    "province": "",
-    "city_name": "Please Add New Address!",
-    "postal_code": "",
-    "full_address": "Address Not Found"
-  }`;
 
-  const noDefault = `{
-    "name": "",
-    "province": "",
-    "city_name": "Please Select Address!",
-    "postal_code": "",
-    "full_address": "No Default"
-  }`;
+  // const emptyAddress = `{
+  //   "name": "",
+  //   "province": "",
+  //   "city_name": "Please Add New Address!",
+  //   "postal_code": "",
+  //   "full_address": "Address Not Found"
+  // }`;
 
-  let add = localStorage.getItem("selectedAddress");
-  if (dataAddress.length === 0) {
-    localStorage.setItem("selectedAddress", emptyAddress);
-  } else if (add === "undefined") {
-    localStorage.setItem("selectedAddress", noDefault);
-  } else {
-    localStorage.getItem("selectedAddress");
-  }
+  // const noDefault = `{
+  //   "name": "",
+  //   "province": "",
+  //   "city_name": "Please Select Address!",
+  //   "postal_code": "",
+  //   "full_address": "No Default"
+  // }`;
+
+  // let add = localStorage.getItem("selectedAddress");
+  // if (dataAddress.length === 0) {
+  //   localStorage.setItem("selectedAddress", emptyAddress);
+  // } else if (add === "undefined") {
+  //   localStorage.setItem("selectedAddress", noDefault);
+  // } else {
+  //   localStorage.getItem("selectedAddress");
+  // }
 
   const address = JSON.parse(localStorage.getItem("selectedAddress"));
   const { province, city_name, full_address, postal_code } = address;
@@ -127,16 +144,24 @@ const CheckoutMobile = () => {
   const checkout = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.post(`${API_URL}/transaction`, {
-        userId: userId,
-        payment: selectedPayment ? selectedPayment.id : null,
-        shipping: service,
-        total: grand,
-        myLatitude,
-        myLongitude,
-        shipping_cost: shipping,
-        shipping_address: formattedAddress,
-      });
+      const response = await axios.post(
+        `${API_URL}/transaction`,
+        {
+          userId: userId,
+          payment: selectedPayment ? selectedPayment.id : null,
+          shipping: service,
+          total: grand,
+          myLatitude,
+          myLongitude,
+          shipping_cost: shipping,
+          shipping_address: formattedAddress,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast({
         title: "Thanks for your purchase!",
         status: "success",
@@ -191,15 +216,13 @@ const CheckoutMobile = () => {
   };
 
   const getPayment = async () => {
-    const response = await axios.get(`${API_URL}/transaction`);
+    const response = await axios.get(`${API_URL}/transaction/payments`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setPayment(response.data.data);
   };
-
-  useEffect(() => {
-    viewCart();
-    getTotal();
-    getPayment();
-  }, []);
 
   const handleExplore = () => {
     navigate("/");

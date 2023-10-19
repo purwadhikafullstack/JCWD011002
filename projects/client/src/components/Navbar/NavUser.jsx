@@ -10,7 +10,6 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   Text,
   Image,
 } from "@chakra-ui/react";
@@ -24,22 +23,33 @@ import CartHover from "./CartHover";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import LogoutAlert from "./LogoutAlert";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserData } from "../../storage/userReducer";
 
 export default function Simple() {
   const navigate = useNavigate();
   const location = useLocation();
-  const profilePath = location.pathname === "/profile" || location.pathname === "/profile/address" || location.pathname === "/profile/transaction";
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const profilePath =
+    location.pathname === "/profile" ||
+    location.pathname === "/profile/address" ||
+    location.pathname === "/profile/transaction";
   const [isCartOpen, setCartOpen] = useState(false);
-
   const [cartLength, setCartLength] = useState(0);
   const API_URL = process.env.REACT_APP_API_BASE_URL;
+  const token = localStorage.getItem("token");
+
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user.userData);
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUserData());
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     viewCart();
   });
 
-  const token = localStorage.getItem("token");
   let userId = "";
   let role = "";
   if (token) {
@@ -49,7 +59,11 @@ export default function Simple() {
 
   const viewCart = async () => {
     try {
-      const response = await axios.get(`${API_URL}/order/cart/${userId}`);
+      const response = await axios.get(`${API_URL}/order/cart/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setCartLength(response.data.data.length);
     } catch (error) {
       console.log(error);
@@ -78,16 +92,21 @@ export default function Simple() {
         zIndex={100}
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <HStack spacing={8} alignItems={"center"}>
+          <HStack spacing={2} alignItems={"center"}>
             {profilePath ? (
-              <Image src="/logo.png" h="36px" position={{ base: "absolute", md: "static" }} left={16} onClick={() => navigate("/")} />
+              <HStack position={{ base: "absolute", md: "static" }} left={16} onClick={() => navigate("/")} cursor="pointer">
+                <Image src="/logo.png" h="36px" />
+                <Text fontFamily="Fira Code" fontSize="xl" fontWeight="bold">NetComp</Text>
+
+              </HStack>
             ) : (
-              <Image src="/logo.png" h="36px" onClick={() => navigate("/")} />
+              <HStack onClick={() => navigate("/")} cursor="pointer">
+                <Image src="/logo.png" h="36px" />
+                <Text fontFamily="Fira Code" fontSize="xl" fontWeight="bold">NetComp</Text>
+              </HStack>
             )}
           </HStack>
-          {role === "user" && !profilePath && (
-            <Searchbar />
-          )}
+          {role === "user" && !profilePath && <Searchbar />}
           <Flex alignItems={"center"}>
             {isLogin ? (
               <>
@@ -120,7 +139,7 @@ export default function Simple() {
                     cursor={"pointer"}
                     minW={0}
                   >
-                    <Avatar size={"sm"} />
+                    <Avatar size={"sm"} src={`${API_URL}/${userData?.avatar}`} />
                   </MenuButton>
                   <MenuList
                     border={"0.5px solid gray"}

@@ -19,7 +19,6 @@ const AllMutation = () => {
   const handlePageChange = (newPage) => {
     setPage(newPage)
   }
-  console.log("all mutaion:", data)
   const fetchData = async () => {
     try {
       const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/stock`, {
@@ -36,7 +35,6 @@ const AllMutation = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       })
-      console.log(data);
       setData(data.data)
       setTotalPages(data.totalPages)
     } catch (error) {
@@ -56,7 +54,7 @@ const AllMutation = () => {
         <Thead bg={"primary"}>
           <Tr>
             <Th color={"white"}>No</Th>
-            <Th color={"white"}>Admin</Th>
+            <Th color={"white"}>User</Th>
             <Th color={"white"}>From Warehouse</Th>
             <Th color={"white"}>To Warehouse</Th>
             <Th color={"white"}>Product</Th>
@@ -70,7 +68,7 @@ const AllMutation = () => {
               <Td>{index + 1}</Td>
               <Td>{item.user?.name}</Td>
               <Td>{item._warehouse_from.name}</Td>
-              <Td>{item._warehouse_to.name}</Td>
+              <Td>{item._warehouse_to?.name}</Td>
               <Td>{item.product.name}</Td>
               <Td>{item.qty}</Td>
               <Td>{item.status.name}</Td>

@@ -25,7 +25,12 @@ const Completed = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/transaction/${userId}/?sortBy=${filterBy}&page=${currentPage}&pageSize=10&filterStatus=5&searchProductName=${searchQuery}&startDate=${startDate}&endDate=${endDate}`
+        `${API_URL}/transaction/${userId}/?sortBy=${filterBy}&page=${currentPage}&pageSize=10&filterStatus=5&searchProductName=${searchQuery}&startDate=${startDate}&endDate=${endDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       setData(response.data.data);
       setTotalPages(response.data.total_page);

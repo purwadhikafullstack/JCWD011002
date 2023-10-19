@@ -38,7 +38,6 @@ const getWarehouseList = async (toast, page, sort, name, search, filterProvince)
       },
       ...setHeaders()
     });
-    console.log("api warehouse:", response.data);
     return response.data;
   } catch (error) {
     const { response } = error;

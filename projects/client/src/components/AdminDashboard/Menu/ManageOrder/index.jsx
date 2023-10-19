@@ -12,11 +12,13 @@ import Filter from "./Filter";
 const mainContainer = {
   w: "full",
   direction: "column",
+  pos: "relative",
   gap: "16px",
 };
 
 const container = {
   w: "full",
+  h: "full",
   variant: "enclosed",
   isFitted: true,
   // isLazy: true,
@@ -37,12 +39,14 @@ function ManageOrder() {
       <Tabs {...container}>
         <TabList>
           {tabList.map((tab, index) => (
-            <Tab key={index}>{tab[0]}</Tab>
+            <Tab whiteSpace="nowrap" key={index}>{tab[0]}</Tab>
           ))}
         </TabList>
-        <TabPanels>
+        <TabPanels h="calc(100% - 40px)" >
           {tabList.map((tab, index) => (
-            <TabPanel key={index}>{tab[1]}</TabPanel>
+            <TabPanel h="full" key={index}>
+              {tab[1]}
+            </TabPanel>
           ))}
         </TabPanels>
       </Tabs>

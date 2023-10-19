@@ -59,6 +59,9 @@ const Product = () => {
             filterByMonth,
             filterByYear,
           },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       setMonth(response.data.data);
@@ -175,8 +178,12 @@ const Product = () => {
                   bgColor={"bgSecondary"}
                   colorScheme="whiteAlpha"
                 >
-                  <TableCaption fontStyle={"italic"} fontSize={"sm"} color={"white"}>
-                  Click Detail to see details of each warehouse
+                  <TableCaption
+                    fontStyle={"italic"}
+                    fontSize={"sm"}
+                    color={"white"}
+                  >
+                    Click Detail to see details of each warehouse
                   </TableCaption>
                   {item.month_sales
                     .filter((monthSale) =>

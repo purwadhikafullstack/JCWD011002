@@ -16,7 +16,6 @@ const getProductById = async (req, res, id) => {
         id_user: id_admin,
       },
     })
-    console.log("ini admin", admin)
     const product = await Product.findOne({
       where: { id }, include: [
         {
@@ -37,10 +36,6 @@ const getProductById = async (req, res, id) => {
       ]
     })
     if (!product) return messages.error(404, "Product not found")
-    // return res.status(200).json({
-    //   message: "Product retrieved successfully",
-    //   data: product,
-    // })
     return messages.success("Product retrieved successfully", product)
   } catch (error) {
     console.log(error)

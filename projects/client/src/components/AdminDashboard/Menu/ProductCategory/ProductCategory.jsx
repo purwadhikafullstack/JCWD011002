@@ -44,15 +44,15 @@ const ProductCategory = () => {
   } = useDisclosure()
   const role = getRole();
   const toast = useToast()
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
   const handlePageChange = (newPage) => {
     setPage(newPage);
   }
   const fetchCategories = async () => {
     try {
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      };
       const { data } = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/product/category`,
         {
@@ -83,10 +83,6 @@ const ProductCategory = () => {
 
   const handleConfirmationDelete = async () => {
     try {
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      };
 
       await axios.delete(
         `${process.env.REACT_APP_API_BASE_URL}/product/category/${selectedCategoryId}`,

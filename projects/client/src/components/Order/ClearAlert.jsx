@@ -17,7 +17,11 @@ const ClearAlert = ({ coba, userId }) => {
   const toast = useToast();
   const clearCart = async () => {
     try {
-      const response = await axios.delete(`${API_URL}/order/${userId}`);
+      const response = await axios.delete(`${API_URL}/order/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       coba();
       toast({
         title: "Cart Cleared!",
@@ -29,7 +33,7 @@ const ClearAlert = ({ coba, userId }) => {
   };
   return (
     <>
-      <Popover  isLazy>
+      <Popover isLazy>
         <PopoverTrigger>
           <Button borderRadius={"none"} w={"full"} variant={"error"}>
             Clear

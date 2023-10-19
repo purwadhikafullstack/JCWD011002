@@ -9,7 +9,11 @@ const OrderSummary = ({ userId, cartLength }) => {
   const API_URL = process.env.REACT_APP_API_BASE_URL;
   const [total, setTotal] = useState(0);
   const getCartTotal = async () => {
-    const response = await axios.get(`${API_URL}/order/${userId}`);
+    const response = await axios.get(`${API_URL}/order/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     setTotal(response.data.data.total);
   };
   useEffect(() => {
@@ -48,12 +52,16 @@ const OrderSummary = ({ userId, cartLength }) => {
         </Text>
         <Divider />
         <br />
-        <Text fontSize={isMd ? "sm" : "md"}>Checkout ({cartLength} Product)</Text>
+        <Text fontSize={isMd ? "sm" : "md"}>
+          Checkout ({cartLength} Product)
+        </Text>
         <Text fontSize={isMd ? "sm" : "md"} fontWeight={"bold"}>
           Total: {toRupiah(total, { dot: ".", floatingPoint: 0 })}
         </Text>
         <br />
-        <Link fontSize={isMd ? "sm" : "md"} to="/">Or continue shopping?</Link>
+        <Link fontSize={isMd ? "sm" : "md"} to="/">
+          Or continue shopping?
+        </Link>
       </Flex>
     </>
   );

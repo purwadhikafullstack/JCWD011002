@@ -9,7 +9,6 @@ const createWarehouse = async (req, res) => {
     const result = await warehouseService.createWarehouse(body);
     res.status(result.status).json(messages.success(result));
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: error.messages })
   }
 }

@@ -15,6 +15,7 @@ import WarehouseTable from "./WarehouseTable";
 import UpdateWarehouse from "./UpdateWarehouse";
 import CreateWarehouse from "./CreateWarehouse";
 
+
 const WarehouseList = () => {
   const [warehouses, setWarehouses] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -35,11 +36,17 @@ const WarehouseList = () => {
     city_name: "",
     postal_code: "",
   });
-  const toast = useToast();
   const [city, setCity] = useState([]);
   const [province, setProvince] = useState([]);
   const [selectedProvinceId, setSelectedProvinceId] = useState("");
   const [selectedProvinceName, setSelectedProvinceName] = useState("");
+  const toast = useToast();
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
+  const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const API_WAREHOUSE = `${BASE_URL}/warehouse`;
   const handlePageChange = (newPage) => {
     setPage(newPage)
   }
@@ -82,7 +89,7 @@ const WarehouseList = () => {
     // setCity([]);
     setEditedWarehouse({
       ...editedWarehouse,
-      province: selectedName, 
+      province: selectedName,
       city_name: "",
     });
   }
@@ -111,10 +118,8 @@ const WarehouseList = () => {
         province: selectedProvinceName,
       };
       await axios.patch(
-        `${process.env.REACT_APP_API_BASE_URL}/warehouse/${selectedWarehouse.id}`, updatedData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        `${API_WAREHOUSE}/${selectedWarehouse.id}`, updatedData, {
+        headers,
       }
       )
       toast({
@@ -154,10 +159,8 @@ const WarehouseList = () => {
   const handleDeleteWarehouse = async () => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_BASE_URL}/warehouse/${selectedWarehouse.id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        `${API_WAREHOUSE}/${selectedWarehouse.id}`, {
+        headers,
       }
       )
       toast({
@@ -171,6 +174,13 @@ const WarehouseList = () => {
       closeDeleteModal();
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Error",
+        description: "An error occurred while deleting the warehouse data.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   }
 
@@ -192,10 +202,8 @@ const WarehouseList = () => {
         province: selectedProvinceName,
       }
       await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/warehouse`, createData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        }
+        `${API_WAREHOUSE}`, createData, {
+        headers
       }
       )
       fetchWarehouses();
@@ -226,7 +234,7 @@ const WarehouseList = () => {
 
       <DeleteWarehouse isDeleteModalOpen={isDeleteModalOpen} closeDeleteModal={closeDeleteModal} handleDeleteWarehouse={handleDeleteWarehouse} />
       {/* Create Warehouse Drawer */}
-      <CreateWarehouse isDrawerCreateOpen={isDrawerCreateOpen} setIsDrawerCreateOpen={setIsDrawerCreateOpen} handleCreateWarehouse={handleCreateWarehouse} province={province} selectedProvinceId={selectedProvinceId} handleSelectProvince={handleSelectProvince} editedWarehouse={editedWarehouse} setEditedWarehouse={setEditedWarehouse} city={city}/>
+      <CreateWarehouse isDrawerCreateOpen={isDrawerCreateOpen} setIsDrawerCreateOpen={setIsDrawerCreateOpen} handleCreateWarehouse={handleCreateWarehouse} province={province} selectedProvinceId={selectedProvinceId} handleSelectProvince={handleSelectProvince} editedWarehouse={editedWarehouse} setEditedWarehouse={setEditedWarehouse} city={city} />
 
     </>
   );

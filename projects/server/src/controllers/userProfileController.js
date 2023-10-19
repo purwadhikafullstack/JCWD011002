@@ -38,7 +38,6 @@ const updateProfile = async (req, res) => {
     const result = await userProfileService.updateProfile(req, id, body);
     res.status(result.status).json(messages.response(result));
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

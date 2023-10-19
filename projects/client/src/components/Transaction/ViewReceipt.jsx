@@ -20,7 +20,12 @@ const ViewReceipt = ({ transactionId }) => {
   const fetchReceipt = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/transaction/receipt/${transactionId}`
+        `${API_URL}/transaction/receipt/${transactionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       setPath(response.data.receipt);
     } catch (error) {

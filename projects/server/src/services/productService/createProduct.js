@@ -33,16 +33,12 @@ const createProduct = async (req, res, name, price, id_category, is_active, desc
           stock: 0
         }, { transaction: t })
       }
-      // await t.commit();
-      // return messages.success('successfully created product', result)
-      // return res.status(201).json(result)
       return messages.success('successfully created product', result)
     })
   }
   catch (error) {
     console.log(error)
     return messages.error(500, error.message)
-    // return messages.error(500, error.message || 'Internal server error')
   }
 }
 

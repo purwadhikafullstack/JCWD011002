@@ -24,7 +24,6 @@ const UserAddress = () => {
   const [editAddressData, setEditAddressData] = useState(null);
   const [address, setAddress] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  console.log("address", address)
   const toast = useToast();
   const openAddAddressModal = () => {
     setIsAddAddressModalOpen(true);
@@ -35,12 +34,10 @@ const UserAddress = () => {
   };
 
   const handleAddAddress = (formData) => {
-    console.log("Adding address:", formData);
     closeAddAddressModal();
   };
 
   const openEditAddressModal = (address) => {
-    console.log('address from openEditAddressModal', address)
     setEditAddressData(address);
     setIsEditAddressModalOpen(true);
   };
@@ -50,19 +47,16 @@ const UserAddress = () => {
   };
 
   const handleEditAddress = (formData) => {
-    console.log("Editing address:", formData);
     closeEditAddressModal();
   };
 
 
   const handleDefaultAddress = async (address) => {
-    console.log("address handle default", address)
     const reqData = {
       is_default: true,
       city_name: address.city_name,
       province: address.province,
     }
-    console.log("reqData", reqData)
     const headers = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

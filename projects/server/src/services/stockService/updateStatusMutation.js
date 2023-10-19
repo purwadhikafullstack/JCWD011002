@@ -9,7 +9,6 @@ const updateStatusMutation = async (req, res) => {
     const { id } = req.params;
     const { id_status } = req.body;
 
-    // Temukan rekaman di stockHistory berdasarkan ID
     const warehouse = await stockHistory.findOne({
       where: {
         id: id
@@ -20,9 +19,7 @@ const updateStatusMutation = async (req, res) => {
       return res.status(404).json({ message: "Stock history not found" });
     }
 
-    // Mulai transaksi Sequelize
     return await sequelize.transaction(async (t) => {
-      // Update status di stockHistory
       const result = await stockHistory.update(
         {
           id_status: id_status
@@ -36,7 +33,6 @@ const updateStatusMutation = async (req, res) => {
       );
 
       if (id_status === 8) {
-        // Update stok di productWarehouse
         await productWarehouse.decrement(
           'stock',
           {

@@ -1,5 +1,6 @@
 import {
   Flex,
+  Spacer,
   Table,
   TableContainer,
   Th,
@@ -20,8 +21,11 @@ const date = new Date();
 
 const mainContainer = {
   direction: "column",
+  h: "full",
   w: "full",
+  // pos: "relative",
   gap: "16px",
+  // bgColor: "yellow",
 };
 
 const tableAttr = {
@@ -141,6 +145,7 @@ function TabPayment({ status }) {
           <TransactionList {...transactionsAttr} />
         </Table>
       </TableContainer>
+      <Spacer />
       <Pagination {...paginationAttr} />
     </Flex>
   );

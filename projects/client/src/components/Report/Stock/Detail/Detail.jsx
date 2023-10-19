@@ -43,6 +43,9 @@ const Detail = () => {
           startDate,
           endDate,
         },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
       setData(response.data.data);
       setTotalPages(response.data.totalPages);
@@ -98,13 +101,11 @@ const Detail = () => {
         >
           <Thead bgColor={"primary"}>
             <Tr>
-              <Th color={"white"}>NO</Th>
               <Th textAlign={"center"} color={"white"}>
-                WH FROM
+                NO
               </Th>
-              <Th textAlign={"center"} color={"white"}>
-                WH TO
-              </Th>
+              <Th textAlign={"center"} color={"white"}>FROM WAREHOUSE</Th>
+              <Th textAlign={"center"} color={"white"}>TO WAREHOUSE</Th>
               <Th textAlign={"center"} color={"white"}>
                 PRODUCT
               </Th>
@@ -135,10 +136,12 @@ const Detail = () => {
             <Tbody>
               {data.map((item, index) => (
                 <Tr key={item.id}>
-                  <Td>{(currentPage - 1) * 10 + index + 1}</Td>
+                  <Td textAlign={"center"}>
+                    {(currentPage - 1) * 10 + index + 1}
+                  </Td>
                   <Td>{item.wh_from}</Td>
                   <Td>{item.wh_to}</Td>
-                  <Td>{item.product}</Td>
+                  <Td textAlign={"center"}>{item.product}</Td>
                   <Td textAlign={"center"}>{item.qty}</Td>
                   <Td textAlign={"center"}>{item.status}</Td>
                   <Td textAlign={"center"}>MWECG2/ID/TXN{item.txn_id}</Td>

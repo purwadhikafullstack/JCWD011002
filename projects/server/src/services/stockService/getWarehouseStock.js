@@ -20,7 +20,6 @@ const getWarehouseStock = async (req, res) => {
     const { id } = req.account
     const admin = await getAdmin(id)
     const { qty = 0, id_product } = req.query;
-    console.log(id_product, admin.id_warehouse)
     const result = await ProductWarehouse.findAll({
       where: {
         id_product: id_product,

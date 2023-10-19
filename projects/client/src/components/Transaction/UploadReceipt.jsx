@@ -36,10 +36,19 @@ const UploadReceipt = ({ isOpen, onClose, onSave, txnid }) => {
       console.log("No image selected.");
       return;
     }
+
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "multipart/form-data",
+    };
+
     const formData = new FormData();
     formData.append("receipt", receipt);
+
     try {
-      await axios.post(`${API_URL}/transaction/receipt/${txnid}`, formData);
+      await axios.post(`${API_URL}/transaction/receipt/${txnid}`, formData, {
+        headers,
+      });
       toast({
         title: "Successfully upload receipt!",
         status: "success",
@@ -121,9 +130,9 @@ const UploadReceipt = ({ isOpen, onClose, onSave, txnid }) => {
                   | PT. PURWADHIKA JAYAJAYAJAYA
                 </Text>
               </Flex>
-              4. Input amount of the transfer <br /> 5. Make sure the
-              recipient name is correct <br /> 6. Confirm the transfer <br />{" "}
-              7. Upload receipt here
+              4. Input amount of the transfer <br /> 5. Make sure the recipient
+              name is correct <br /> 6. Confirm the transfer <br /> 7. Upload
+              receipt here
             </Text>
             <Input
               mt={2}

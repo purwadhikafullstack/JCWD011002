@@ -34,17 +34,25 @@ const Summary = () => {
 
   const fetchSales = async () => {
     try {
-      const response = await axios.get(`${API_URL}/report/sales`, {
-        params: {
-          page: currentPage,
-          pageSize: 10,
-          orderBy,
-          filterByMonth,
-          filterByYear,
-          categoryId,
-          productId,
+      const response = await axios.get(
+        `${API_URL}/report/sales`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         },
-      });
+        {
+          params: {
+            page: currentPage,
+            pageSize: 10,
+            orderBy,
+            filterByMonth,
+            filterByYear,
+            categoryId,
+            productId,
+          },
+        }
+      );
       setSales(response.data.data);
       setTotalPages(response.data.totalPages);
     } catch (error) {

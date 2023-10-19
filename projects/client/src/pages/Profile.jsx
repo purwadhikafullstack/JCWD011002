@@ -32,21 +32,12 @@ export default function Profile() {
 
   const dispatch = useDispatch()
   const userData = useSelector((state) => state.user.userData)
-
   const token = localStorage.getItem('token');
-  console.log("token", token)
-  console.log("userData", userData)
-
   useEffect(() => {
     if (token) {
       dispatch(fetchUserData(toast));
     }
   }, [dispatch]);
-
-  const location = useLocation();
-  console.log("location", location)
-  const profilePath = location.pathname === "/profile" || location.pathname === "/profile/address" || location.pathname === "/profile/transaction";
-  console.log("profilePath", profilePath)
 
   return (
     <Box w={"full"} mx="auto">

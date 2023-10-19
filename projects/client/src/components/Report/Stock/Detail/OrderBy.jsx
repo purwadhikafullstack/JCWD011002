@@ -58,7 +58,6 @@ const OrderBy = ({
         },
       });
       const products = response.data.data.products;
-      console.log(products);
       setInitialItems(
         products.map((product) => ({
           name: product.name,
@@ -159,10 +158,7 @@ const OrderBy = ({
         },
       });
       setWh(response.data.data);
-      console.log(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -209,21 +205,6 @@ const OrderBy = ({
           </InputGroup>
         </Stack>
       </Box>
-      {/* <Select
-        ml={2}
-        w={"15vw"}
-        color={"black"}
-        bg={"white"}
-        placeholder="All Warehouse From"
-        value={warehouseFrom}
-        onChange={handleWarehouseFrom}
-      >
-        {dataWarehouse.map((warehouse) => (
-          <option key={warehouse.id} value={warehouse.id}>
-            {warehouse.name}
-          </option>
-        ))}
-      </Select> */}
       {role === "admin warehouse" ? (
         <Select
           ml={2}

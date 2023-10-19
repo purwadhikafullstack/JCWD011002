@@ -5,10 +5,8 @@ import AllMutation from './AllMutation'
 import { Divider, Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import jwtDecode from 'jwt-decode'
 const MutationList = () => {
-  const [selected, setSelected] = useState(false)
   const decode = jwtDecode(localStorage.getItem('token'))
   const role = decode.role
-  console.log("ini roleee", role)
   return (
     <>
       <Tabs w={"full"} isFitted variant='enclosed'>

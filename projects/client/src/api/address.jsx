@@ -20,7 +20,6 @@ const getProvince = async (setProvince, toast) => {
   try {
     const response = await axios.get(`${RAJA_ONGKIR_URL}/province`);
     setProvince(response.data.rajaongkir.results);
-    console.log('response province', response.data.rajaongkir.results);
   } catch (error) {
     console.log(error);
     const { response } = error;
@@ -32,7 +31,6 @@ const getCityByProvince = async (province, setCity, toast) => {
   try {
     const response = await axios.get(`${RAJA_ONGKIR_URL}/citybyprovince?province=${province}`);
     setCity(response.data.rajaongkir.results);
-    console.log('response city', response.data.rajaongkir.results);
   } catch (error) {
     console.log(error);
     const { response } = error;
@@ -62,7 +60,6 @@ const getAddressUser = async (toast, setDataAddress) => {
   try {
     const response = await axios.get(`${ADDRESS_URL}`, setHeaders());
     setDataAddress(response.data.data);
-    console.log(response.data.data);
   } catch (error) {
     console.log(error);
     const { response } = error;
@@ -79,7 +76,6 @@ const updateAddressUser = async (addressData, formData, toast, onEditAddress, on
     onEditAddress(formData);
     notification(toast, setToastParams(response));
     onClose();
-    console.log(response.data);
   } catch (error) {
     const { response } = error;
     notification(toast, setToastParams(response.status ? response : error));

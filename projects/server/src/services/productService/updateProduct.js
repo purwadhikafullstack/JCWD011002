@@ -7,9 +7,7 @@ const fs = require('fs')
 
 const updateProduct = async (id, name, price, id_category, is_active, description, req) => {
   try {
-    // const id = req.params.id;
     const product = await Product.findByPk(id);
-    // const { name, price, id_category, is_active, description } = req.body
     let updateData = {
       name: name,
       price: price,
@@ -35,17 +33,10 @@ const updateProduct = async (id, name, price, id_category, is_active, descriptio
         },
         { transaction: t }
       );
-      // return res.status(200).json({
-      //   message: "Product successfully updated!",
-      //   data: result
-      // });
       return messages.success("Product successfully updated!", result)
     });
   } catch (error) {
     console.log(error);
-    // return res.status(500).json({
-    //   message: error.message
-    // });
     return messages.error(500, error.message)
   }
 }

@@ -11,7 +11,11 @@ const Summary = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${API_URL}/report/stock/summary`);
+      const response = await axios.get(`${API_URL}/report/stock/summary`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setWarehouse(response.data.data);
     } catch (error) {
       console.log(error);
@@ -26,9 +30,7 @@ const Summary = () => {
         },
       });
       setWh(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

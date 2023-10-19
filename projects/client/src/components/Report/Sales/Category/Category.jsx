@@ -30,17 +30,23 @@ const Category = () => {
 
   const fetchSales = async () => {
     try {
-      const response = await axios.get(`${API_URL}/report/sales/category`, {
-        params: {
-          page: currentPage,
-          pageSize: 10,
-          orderBy,
-          filterByMonth,
-          filterByYear,
-          warehouseId,
-          categoryId,
+      const response = await axios.get(
+        `${API_URL}/report/sales/category`,
+        {
+          params: {
+            page: currentPage,
+            pageSize: 10,
+            orderBy,
+            filterByMonth,
+            filterByYear,
+            warehouseId,
+            categoryId,
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         },
-      });
+      );
       setCategory(response.data.categories);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -62,7 +68,12 @@ const Category = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/report/sales/product/permonth`
+        `${API_URL}/report/sales/product/permonth`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       const categoryTotals = extractCategoryTotals(response.data.data);
       setCategoryTotals(categoryTotals);

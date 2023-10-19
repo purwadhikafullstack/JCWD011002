@@ -8,7 +8,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Button,
-  useDisclosure,
   Input,
   Text,
   Select,
@@ -18,15 +17,9 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios'
 const RequestMutation = ({ isOpen, onClose, products, fetchProducts, fetchDetailStock }) => {
-  // const { isOpen, onOpen, onClose } = useDisclosure()
   const [warehouse, setWarehouse] = useState([])
   const [warehouseId, setWarehouseId] = useState()
-  // console.log("id warehouse", warehouse[0].id)
-  console.log("warehouse nih", warehouse)
   const [qty, setQty] = useState(0)
-  console.log("qty", qty)
-  const btnRef = React.useRef()
-  console.log("ini product drawer request mutation", products)
   const toast = useToast()
   const fetchWarehouse = async () => {
     try {
@@ -35,7 +28,6 @@ const RequestMutation = ({ isOpen, onClose, products, fetchProducts, fetchDetail
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-      console.log("{data} fetch warehous stock", { data })
       setWarehouse(data.data)
       if (data.data.length === 0) {
         toast({

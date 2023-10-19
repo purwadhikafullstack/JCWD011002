@@ -12,8 +12,11 @@ const ReqMutationFrom = () => {
   const [warehouse_to, setWarehouseTo] = useState('')
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  console.log(data.length)
   const toast = useToast()
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
   const fetchData = async () => {
     try {
       const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/stock/pendingwhfrom`, {
@@ -22,11 +25,8 @@ const ReqMutationFrom = () => {
           search: search || '',
           warehouse_to
         },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
+        headers
       })
-      console.log(data);
       setData(data.data)
       setTotalPages(data.totalPages)
     } catch (error) {
@@ -38,9 +38,7 @@ const ReqMutationFrom = () => {
       await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/stock/${id}`, {
         id_status: status
       }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
+        headers
       })
       fetchData()
       toast({
@@ -71,7 +69,7 @@ const ReqMutationFrom = () => {
         <Thead bg={"primary"}>
           <Tr>
             <Th color={"white"}>No</Th>
-            <Th color={"white"}>Admin</Th>
+            <Th color={"white"}>User</Th>
             <Th color={"white"}>From Warehouse</Th>
             <Th color={"white"}>To Warehouse</Th>
             <Th color={"white"}>Product</Th>

@@ -22,7 +22,11 @@ const CartHover = () => {
 
   const viewCart = async () => {
     try {
-      const response = await axios.get(`${API_URL}/order/cart/${userId}`);
+      const response = await axios.get(`${API_URL}/order/cart/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setCart(response.data.data);
       setCartLength(response.data.data.length);
     } catch (error) {
@@ -31,7 +35,11 @@ const CartHover = () => {
   };
 
   const getCartTotal = async () => {
-    const response = await axios.get(`${API_URL}/order/${userId}`);
+    const response = await axios.get(`${API_URL}/order/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     setTotal(response.data.data.total);
   };
   useEffect(() => {

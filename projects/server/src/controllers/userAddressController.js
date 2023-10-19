@@ -6,7 +6,6 @@ const getUserAddress = async (req, res) => {
     const result = await userAddressService.getUserAddress.getUserAddress(id);
     res.status(result.status).json(messages.response(result))
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: error.message })
   }
 }
@@ -18,7 +17,6 @@ const getUserAddressById = async (req, res) => {
     const result = await userAddressService.getUserAddress.getUserAddressById(id, id_user);
     res.status(result.status).json(messages.response(result))
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: error.message })
   }
 }
@@ -32,7 +30,6 @@ const createUserAddress = async (req, res) => {
     const result = await userAddressService.createUserAddress(id, body, id_user)
     res.status(result.status).json(messages.response(result))
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: error.message })
   }
 }
@@ -46,7 +43,6 @@ const updateUserAddress = async (req, res) => {
     const result = await userAddressService.updateUserAddress(id, body, id_user);
     res.status(result.status).json(messages.response(result));
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -57,7 +53,6 @@ const deleteUserAddress = async (req, res) => {
     const result = await userAddressService.deleteUserAddress(id);
     res.status(result.status).json(messages.response(result));
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -68,7 +63,6 @@ async function getDefault(req, res) {
     const result = await userAddressService.getDefault(userId);
     return res.status(200).json(result);
   } catch (error) {
-    console.error("Error getting default:", error);
     return res.status(500).json(messages.error(500, error.message));
   }
 }

@@ -41,18 +41,31 @@ const CartPage = () => {
 
   const viewCart = async () => {
     try {
-      const response = await axios.get(`${API_URL}/order/cart/${userId}`);
+      const response = await axios.get(`${API_URL}/order/cart/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setCart(response.data.data);
       setCartLength(response.data.data.length);
     } catch (error) {
       console.log(error);
     }
   };
+
   const fetchDefault = async () => {
     try {
-      const response = await axios.post(`${API_URL}/address/default`, {
-        userId: userId,
-      });
+      const response = await axios.post(
+        `${API_URL}/address/default`,
+        {
+          userId: userId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       localStorage.setItem(
         "selectedAddress",
         JSON.stringify(response.data.data)
@@ -69,10 +82,18 @@ const CartPage = () => {
 
   const handleDelete = async (productId) => {
     try {
-      const response = await axios.post(`${API_URL}/order/remove`, {
-        userId: userId,
-        productId: productId,
-      });
+      const response = await axios.post(
+        `${API_URL}/order/remove`,
+        {
+          userId: userId,
+          productId: productId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.status === 200) {
         viewCart();
         if (!toast.isActive("success")) {
@@ -94,17 +115,33 @@ const CartPage = () => {
 
   const handleSetQuantity = async (productId, newQuantity) => {
     try {
+      const headers = {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      };
+
       if (newQuantity === 0) {
-        await axios.post(`${API_URL}/order/remove`, {
-          userId: userId,
-          productId: productId,
-        });
+        await axios.post(
+          `${API_URL}/order/remove`,
+          {
+            userId: userId,
+            productId: productId,
+          },
+          {
+            headers,
+          }
+        );
       } else {
-        await axios.patch(`${API_URL}/order/set`, {
-          userId: userId,
-          productId: productId,
-          quantity: newQuantity,
-        });
+        await axios.patch(
+          `${API_URL}/order/set`,
+          {
+            userId: userId,
+            productId: productId,
+            quantity: newQuantity,
+          },
+          {
+            headers,
+          }
+        );
       }
       viewCart();
     } catch (error) {

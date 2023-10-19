@@ -25,7 +25,12 @@ const ToConfirm = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/transaction/${userId}/?sortBy=${filterBy}&page=${currentPage}&pageSize=10&filterStatus=2&searchProductName=${searchQuery}&startDate=${startDate}&endDate=${endDate}`
+        `${API_URL}/transaction/${userId}/?sortBy=${filterBy}&page=${currentPage}&pageSize=10&filterStatus=2&searchProductName=${searchQuery}&startDate=${startDate}&endDate=${endDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       setData(response.data.data);
       setTotalPages(response.data.total_page);
@@ -57,7 +62,11 @@ const ToConfirm = () => {
   return (
     <>
       {data.length === 0 ? (
-        <Text  align={"center"} fontSize={isMd ? "sm" : "md"} fontWeight={"bold"}>
+        <Text
+          align={"center"}
+          fontSize={isMd ? "sm" : "md"}
+          fontWeight={"bold"}
+        >
           No Transaction Found
         </Text>
       ) : (

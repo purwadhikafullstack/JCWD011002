@@ -91,9 +91,7 @@ const ModalDetail = ({ detail_product_sales, product_name }) => {
       });
       filterByWarehouse(response.data.data.id_warehouse);
       setWh(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   useEffect(() => {
     fetchWHAdmin();
@@ -106,7 +104,6 @@ const ModalDetail = ({ detail_product_sales, product_name }) => {
         ? filterByWarehouse(selectedWarehouse)
         : filterByWarehouse(1);
     }
-    // filterByWarehouse(selectedWarehouse);
   }, []);
 
   return (
@@ -118,7 +115,9 @@ const ModalDetail = ({ detail_product_sales, product_name }) => {
       <Modal size={"3xl"} onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent bgColor={"bgSecondary"}>
-          <ModalHeader color={"white"} bg={"primary"} mb={2}>{product_name}</ModalHeader>
+          <ModalHeader color={"white"} bg={"primary"} mb={2}>
+            {product_name}
+          </ModalHeader>
           <ModalCloseButton color={"white"} />
           <ModalBody>
             <Flex>
@@ -226,7 +225,12 @@ const ModalDetail = ({ detail_product_sales, product_name }) => {
             </TableContainer>
           </ModalBody>
           <ModalFooter w={"full"}>
-            <Button w={"full"} colorScheme="red" borderRadius={0} onClick={onClose}>
+            <Button
+              w={"full"}
+              colorScheme="red"
+              borderRadius={0}
+              onClick={onClose}
+            >
               Close
             </Button>
           </ModalFooter>

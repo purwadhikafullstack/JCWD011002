@@ -58,14 +58,6 @@ const getProductList = async (id, role, sort, price, name, id_category, search, 
       limit: itemsPerPage,
     });
 
-    // return res.status(200).json({
-    //   message: "Product list retrieved successfully",
-    //   totalRows: totalCount,
-    //   totalPages: totalPages,
-    //   currentPage: currentPage,
-    //   itemsPerPage: itemsPerPage,
-    //   data: productList,
-    // });
     return messages.success("Product list retrieved successfully", {
       totalRows: totalCount,
       totalPages: totalPages,
@@ -75,7 +67,6 @@ const getProductList = async (id, role, sort, price, name, id_category, search, 
     })
   } catch (error) {
     console.log(error);
-    // return res.status(500).json({ message: "Error retrieving product list" });
     return messages.error(500, error.message);
   }
 }

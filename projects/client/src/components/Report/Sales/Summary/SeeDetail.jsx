@@ -32,7 +32,11 @@ const SeeDetail = ({ transactionId }) => {
 
   const fetchDetail = async () => {
     try {
-      const response = await axios.get(`${API_URL}/report/sales`);
+      const response = await axios.get(`${API_URL}/report/sales`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setDatas(response.data.data);
     } catch (error) {
       console.log(error);

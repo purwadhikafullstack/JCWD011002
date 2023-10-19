@@ -32,35 +32,35 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
   return (
     <Flex justify="center" mt="4">
-        <Button
-          mr={1}
-          onClick={() => handlePageChange(currentPage - 1)}
-          bg={"white"}
-          color={"black"}
-          isDisabled={currentPage === 1}
-        >
-          <IoIosArrowBack />
-        </Button>
+      <Button
+        mr={1}
+        onClick={() => handlePageChange(currentPage - 1)}
+        bg={"white"}
+        color={"black"}
+        isDisabled={currentPage === 1}
+      >
+        <IoIosArrowBack />
+      </Button>
       {pagesToShow.map((page) => (
         <Button
           key={page}
           mx={1}
           onClick={() => handlePageChange(page)}
           color={"black"}
-          bg={currentPage === page ? 'white' : 'white.300'}
+          bg={currentPage === page ? 'white' : 'gray'}
           style={{ borderRadius: '5px' }}
         >
           {page}
         </Button>
       ))}
-        <Button
-          ml={1}
-          bg={"white"} color={"black"}
-          onClick={() => handlePageChange(currentPage + 1)}
-          isDisabled={currentPage === totalPages}
-        >
-          <IoIosArrowForward />
-        </Button>
+      <Button
+        ml={1}
+        bg={"white"} color={"black"}
+        onClick={() => handlePageChange(currentPage + 1)}
+        isDisabled={currentPage === totalPages}
+      >
+        <IoIosArrowForward />
+      </Button>
     </Flex>
   );
 };

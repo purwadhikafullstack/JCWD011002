@@ -34,9 +34,36 @@ const SelectAddress = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isEditAddressModalOpen, setIsEditAddressModalOpen] = useState(false);
   const [editAddressData, setEditAddressData] = useState(null);
-  const selectAddress = JSON.parse(localStorage.getItem("selectedAddress"));
   const token = localStorage.getItem("token");
   const [dataAddress, setDataAddress] = useState([]);
+
+  const emptyAddress = `{
+    "name": "",
+    "province": "",
+    "city_name": "Please Add New Address!",
+    "postal_code": "",
+    "full_address": "Address Not Found"
+  }`;
+
+  const noDefault = `{
+    "name": "",
+    "province": "",
+    "city_name": "Please Select Address!",
+    "postal_code": "",
+    "full_address": "No Default"
+  }`;
+
+  let add = localStorage.getItem("selectedAddress");
+  
+  if (dataAddress.length === 0) {
+    localStorage.setItem("selectedAddress", emptyAddress);
+  } else if (add === "undefined") {
+    localStorage.setItem("selectedAddress", noDefault);
+  } else {
+    localStorage.getItem("selectedAddress");
+  }
+
+  const selectAddress = JSON.parse(localStorage.getItem("selectedAddress"));
 
   const openSelectAddressModal = () => {
     setIsSelectAddressModalOpen(true);
@@ -103,6 +130,11 @@ const SelectAddress = () => {
     try {
       const response = await axios.post(`${API_URL}/address/default`, {
         userId: userId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       localStorage.setItem(
         "selectedAddress",

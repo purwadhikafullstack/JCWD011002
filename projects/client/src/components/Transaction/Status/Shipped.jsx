@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import {
-  Box,
-  Divider,
-  Flex,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Divider, Flex, Image, Text } from "@chakra-ui/react";
 import { Badge } from "@chakra-ui/react";
 import Pagination from "../Pagination";
 import SearchBar from "../SearchBar";
@@ -32,7 +26,12 @@ const Shipped = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/transaction/${userId}/?sortBy=${filterBy}&page=${currentPage}&pageSize=10&filterStatus=4&searchProductName=${searchQuery}&startDate=${startDate}&endDate=${endDate}`
+        `${API_URL}/transaction/${userId}/?sortBy=${filterBy}&page=${currentPage}&pageSize=10&filterStatus=4&searchProductName=${searchQuery}&startDate=${startDate}&endDate=${endDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       setData(response.data.data);
       setTotalPages(response.data.total_page);

@@ -1,18 +1,17 @@
 const router = require("express").Router();
 const { reportController } = require("../controllers");
+const { authentication } = require('../middlewares');
 
-router.get("/stock", reportController.getStockHistory);
-router.get("/stock/summary", reportController.getAllStockHistory);
+router.get("/stock", authentication, reportController.getStockHistory);
+router.get("/stock/summary", authentication, reportController.getAllStockHistory);
 
-router.get("/sales", reportController.getSalesReport);
-router.get("/sales/product", reportController.getSalesProduct);
-router.get("/sales/product/permonth", reportController.getSalesProductMonthly);
-router.get("/sales/category", reportController.getSalesCategory);
-router.get("/sales/monthly", reportController.getMonthlySales);
-router.get("/sales/warehouse/:warehouseId", reportController.getSalesWH);
+router.get("/sales", authentication, reportController.getSalesReport);
+router.get("/sales/product", authentication, reportController.getSalesProduct);
+router.get("/sales/product/permonth", authentication, reportController.getSalesProductMonthly);
+router.get("/sales/category", authentication, reportController.getSalesCategory);
+router.get("/sales/monthly", authentication, reportController.getMonthlySales);
+router.get("/sales/warehouse/:warehouseId", authentication, reportController.getSalesWH);
 
-router.get("/summary", reportController.getSummary);
-
-router.get("/summary", reportController.getSummary);
+router.get("/summary-card", authentication, reportController.getSummary);
 
 module.exports = router;

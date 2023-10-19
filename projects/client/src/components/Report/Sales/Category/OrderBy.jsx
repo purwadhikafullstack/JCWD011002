@@ -75,9 +75,7 @@ const OrderBy = ({
         },
       });
       setWh(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

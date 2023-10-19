@@ -76,11 +76,20 @@ const Checkout = () => {
   }, []);
 
   useEffect(() => {
-    viewCart();
-    getTotal();
-    fetchAddress();
-    getPayment();
+    const fetchData = async () => {
+      try {
+        await fetchAddress();
+        viewCart();
+        getTotal();
+        getPayment();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
   }, []);
+  
 
   const fetchAddress = async () => {
     try {
@@ -96,13 +105,22 @@ const Checkout = () => {
   };
 
   const viewCart = async () => {
-    const response = await axios.get(`${API_URL}/order/cart/${userId}`);
+    const response = await axios.get(`${API_URL}/order/cart/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setCart(response.data.data);
   };
   const getTotal = async () => {
-    const response = await axios.get(`${API_URL}/order/${userId}`);
+    const response = await axios.get(`${API_URL}/order/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setTotal(response.data.data.total);
   };
+
   const emptyAddress = `{
     "name": "",
     "province": "",
@@ -134,16 +152,24 @@ const Checkout = () => {
   const checkout = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.post(`${API_URL}/transaction`, {
-        userId: userId,
-        payment: selectedPayment ? selectedPayment.id : null,
-        shipping: service,
-        total: grand,
-        myLatitude,
-        myLongitude,
-        shipping_cost: shipping,
-        shipping_address: formattedAddress,
-      });
+      const response = await axios.post(
+        `${API_URL}/transaction`,
+        {
+          userId: userId,
+          payment: selectedPayment ? selectedPayment.id : null,
+          shipping: service,
+          total: grand,
+          myLatitude,
+          myLongitude,
+          shipping_cost: shipping,
+          shipping_address: formattedAddress,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast({
         title: "Thanks for your purchase!",
         status: "success",
@@ -198,7 +224,11 @@ const Checkout = () => {
   };
 
   const getPayment = async () => {
-    const response = await axios.get(`${API_URL}/transaction/payments`);
+    const response = await axios.get(`${API_URL}/transaction/payments`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setPayment(response.data.data);
   };
 
@@ -227,7 +257,7 @@ const Checkout = () => {
             Checkout
           </Text>
           <Box mb={1} w={"100vw"} px={6} py={6} bgColor={"secondary"}>
-            <SelectAddress dataAddress={dataAddress} />
+            <SelectAddress />
           </Box>
           <TableContainer>
             <Table

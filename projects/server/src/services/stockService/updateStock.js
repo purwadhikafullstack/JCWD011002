@@ -8,8 +8,6 @@ const { messages } = require("../../helpers")
 
 const updateStock = async (id, role, addition, subtraction, warehouseId, productId) => {
   try {
-    // const { id, role } = req.account
-    // const { addition, subtraction, warehouseId, productId } = req.body;
     return await sequelize.transaction(async (t) => {
       if (role === "admin warehouse") {
         const admin = await Admin.findOne({
@@ -28,7 +26,6 @@ const updateStock = async (id, role, addition, subtraction, warehouseId, product
           qty: addition ? addition : subtraction,
           id_status: addition ? 10 : 11
         })
-        console.log("stock hystory", stockHistory)
         if (addition) {
           await productWarehouses.update(
             {
@@ -60,7 +57,6 @@ const updateStock = async (id, role, addition, subtraction, warehouseId, product
           qty: addition ? addition : subtraction,
           id_status: addition ? 10 : 11
         })
-        console.log("stock hystory", stockHistory)
         if (addition) {
           await productWarehouses.update(
             {

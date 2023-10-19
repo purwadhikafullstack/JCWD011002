@@ -30,28 +30,10 @@ const updateUser = async (token, toast, userData) => {
   try {
     const response = await axios.patch(`${USER_URL}`, userData, setHeaders(token));
     notification(toast, setToastParams(response));
+    return (response);
   } catch (error) {
     const { response } = error;
     notification(toast, { title: response.data?.data[0], status: response.status });
-  }
-}
-
-const updateAvatar = async (token, toast, file, userData) => {
-  try {
-    const formData = new FormData();
-    formData.append("avatar", file);
-    Object.keys(userData).forEach((key) => {
-      formData.append(key, userData[key]);
-    });
-    const response = await axios.patch(`${USER_URL}`, formData, setHeaders(token));
-    notification(toast, setToastParams(response));
-    if (response.status === 200) {
-      setTimeout(() => (window.location.reload()), 1000);
-    }
-  } catch (error) {
-    console.log(error)
-    const { response } = error;
-    notification(toast, setToastParams(response.status ? response : error));
   }
 }
 
@@ -70,4 +52,4 @@ const changePassword = async (token, toast, body, onClose) => {
   }
 }
 
-export { getUser, updateUser, updateAvatar, changePassword };
+export { getUser, updateUser, changePassword };

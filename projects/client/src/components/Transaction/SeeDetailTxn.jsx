@@ -32,7 +32,14 @@ const SeeDetailTxn = ({ transactionId }) => {
   const [datas, setDatas] = useState([]);
   const fetchDetail = async () => {
     try {
-      const response = await axios.get(`${API_URL}/transaction/detail/${transactionId}`);
+      const response = await axios.get(
+        `${API_URL}/transaction/detail/${transactionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       setDatas(response.data.data);
     } catch (error) {
       console.log(error);
@@ -70,7 +77,6 @@ const SeeDetailTxn = ({ transactionId }) => {
 
   const theme = extendTheme({ breakpoints });
   const [isMd] = useMediaQuery("(max-width: " + theme.breakpoints.md + ")");
-
 
   return (
     <>

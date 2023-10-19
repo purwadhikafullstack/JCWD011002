@@ -22,10 +22,18 @@ function CancelOrder({ transactionId }) {
   const API_URL = process.env.REACT_APP_API_BASE_URL;
   const handleCancel = async () => {
     try {
-      const response = await axios.post(`${API_URL}/transaction/cancel`, {
-        userId: userId,
-        transactionId: transactionId,
-      });
+      const response = await axios.post(
+        `${API_URL}/transaction/cancel`,
+        {
+          userId: userId,
+          transactionId: transactionId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       toast({
         title: "Order has been cancelled",
         status: "success",
