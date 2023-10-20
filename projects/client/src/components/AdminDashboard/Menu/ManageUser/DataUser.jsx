@@ -6,9 +6,10 @@ const tdAttr = {
   textAlign: "center",
 };
 
-function DataUser({ admin, num }) {
+function DataUser({ user, num }) {
   const { onOpen, onClose, isOpen } = useDisclosure();
-  const { user, warehouse } = admin;
+  const { admin, role } = user;
+  const { warehouse } = admin || {};
 
   const statusAttr = {
     children: user?.is_active ? "Active" : "Inactive",
@@ -18,14 +19,14 @@ function DataUser({ admin, num }) {
     variant: "edit",
     onClick: onOpen,
   };
-  const drawerDetailAttr = { admin, isOpen, onClose };
+  const drawerDetailAttr = { user, isOpen, onClose };
   return (
     <Tr>
       <Td {...tdAttr}>{num}</Td>
       <Td {...tdAttr} textAlign={"left"}>
         {user?.name}
       </Td>
-      <Td {...tdAttr}>{user?.role?.name}</Td>
+      <Td {...tdAttr}>{role?.name}</Td>
       <Td {...tdAttr}>
         {warehouse && warehouse !== "" ? warehouse?.name : "-"}
       </Td>

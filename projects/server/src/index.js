@@ -39,7 +39,6 @@ app.use("/api/order", userOrderRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/rajaongkir", rajaongkirRouter);
 app.use("/api/user", userProfileRouter);
-app.use("/api/public", express.static(path.resolve(__dirname, "../public")));
 app.use("/api/transaction", transactionRouter);
 app.use("/api/address", addressRouter);
 app.use("/api/product", productRouter);
@@ -57,6 +56,7 @@ app.get("/api/greetings", (req, res, next) => {
   });
 });
 
+app.use("/api/src/public", express.static(path.join(__dirname, "public")));
 // ===========================
 
 // not found
@@ -67,6 +67,7 @@ app.use((req, res, next) => {
     next();
   }
 });
+
 
 // error
 app.use((err, req, res, next) => {

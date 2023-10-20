@@ -33,7 +33,8 @@ const DetailProduct = ({ isOpen, onClose, product, fetchProduct }) => {
   const [imageValidationError, setImageValidationError] = useState(null);
   const [categories, setCategories] = useState([]);
   const toast = useToast();
-  const [currentProductImage, setCurrentProductImage] = useState(''); // Menyimpan URL gambar produk saat ini
+  const [currentProductImage, setCurrentProductImage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const token = localStorage.getItem('token');
   const decodedToken = jwtDecode(token);
 
@@ -116,6 +117,7 @@ const DetailProduct = ({ isOpen, onClose, product, fetchProduct }) => {
 
   const saveChanges = async () => {
     try {
+      setIsLoading(true);
       const formData = new FormData();
       formData.append('name', editedProduct.name);
       formData.append('description', editedProduct.description);
@@ -147,9 +149,15 @@ const DetailProduct = ({ isOpen, onClose, product, fetchProduct }) => {
       onClose();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
-
+  const formatter = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+  });
+  const price = formatter.format(product?.price);
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
       <DrawerOverlay />
@@ -242,7 +250,7 @@ const DetailProduct = ({ isOpen, onClose, product, fetchProduct }) => {
                   ))}
                 </Select>
               ) : (
-                <Text>{product?.category?.name}</Text>
+                <Text>{product?._category?.name}</Text>
               )}
               <Divider mt={2} />
             </Box>
@@ -268,11 +276,11 @@ const DetailProduct = ({ isOpen, onClose, product, fetchProduct }) => {
                 <Input
                   type="number"
                   name="price"
-                  value={editedProduct.price}
+                  value={editedProduct?.price}
                   onChange={handleEditChange}
                 />
               ) : (
-                <Text>{product?.price}</Text>
+                <Text>{price}</Text>
               )}
               <Divider mt={2} />
             </Box>
@@ -302,6 +310,7 @@ const DetailProduct = ({ isOpen, onClose, product, fetchProduct }) => {
                   <Button
                     w={'full'}
                     mb={2}
+                    isLoading={isLoading} loadingText="Saving..."
                     colorScheme="green"
                     onClick={saveChanges}
                   >

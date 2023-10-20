@@ -1,5 +1,4 @@
 import React from "react";
-import CategoryCard from "../components/Card/CategoryCard";
 import { Flex } from "@chakra-ui/react";
 import LineBreak from "../components/Custom/LineBreak";
 import ProductList from "../components/Homepage/ProductList";

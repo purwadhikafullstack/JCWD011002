@@ -64,6 +64,10 @@ function FormAddToCart({ product }) {
     });
   }
 
+  function isReady() {
+    return product?.is_active && parseInt(product?.stock) > 0;
+  }
+
   function handelChange(value) {
     if (value > product?.stock) return handleNotif("Cannot be more than stock");
     formik.setFieldValue("qty", value);
@@ -127,12 +131,12 @@ function FormAddToCart({ product }) {
     type: "submit",
     w: "fit-content",
     gap: "8px",
-    isDisabled: !product?.is_active,
+    isDisabled: !isReady(),
     _disabled: {
       cursor: "not-allowed",
-      bgColor: "bgSecondary",
+      bgColor: "textSecondary",
       _hover: {
-        bgColor: "bgSecondary",
+        bgColor: "textReverseSecondary",
       },
     },
   };

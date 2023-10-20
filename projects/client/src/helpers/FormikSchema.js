@@ -19,6 +19,11 @@ const confirmPassword = Yup.string()
   .oneOf([Yup.ref("password"), null], "Password must be same")
   .required("Required");
 
+const loginSchema = Yup.object().shape({
+  identifier: Yup.string().required("Required"),
+  password: Yup.string().required("Required"),
+});
+
 const registerSchema = Yup.object().shape({
   email,
 });
@@ -33,11 +38,17 @@ const registrationSchema = Yup.object().shape({
 
 const changePasswordSchema = Yup.object().shape({
   password,
-  confirmPassword
-})
+  confirmPassword,
+});
 const resetPasswordSchema = Yup.object().shape({
   password,
   confirmPassword,
 });
 
-export { registerSchema, registrationSchema, resetPasswordSchema, changePasswordSchema };
+export {
+  loginSchema,
+  registerSchema,
+  registrationSchema,
+  resetPasswordSchema,
+  changePasswordSchema,
+};

@@ -1,7 +1,7 @@
-import { Text, VStack } from "@chakra-ui/react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 
-function setInfoDetail(title, value) {
-  return { title, value };
+function setInfoDetail(title, value, icon) {
+  return { title, value, icon };
 }
 
 const container = {
@@ -12,10 +12,13 @@ const titleAttr = {
   fontWeight: "semibold",
 };
 
-function DrawerInfoDetail({ title, value }) {
+function DrawerInfoDetail({ title, value, icon }) {
   return (
     <VStack {...container}>
-      <Text {...titleAttr}>{title}</Text>
+      <HStack>
+        {icon}
+        <Text {...titleAttr}>{title}</Text>
+      </HStack>
       <Text>{value}</Text>
     </VStack>
   );

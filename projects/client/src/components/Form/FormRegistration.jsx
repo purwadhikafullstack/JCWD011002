@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { registrationSchema } from "../../helpers/FormikSchema";
 import { registration } from "../../api/auth";
+import LoadingBar from "../Utility/LoadingBar";
 
 const container = {
   direction: "column",
@@ -43,14 +44,7 @@ function FormRegistration() {
     onSubmit: (values) => handleSubmit(values),
   });
 
-  const nameAttr = setAttr(
-    "name",
-    "text",
-    "Name",
-    <FiUser />,
-    formik,
-    "dark"
-  );
+  const nameAttr = setAttr("name", "text", "Name", <FiUser />, formik, "dark");
   const usernameAttr = setAttr(
     "username",
     "text",
@@ -92,16 +86,19 @@ function FormRegistration() {
   };
 
   return (
-    <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
-      <Flex {...container}>
-        <InputTextCustom {...nameAttr} />
-        <InputTextCustom {...usernameAttr} />
-        <InputTextCustom {...phoneAttr} />
-        <InputTextCustom {...passwordAttr} />
-        <InputTextCustom {...confirmPasswordAttr} />
-        <Button {...buttonAttr}>Register</Button>
-      </Flex>
-    </form>
+    <>
+      <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
+        <Flex {...container}>
+          <InputTextCustom {...nameAttr} />
+          <InputTextCustom {...usernameAttr} />
+          <InputTextCustom {...phoneAttr} />
+          <InputTextCustom {...passwordAttr} />
+          <InputTextCustom {...confirmPasswordAttr} />
+          <Button {...buttonAttr}>Register</Button>
+        </Flex>
+      </form>
+      {isLoading && <LoadingBar />}
+    </>
   );
 }
 

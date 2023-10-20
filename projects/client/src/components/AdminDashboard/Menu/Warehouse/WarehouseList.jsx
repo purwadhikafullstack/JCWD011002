@@ -14,6 +14,8 @@ import DeleteWarehouse from "./DeleteWarehouse";
 import WarehouseTable from "./WarehouseTable";
 import UpdateWarehouse from "./UpdateWarehouse";
 import CreateWarehouse from "./CreateWarehouse";
+import Loading from "../../../Utility/Loading";
+
 
 
 const WarehouseList = () => {
@@ -40,6 +42,7 @@ const WarehouseList = () => {
   const [province, setProvince] = useState([]);
   const [selectedProvinceId, setSelectedProvinceId] = useState("");
   const [selectedProvinceName, setSelectedProvinceName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const headers = {
     "Content-Type": "application/json",
@@ -95,9 +98,18 @@ const WarehouseList = () => {
   }
 
   const fetchWarehouses = async () => {
-    const { data } = await getWarehouseList(toast, page, sort, name, search, filterProvince);
-    setWarehouses(data.data);
-    setTotalPages(data.totalPages);
+    try {
+      setIsLoading(true);
+      const { data } = await getWarehouseList(toast, page, sort, name, search, filterProvince);
+      setWarehouses(data.data);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+
   };
 
   const openEditDrawer = (warehouse) => {
@@ -113,6 +125,7 @@ const WarehouseList = () => {
 
   const handleEditWarehouse = async () => {
     try {
+      setIsLoading(true);
       const updatedData = {
         ...editedWarehouse,
         province: selectedProvinceName,
@@ -126,20 +139,23 @@ const WarehouseList = () => {
         title: "Warehouse Updated",
         description: "Warehouse data has been updated successfully.",
         status: "success",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
       });
       fetchWarehouses();
       closeEditDrawer();
     } catch (error) {
+      setIsLoading(false);
       console.error(error);
       toast({
         title: "Error",
         description: "An error occurred while updating the warehouse data.",
         status: "error",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -167,7 +183,7 @@ const WarehouseList = () => {
         title: "Warehouse Deleted",
         description: "Warehouse data has been deleted successfully.",
         status: "success",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
       })
       fetchWarehouses();
@@ -178,7 +194,7 @@ const WarehouseList = () => {
         title: "Error",
         description: "An error occurred while deleting the warehouse data.",
         status: "error",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
       });
     }
@@ -197,6 +213,7 @@ const WarehouseList = () => {
 
   const handleCreateWarehouse = async () => {
     try {
+      setIsLoading(true);
       const createData = {
         ...editedWarehouse,
         province: selectedProvinceName,
@@ -208,8 +225,25 @@ const WarehouseList = () => {
       )
       fetchWarehouses();
       setIsDrawerCreateOpen(false);
+      toast({
+        title: "Warehouse Created",
+        description: "Warehouse data has been created successfully.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      })
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
+      toast({
+        title: "Error",
+        description: "An error occurred while creating the warehouse data.",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      })
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -217,6 +251,7 @@ const WarehouseList = () => {
     <>
       {/* Table content */}
       <Flex flexDirection={"column"} w={"full"} mt={4}>
+        {/* {isLoading && <Loading />} */}
         <Flex justifyContent={"space-between"}>
           <Box>
             <Button bg={"darkBlue"} mb={4} color={"white"} onClick={handleDrawerCreateOpen}>Create Warehouse</Button>
@@ -230,11 +265,11 @@ const WarehouseList = () => {
         ) : null}
       </Flex>
       {/* Edit Drawer */}
-      <UpdateWarehouse city={city} isDrawerOpen={isDrawerOpen} closeEditDrawer={closeEditDrawer} handleEditWarehouse={handleEditWarehouse} province={province} selectedProvinceId={selectedProvinceId} handleSelectProvince={handleSelectProvince} editedWarehouse={editedWarehouse} setEditedWarehouse={setEditedWarehouse} />
+      <UpdateWarehouse isLoading={isLoading} city={city} isDrawerOpen={isDrawerOpen} closeEditDrawer={closeEditDrawer} handleEditWarehouse={handleEditWarehouse} province={province} selectedProvinceId={selectedProvinceId} handleSelectProvince={handleSelectProvince} editedWarehouse={editedWarehouse} setEditedWarehouse={setEditedWarehouse} />
 
       <DeleteWarehouse isDeleteModalOpen={isDeleteModalOpen} closeDeleteModal={closeDeleteModal} handleDeleteWarehouse={handleDeleteWarehouse} />
       {/* Create Warehouse Drawer */}
-      <CreateWarehouse isDrawerCreateOpen={isDrawerCreateOpen} setIsDrawerCreateOpen={setIsDrawerCreateOpen} handleCreateWarehouse={handleCreateWarehouse} province={province} selectedProvinceId={selectedProvinceId} handleSelectProvince={handleSelectProvince} editedWarehouse={editedWarehouse} setEditedWarehouse={setEditedWarehouse} city={city} />
+      <CreateWarehouse isLoading={isLoading} isDrawerCreateOpen={isDrawerCreateOpen} setIsDrawerCreateOpen={setIsDrawerCreateOpen} handleCreateWarehouse={handleCreateWarehouse} province={province} selectedProvinceId={selectedProvinceId} handleSelectProvince={handleSelectProvince} editedWarehouse={editedWarehouse} setEditedWarehouse={setEditedWarehouse} city={city} />
 
     </>
   );

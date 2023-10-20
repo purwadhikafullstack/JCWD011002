@@ -34,7 +34,7 @@ async function registration(toast, token, attributes) {
       setHeaders(token)
     );
     notification(toast, setToastParams(response));
-    setTimeout(() => (document.location.href = "/"), 2500);
+    document.location.href = "/";
   } catch (error) {
     const { response } = error;
     notification(toast, setToastParams(response.status ? response : error));
@@ -50,7 +50,7 @@ async function login(toast, attributes) {
     const { token } = response.data.data;
     localStorage.setItem("token", token);
     // Reload to last page
-    setTimeout(() => document.location.reload(), 2500);
+    document.location.reload();
   } catch (error) {
     const { response } = error;
     notification(toast, setToastParams(response.status ? response : error));
@@ -87,7 +87,7 @@ async function resetPassword(toast, token, attributes) {
       setHeaders(token)
     );
     notification(toast, setToastParams(response));
-    setTimeout(() => (document.location.href = "/"), 2500);
+    document.location.href = "/";
   } catch (error) {
     const { response } = error;
     notification(toast, setToastParams(response.status ? response : error));

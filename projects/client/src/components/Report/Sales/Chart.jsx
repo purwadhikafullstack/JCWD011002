@@ -76,12 +76,10 @@ const Charts = () => {
       if (chartRef.current.chart) {
         chartRef.current.chart.destroy();
       }
-
       const labels = data.map((item) => `${item.month} ${item.year}`);
       const totalSales = data.map((item) =>
         parseInt(item.total_sales_per_month)
       );
-
       const newChart = new Chart(ctx, {
         type: "bar",
         data: {
@@ -127,6 +125,7 @@ const Charts = () => {
       chartRef.current.chart = newChart;
     }
   }, [data]);
+  
 
   return (
     <>

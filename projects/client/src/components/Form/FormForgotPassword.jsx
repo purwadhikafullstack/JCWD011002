@@ -5,6 +5,7 @@ import { FiMail } from "react-icons/fi";
 import { registerSchema } from "../../helpers/FormikSchema";
 import { useState } from "react";
 import { forgotPassword } from "../../api/auth";
+import LoadingBar from "../Utility/LoadingBar";
 
 const container = {
   direction: "column",
@@ -46,12 +47,15 @@ function FormForgotPassword({ onClose }) {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Flex {...container}>
-        <InputTextCustom {...emailAttr} />
-        <Button {...buttonAttr}>Forgot Password</Button>
-      </Flex>
-    </form>
+    <>
+      <form onSubmit={formik.handleSubmit}>
+        <Flex {...container}>
+          <InputTextCustom {...emailAttr} />
+          <Button {...buttonAttr}>Forgot Password</Button>
+        </Flex>
+      </form>
+      {isLoading && <LoadingBar />}
+    </>
   );
 }
 

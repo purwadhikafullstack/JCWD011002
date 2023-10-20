@@ -32,6 +32,7 @@ export default function Profile() {
 
   const dispatch = useDispatch()
   const userData = useSelector((state) => state.user.userData)
+  
   const token = localStorage.getItem('token');
   useEffect(() => {
     if (token) {

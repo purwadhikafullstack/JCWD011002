@@ -6,15 +6,15 @@ import { useDispatch } from "react-redux";
 import { searchOrder } from "../../../../../storage/SearchReducer";
 
 function Searchbar() {
-  const [searchParams, setSearchParams] = useSearchParams({ q: "" });
-  const query = searchParams.get("k_order");
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const query = searchParams.get("q");
   const dispatch = useDispatch();
 
   function onChange(event) {
     const { value } = event.target;
     setSearchParams(
       (prev) => {
-        prev.set("k_order", value);
+        prev.set("q", value);
         return prev;
       },
       { replace: true }

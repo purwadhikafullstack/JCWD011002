@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { resetPassword } from "../../api/auth";
 import { resetPasswordSchema } from "../../helpers/FormikSchema";
+import LoadingBar from "../Utility/LoadingBar";
 
 const container = {
   direction: "column",
@@ -64,13 +65,16 @@ function FormResetPassword() {
     isLoading,
   };
   return (
-    <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
-      <Flex {...container}>
-        <InputTextCustom {...passwordAttr} />
-        <InputTextCustom {...confirmPasswordAttr} />
-        <Button {...buttonAttr}>Reset</Button>
-      </Flex>
-    </form>
+    <>
+      <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
+        <Flex {...container}>
+          <InputTextCustom {...passwordAttr} />
+          <InputTextCustom {...confirmPasswordAttr} />
+          <Button {...buttonAttr}>Reset</Button>
+        </Flex>
+      </form>
+      {isLoading && <LoadingBar />}
+    </>
   );
 }
 

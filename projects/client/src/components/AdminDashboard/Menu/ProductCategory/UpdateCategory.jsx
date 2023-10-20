@@ -16,11 +16,10 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 
-const UpdateCategory = ({ isOpen, onClose, categoryId, fetchCategory }) => {
+const UpdateCategory = ({ isOpen, onClose, categoryId, fetchCategory, isLoading, setIsLoading }) => {
   const toast = useToast();
   const [categoryData, setCategoryData] = useState({});
   const [previewImage, setPreviewImage] = useState(null);
-
   const fetchCategoryData = async () => {
     try {
       const headers = {
@@ -32,7 +31,6 @@ const UpdateCategory = ({ isOpen, onClose, categoryId, fetchCategory }) => {
         `${process.env.REACT_APP_API_BASE_URL}/product/category/${categoryId}`,
         { headers }
       );
-
       setCategoryData(data.data);
       if (data.data.image) {
         setPreviewImage(`${process.env.REACT_APP_API_BASE_URL}/${data.data.image}`);
@@ -68,6 +66,7 @@ const UpdateCategory = ({ isOpen, onClose, categoryId, fetchCategory }) => {
         formData,
         { headers }
       );
+      setIsLoading(true);
       toast({
         title: "Edit category success",
         status: "success",
@@ -85,6 +84,8 @@ const UpdateCategory = ({ isOpen, onClose, categoryId, fetchCategory }) => {
         duration: 2000,
         isClosable: true,
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -128,7 +129,7 @@ const UpdateCategory = ({ isOpen, onClose, categoryId, fetchCategory }) => {
     <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
       <DrawerOverlay />
       <DrawerContent bg={"secondary"} color={"white"}>
-      <DrawerCloseButton />
+        <DrawerCloseButton />
         <DrawerHeader>Edit Category</DrawerHeader>
         <DrawerBody>
           <Input
@@ -157,7 +158,7 @@ const UpdateCategory = ({ isOpen, onClose, categoryId, fetchCategory }) => {
           </Box>
         </DrawerBody>
         <DrawerFooter>
-          <Button w={"100%"} colorScheme="blue" mr={3} onClick={handleUpdateCategory}>
+          <Button w={"100%"} colorScheme="blue" mr={3} onClick={handleUpdateCategory} isLoading={isLoading} loadingText="Updating...">
             Save
           </Button>
           <Button w={"100%"} onClick={onClose}>Cancel</Button>

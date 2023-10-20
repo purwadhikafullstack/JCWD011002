@@ -1,7 +1,7 @@
 import { Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerFooter, DrawerBody, Input, Button, Box, Text, useToast, Image, DrawerCloseButton, Select } from '@chakra-ui/react'
 import React from 'react'
 
-const UpdateWarehouse = ({ city, isDrawerOpen, closeEditDrawer, handleEditWarehouse, province, selectedProvinceId, handleSelectProvince, editedWarehouse, setEditedWarehouse }) => {
+const UpdateWarehouse = ({ city, isDrawerOpen, closeEditDrawer, handleEditWarehouse, province, selectedProvinceId, handleSelectProvince, editedWarehouse, setEditedWarehouse, isLoading }) => {
   return (
     <>
       <Drawer isOpen={isDrawerOpen} onClose={closeEditDrawer}>
@@ -57,7 +57,7 @@ const UpdateWarehouse = ({ city, isDrawerOpen, closeEditDrawer, handleEditWareho
                   }
                 />
                 <Box w={"85%"} position={"absolute"} bottom={0}>
-                  <Button w={"full"} colorScheme="green" mb={3} type="submit">Save</Button>
+                  <Button w={"full"} colorScheme="green" mb={3} type="submit" isLoading={isLoading} loadingText="Saving...">Save</Button>
                   <br />
                   <Button w={"full"} mb={3} onClick={closeEditDrawer}>Cancel</Button>
                 </Box>

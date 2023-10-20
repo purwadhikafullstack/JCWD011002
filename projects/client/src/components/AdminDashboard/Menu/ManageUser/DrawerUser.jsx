@@ -31,9 +31,9 @@ const drawerFooterAttr = {
   borderTopWidth: "1px",
 };
 
-function DrawerUser({ admin, isOpen, onClose }) {
+function DrawerUser({ user, isOpen, onClose }) {
   const [isEdit, setIsEdit] = useState(false);
-  const { user } = admin;
+  const { role } = user;
   const dispatch = useDispatch();
   const toast = useToast();
 
@@ -70,9 +70,9 @@ function DrawerUser({ admin, isOpen, onClose }) {
 
   function setDrawerContent() {
     return isEdit ? (
-      <DrawerEdit data={admin} formik={formik} />
+      <DrawerEdit user={user} formik={formik} />
     ) : (
-      <DrawerInfo data={admin} />
+      <DrawerInfo user={user} />
     );
   }
 
@@ -80,10 +80,10 @@ function DrawerUser({ admin, isOpen, onClose }) {
     return isEdit ? (
       <DrawerEditButtonGroup {...editButtonAttr} />
     ) : (
-      <DrawerBaseButtonGroup {...editButtonAttr} onClose={onClose}/>
+      <DrawerBaseButtonGroup {...editButtonAttr} onClose={onClose} />
     );
   }
-  
+
   return (
     <Drawer {...drawerAttr}>
       <DrawerOverlay />
@@ -93,7 +93,7 @@ function DrawerUser({ admin, isOpen, onClose }) {
         </DrawerHeader>
         <DrawerCloseButton />
         <DrawerBody py="20px">{setDrawerContent()}</DrawerBody>
-        <DrawerFooter {...drawerFooterAttr}>{setDrawerButton()}</DrawerFooter>
+        {role?.name !== "user" && <DrawerFooter {...drawerFooterAttr}>{setDrawerButton()}</DrawerFooter>}
       </DrawerContent>
     </Drawer>
   );

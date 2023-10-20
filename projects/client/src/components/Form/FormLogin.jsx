@@ -12,6 +12,8 @@ import { useFormik } from "formik";
 import InputTextCustom, { setAttr } from "../Custom/InputTextCustom";
 import { FiUnlock, FiUser } from "react-icons/fi";
 import ForgotModal from "../ResetPassword/ForgotModal";
+import LoadingBar from "../Utility/LoadingBar";
+import { loginSchema } from "../../helpers/FormikSchema";
 
 const container = {
   direction: "column",
@@ -49,6 +51,7 @@ function FormLogin() {
 
   const formik = useFormik({
     initialValues,
+    validationSchema: loginSchema,
     onSubmit: (values) => handleSubmit(values),
   });
 
@@ -92,6 +95,7 @@ function FormLogin() {
         </Flex>
       </form>
       <ForgotModal {...modalAttr} />
+      {isLoading && <LoadingBar />}
     </>
   );
 }

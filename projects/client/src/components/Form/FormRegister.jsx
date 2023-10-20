@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { Button, Flex, useToast } from "@chakra-ui/react";
 import { register } from "../../api/auth";
 import { useState } from "react";
+import LoadingBar from "../Utility/LoadingBar";
 
 const container = {
   direction: "column",
@@ -31,7 +32,14 @@ function FormRegister({ onClose }) {
     onSubmit: (values) => handleSubmit(values),
   });
 
-  const emailAttr = setAttr("email", "email", "Email", <FiMail />, formik, "light");
+  const emailAttr = setAttr(
+    "email",
+    "email",
+    "Email",
+    <FiMail />,
+    formik,
+    "light"
+  );
   const buttonAttr = {
     type: "submit",
     variant: "capsuleSuccess",
@@ -39,12 +47,15 @@ function FormRegister({ onClose }) {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Flex {...container}>
-        <InputTextCustom {...emailAttr} />
-        <Button {...buttonAttr}>Register</Button>
-      </Flex>
-    </form>
+    <>
+      <form onSubmit={formik.handleSubmit}>
+        <Flex {...container}>
+          <InputTextCustom {...emailAttr} />
+          <Button {...buttonAttr}>Register</Button>
+        </Flex>
+      </form>
+      {isLoading && <LoadingBar />}
+    </>
   );
 }
 

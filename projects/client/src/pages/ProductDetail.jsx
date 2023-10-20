@@ -17,6 +17,10 @@ function ProductDetail() {
     return url.pop();
   }
 
+  function isReady() {
+    return product?.is_active && parseInt(product?.stock) > 0;
+  }
+
   async function fetchProduct() {
     const { data } = await getProduct(toast, getId());
     setProduct(data);
@@ -29,7 +33,7 @@ function ProductDetail() {
   const container = {
     templateColumns: {
       base: "repeat(1, minmax(250, 1fr))",
-      md: "repeat(2, minmax(250px, 1fr))"
+      md: "repeat(2, minmax(250px, 1fr))",
     },
     w: "full",
     py: "16px",
@@ -46,9 +50,11 @@ function ProductDetail() {
     pos: "relative",
     bgImage: getImage(product?.image),
     bgPos: "center",
-    bgSize: "contain",
     borderRadius: "8px",
     overflow: "hidden",
+    bgSize: "contain",
+    bgColor: "bgSecondary",
+    bgRepeat: "no-repeat",
   };
 
   const backdrop = {
@@ -56,7 +62,7 @@ function ProductDetail() {
     h: "full",
     alignItems: "center",
     justifyContent: "center",
-    backdropFilter: `grayscale(${product?.is_active ? 0 : 0.8})`,
+    backdropFilter: `grayscale(${isReady() ? 0 : 0.8})`,
   };
 
   const soldOutAttr = {
@@ -64,23 +70,18 @@ function ProductDetail() {
     src: "/images/out-of-stock.png",
     objectFit: "cover",
     p: "16px",
-    display: !product?.is_active ? "block" : "none",
+    display: !isReady() ? "block" : "none",
   };
 
   return (
     <Flex {...mainContainer}>
       <Grid {...container}>
-        <GridItem
-          {...imageAttr}
-          bgSize={"contain"}
-          bgRepeat={"no-repeat"}
-          bgColor={"bgSecondary"}
-        >
+        <GridItem {...imageAttr}>
           <Flex {...backdrop}>
             <Image {...soldOutAttr} />
           </Flex>
         </GridItem>
-        <ProductInfo product={product}/>
+        <ProductInfo product={product} />
       </Grid>
     </Flex>
   );

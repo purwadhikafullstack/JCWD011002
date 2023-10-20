@@ -14,24 +14,20 @@ const container = {
 
 function ProductList() {
   const [products, setProducts] = useState([]);
-  const [maxPage, setMaxPage] = useState(1);
-  const [searchParams, setSearchParams] = useSearchParams({
-    page: 1,
-    category: 0,
-    order: "name",
-    sort: "ASC",
-  });
+  const [maxPage, setMaxPage] = useState(0);
+  const [firstRander, setFirstRander] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams({});
   const search = useSelector((state) => state.search.products);
   const toast = useToast();
 
-  const currentPage = searchParams.get("page");
-  const currentCategory = searchParams.get("category");
-  const currentOrder = searchParams.get("order");
-  const currentSort = searchParams.get("sort");
+  const currentPage = searchParams.get("page") || 1;
+  const currentCategory = searchParams.get("category") || 0;
+  const currentOrder = searchParams.get("order") || "name";
+  const currentSort = searchParams.get("sort") || "ASC";
 
   const paginationAttr = {
     maxPage,
-    currentPage,
+    currentPage: currentPage,
     setCurrentPage: setSearchParams,
   };
 
@@ -47,6 +43,7 @@ function ProductList() {
     const { products: productList, pages } = data;
     setMaxPage(pages);
     setProducts(productList);
+    setFirstRander(false)
   }
 
   useEffect(() => {
@@ -55,8 +52,10 @@ function ProductList() {
 
   useEffect(() => {
     setSearchParams((prev) => {
-      prev.set("page", 1);
-      return prev;
+      if (!firstRander) {
+        prev.set("page", 1);
+        return prev;
+      }
     });
   }, [search, currentCategory, currentOrder, currentSort]);
 

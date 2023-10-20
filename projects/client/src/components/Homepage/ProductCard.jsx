@@ -74,6 +74,10 @@ function ProductCard({ product }) {
   const toast = useToast();
   const navigate = useNavigate();
 
+  function isReady() {
+    return product?.is_active && parseInt(product?.stock) > 0;
+  }
+
   function handleDetail() {
     navigate(`/product/${product?.id}`);
   }
@@ -110,6 +114,7 @@ function ProductCard({ product }) {
   const imageAttr = {
     src: GetImage(product?.image),
     objectFit: "cover",
+    filter: `grayscale(${isReady() ? 0 : 0.8})`
   };
 
   const imageSectionAttr = {
@@ -121,14 +126,34 @@ function ProductCard({ product }) {
     fontFamily: "Fira Code",
     variant: "edit",
     mt: "8px",
+    isDisabled: !isReady(),
     onClick: (e) => handleAddToCart(e),
+    _disabled: {
+      cursor: "not-allowed",
+      bgColor: "textSecondary",
+      _hover: {
+        bgColor: "textReverseSecondary",
+      },
+    },
+  };
+
+  const soldOutAttr = {
+    pos: "absolute",
+    h: "full",
+    src: "/images/out-of-stock.png",
+    objectFit: "cover",
+    p: "16px",
+    display: !isReady() ? "block" : "none",
   };
 
   return (
     <GridItem {...mainContainer}>
       <Flex {...container}>
         <Flex {...imageSectionAttr}>
-          <Image {...imageAttr} />
+          <Flex>
+            <Image {...imageAttr} />
+            <Image {...soldOutAttr} />
+          </Flex>
           <Text {...categoryAttr}>{product?.category}</Text>
         </Flex>
         <Flex {...detailAttr}>

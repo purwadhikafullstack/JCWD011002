@@ -23,9 +23,7 @@ const mainContainer = {
   direction: "column",
   h: "full",
   w: "full",
-  // pos: "relative",
   gap: "16px",
-  // bgColor: "yellow",
 };
 
 const tableAttr = {
@@ -43,28 +41,16 @@ const thAttr = {
   color: "textPrimary",
 };
 
-function setUrlParams() {
-  const params = {
-    page: 1,
-    month: date.getMonth(),
-    year: date.getFullYear(),
-    sort: "DESC",
-    k_order: "",
-    warehouse: 0,
-  };
-  if (getRole() === "admin warehouse") delete params.warehouse;
-  return params;
-}
-
 function TabPayment({ status }) {
+  const [firstRander, setFirstRander] = useState(true);
   const [transactions, setTransaction] = useState([]);
   const [maxPage, setMaxPage] = useState(1);
-  const [searchParams, setSearchParams] = useSearchParams(setUrlParams());
-  const currentPage = searchParams.get("page");
-  const currentSort = searchParams.get("sort");
-  const currentMonth = searchParams.get("month");
-  const currentYear = searchParams.get("year");
-  const currentWarehouse = searchParams.get("warehouse");
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const currentPage = searchParams.get("page") || 1;
+  const currentSort = searchParams.get("sort") || "DESC";
+  const currentMonth = searchParams.get("month") || date.getMonth();
+  const currentYear = searchParams.get("year") || date.getFullYear();
+  const currentWarehouse = searchParams.get("warehouse") || "0";
   const currentSearch = useSelector((state) => state.search.orders);
   const updateStatus = useSelector((state) => state.trigger.orderStatus);
   const dependancies = [
@@ -86,7 +72,7 @@ function TabPayment({ status }) {
   async function fetchTransactions() {
     const attributes = {
       status,
-      page: currentPage, // current page
+      page: currentPage,
       limit: 10, // limit
       sort: currentSort,
       month: currentMonth,
@@ -94,25 +80,29 @@ function TabPayment({ status }) {
       search: currentSearch,
       warehouse: await selectWarehouse(),
     };
-    if (parseInt(currentWarehouse) === 0) delete attributes.warehouse;
+    if (parseInt(attributes?.warehouse) === 0) delete attributes.warehouse;
     const { data } = await getTransactions(toast, attributes);
     const { transactions: transactionList, pages } = data;
     setTransaction(transactionList);
     setMaxPage(pages);
+    setFirstRander(true);
   }
 
-  function resetPage() {
-    setSearchParams((prev) => {
-      prev.set("page", 1);
-      return prev;
-    });
-  }
-
+  
   const paginationAttr = {
     maxPage,
     currentPage,
     setCurrentPage: setSearchParams,
   };
+  
+  function resetPage() {
+    if (!firstRander) {
+      setSearchParams((prev) => {
+        prev.set("page", 1);
+        return prev;
+      });
+    }
+  }
 
   useEffect(() => {
     fetchTransactions();

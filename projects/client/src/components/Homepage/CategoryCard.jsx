@@ -5,7 +5,7 @@ const backdrop = {
   h: "full",
   alignItems: "center",
   justifyContent: "center",
-  bgColor: "#00000066",
+  bgColor: "#00000033",
   backdropFilter: "blur(2px)",
 };
 

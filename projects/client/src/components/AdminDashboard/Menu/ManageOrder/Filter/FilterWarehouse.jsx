@@ -18,9 +18,9 @@ function setFilter(warehouses) {
   ));
 }
 
-function FilterStatus() {
+function FilterWarehouse() {
   const [warehouses, setWarehouses] = useState([{ name: "All Warehouse", id: 0 }]);
-  const [searchParams, setSearchParams] = useSearchParams({ warehouse: 0 });
+  const [searchParams, setSearchParams] = useSearchParams({});
   const toast = useToast();
 
   async function fetchWarehouse() {
@@ -49,4 +49,4 @@ function FilterStatus() {
   return <Select {...statusAttr}>{setFilter(warehouses)}</Select>;
 }
 
-export default FilterStatus;
+export default FilterWarehouse;

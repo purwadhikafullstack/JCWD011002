@@ -10,7 +10,7 @@ function buttonChildren() {
   return (
     <Flex {...container}>
       <IcAddUser fontSize={"18px"} />
-      <Text>New Admin</Text>
+      <Text>Create Admin</Text>
     </Flex>
   );
 }
@@ -20,7 +20,7 @@ function AddButton() {
 
   const addAttr = {
     children: buttonChildren(),
-    variant: "success",
+    variant: "edit",
     fontSize: "16px",
     w: "fit-content",
     px: "12px",

@@ -7,8 +7,8 @@ function RenderFieldInput({ handleEditPasswordClick, fieldName, label, type, fie
 
   return (
     <Flex align="center" justify="space-between" direction={{ base: 'column', md: 'row' }}>
-      <FormControl m={4} w={isEditing[fieldName] ? '100%' : 'auto'}>
-        <Flex alignItems={isEditing[fieldName] ? 'center' : ''}>
+      <FormControl color={"white"} m={4} w={isEditing[fieldName] ? '100%' : 'auto'}>
+        <Flex alignItems={isEditing[fieldName] ? 'center' : ''} >
           <FormLabel>{label}: </FormLabel>
           {isEditing[fieldName] ? (
             <Input

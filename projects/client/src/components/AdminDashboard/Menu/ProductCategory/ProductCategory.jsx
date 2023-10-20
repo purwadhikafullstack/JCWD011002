@@ -37,6 +37,8 @@ const ProductCategory = () => {
   const [searchInput, setSearchInput] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
   const {
     isOpen: isConfirmationOpen,
     onOpen: onConfirmationOpen,
@@ -99,7 +101,6 @@ const ProductCategory = () => {
       setCategories((prevCategories) =>
         prevCategories.filter((category) => category.id !== selectedCategoryId)
       );
-
     } catch (error) {
       toast({
         title: "Failed to delete category",
@@ -108,7 +109,6 @@ const ProductCategory = () => {
         duration: "2000",
         isClosable: true,
       })
-
     } finally {
       setSelectedCategoryId(null);
       onConfirmationClose();
@@ -125,7 +125,7 @@ const ProductCategory = () => {
         {role === "admin" &&
           <Button bg={"primary"} color={"white"} leftIcon={<AddIcon />} onClick={onOpen}>
             Create Category
-            <FormCreateCategory isOpen={isOpen} onClose={onClose} fetchCategory={fetchCategories} />
+            <FormCreateCategory isLoading={isLoading} setIsLoading={setIsLoading} isOpen={isOpen} onClose={onClose} fetchCategory={fetchCategories} />
           </Button>
         }
         <FilterCategory search={search} setSearch={setSearch} sort={sort} setSort={setSort} name={name} setName={setName} searchInput={searchInput} setSearchInput={setSearchInput} />
@@ -173,7 +173,7 @@ const ProductCategory = () => {
         <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
       ) : null}
 
-      <UpdateCategory isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} categoryId={selectedCategoryId} fetchCategory={fetchCategories} />
+      <UpdateCategory isLoading={isLoading} setIsLoading={setIsLoading} isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} categoryId={selectedCategoryId} fetchCategory={fetchCategories} />
       <ConfirmationModal
         isOpen={isConfirmationOpen}
         onClose={onConfirmationClose}

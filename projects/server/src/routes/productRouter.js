@@ -3,17 +3,12 @@ const { createProductCategory, getAllCategory, updateProductCategory, deleteProd
   getCategoryById,
   updateImageCategory, } = require('../controllers/productController');
 const authentication = require('../middlewares/authentication');
-// const createProduct = require('../services/productService/createProduct');
 const multer = require('../middlewares/multer');
-// const updateProduct = require('../services/productService/updateProduct');
-// const getProductList = require('../services/productService/getProduct');
 const disableProduct = require('../services/productService/deleteProduct');
-// const getProductById = require('../services/productService/getProductById');
-// const updateStock = require('../services/stockService/updateStock');
 
 const router = require("express").Router();
 
-router.patch("/stock", authentication, updateStock)
+// router.patch("/stock", authentication, updateStock)
 // category routes
 router.get("/category", getAllCategory)
 router.get("/category/:id", getCategoryById)

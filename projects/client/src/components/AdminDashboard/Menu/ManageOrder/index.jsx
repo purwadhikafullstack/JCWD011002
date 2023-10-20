@@ -21,7 +21,7 @@ const container = {
   h: "full",
   variant: "enclosed",
   isFitted: true,
-  // isLazy: true,
+  isLazy: true,
 };
 
 function ManageOrder() {
