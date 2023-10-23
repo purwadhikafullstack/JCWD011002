@@ -56,18 +56,26 @@ app.get("/api/greetings", (req, res, next) => {
   });
 });
 
+if(__dirname.split("/").includes("www")) {
+  app.use("/api/public", express.static(path.resolve(__dirname, "../../../public")))
+} else{
+  app.use("/api/public", express.static(path.resolve(__dirname, "../public")))
+}
+
+// app.use(express.static(path.join(__dirname, "public")))
 // app.use("/api/src/public", express.static(path.join(__dirname, "public")));
 // app.use("/api/public", express.static(path.join(__dirname, "public")));
 // app.use("/api/src/public", express.static(path.resolve(__dirname, "public")));
-if (__dirname.split("/").pop() === "src") {
-  app.use("/api/public", express.static(path.resolve(__dirname, "../public")));
-} else {
-  app.use("/api/public", express.static(path.join(__dirname, "public")));
-}
-console.log(__dirname);
+// if (__dirname.split("/").pop() === "src") {
+//   app.use("/api/public", express.static(path.resolve(__dirname, "../public")));
+// } else {
+//   app.use("/api/public", express.static(path.join(__dirname, "public")));
+// }
+// console.log(__dirname);
 // console.log(path.resolve("../public"))
-console.log(__dirname);
 // console.log("PATH", path.resolve(__dirname, "public"))
+// console.log(path.join(__dirname, "../public"))
+
 // ===========================
 
 // not found
