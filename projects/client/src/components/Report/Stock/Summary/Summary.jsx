@@ -39,13 +39,13 @@ const Summary = () => {
   useEffect(() => {
     fetchData();
     fetchWHAdmin();
-  }, []);
+  }, [wh]);
 
   const filteredWarehouses = warehouse.filter((item) => {
-    if (wh.id_warehouse === null) {
+    if (wh?.id_warehouse === null) {
       return true;
     }
-    return item.warehouse_name === wh.warehouse_name;
+    return item?.warehouse_name === wh?.warehouse_name;
   });
 
   return (
@@ -53,7 +53,7 @@ const Summary = () => {
       <Flex direction={"column"} gap={2} mr={2}>
         {filteredWarehouses?.map((item) => (
           <Flex
-            key={item.id}
+            key={item?.id}
             w={"79vw"}
             p={"15px"}
             bg="bgSecondary"
@@ -85,14 +85,14 @@ const Summary = () => {
                   align={"right"}
                   fontWeight={"bold"}
                 >
-                  {item.warehouse_name}
+                  {item?.warehouse_name}
                 </Text>
               </Flex>
             </Flex>
             <Box>
               <SeeDetail
-                warehouse_name={item.warehouse_name}
-                month={item.data}
+                warehouse_name={item?.warehouse_name}
+                month={item?.data}
               />
             </Box>
           </Flex>
