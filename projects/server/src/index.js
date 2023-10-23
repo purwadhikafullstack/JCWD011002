@@ -58,7 +58,14 @@ app.get("/api/greetings", (req, res, next) => {
 
 // app.use("/api/src/public", express.static(path.join(__dirname, "public")));
 // app.use("/api/public", express.static(path.join(__dirname, "public")));
-app.use("/api/src/public", express.static(path.resolve(__dirname, "public")));
+// app.use("/api/src/public", express.static(path.resolve(__dirname, "public")));
+if (__dirname.split("/").pop() === "src") {
+  app.use("/api/public", express.static(path.resolve(__dirname, "../public")));
+} else {
+  app.use("/api/public", express.static(path.resolve("public")));
+}
+// console.log(path.resolve("../public"))
+console.log(__dirname);
 // console.log("PATH", path.resolve(__dirname, "public"))
 // ===========================
 
@@ -70,7 +77,6 @@ app.use((req, res, next) => {
     next();
   }
 });
-
 
 // error
 app.use((err, req, res, next) => {
