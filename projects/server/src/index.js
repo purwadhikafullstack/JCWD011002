@@ -62,8 +62,9 @@ app.get("/api/greetings", (req, res, next) => {
 if (__dirname.split("/").pop() === "src") {
   app.use("/api/public", express.static(path.resolve(__dirname, "../public")));
 } else {
-  app.use("/api/public", express.static(path.resolve("public")));
+  app.use("/api/public", express.static(path.join(__dirname, "public")));
 }
+console.log(__dirname);
 // console.log(path.resolve("../public"))
 console.log(__dirname);
 // console.log("PATH", path.resolve(__dirname, "public"))
