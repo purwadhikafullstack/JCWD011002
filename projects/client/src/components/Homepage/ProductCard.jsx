@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { addToCart } from "../../api/cart";
 import Notification from "../../helpers/Notification";
 import jwt_decode from "jwt-decode";
+import { useState } from "react";
+import LoadingBar from "../Utility/LoadingBar";
 
 const container = {
   direction: "column",
@@ -71,6 +73,7 @@ function getUserId() {
 }
 
 function ProductCard({ product }) {
+  const [isLoading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -96,7 +99,9 @@ function ProductCard({ product }) {
       productId: product?.id,
       quantity: 1,
     };
+    setLoading(true);
     await addToCart(toast, attributes);
+    setLoading(false);
   }
 
   const mainContainer = {
@@ -114,11 +119,12 @@ function ProductCard({ product }) {
   const imageAttr = {
     src: GetImage(product?.image),
     objectFit: "cover",
-    filter: `grayscale(${isReady() ? 0 : 0.8})`
+    filter: `grayscale(${isReady() ? 0 : 0.8})`,
   };
 
   const imageSectionAttr = {
     pos: "relative",
+    minH: "240px"
   };
 
   const addToCartAttr = {
@@ -147,22 +153,25 @@ function ProductCard({ product }) {
   };
 
   return (
-    <GridItem {...mainContainer}>
-      <Flex {...container}>
-        <Flex {...imageSectionAttr}>
-          <Flex>
-            <Image {...imageAttr} />
-            <Image {...soldOutAttr} />
+    <>
+      <GridItem {...mainContainer}>
+        <Flex {...container}>
+          <Flex {...imageSectionAttr}>
+            <Flex>
+              <Image {...imageAttr} />
+              <Image {...soldOutAttr} />
+            </Flex>
+            <Text {...categoryAttr}>{product?.category}</Text>
           </Flex>
-          <Text {...categoryAttr}>{product?.category}</Text>
+          <Flex {...detailAttr}>
+            <Text {...nameAttr}>{product?.name}</Text>
+            <Text {...priceAttr}>Rp {formaterPrice(product?.price)}</Text>
+            <Button {...addToCartAttr} />
+          </Flex>
         </Flex>
-        <Flex {...detailAttr}>
-          <Text {...nameAttr}>{product?.name}</Text>
-          <Text {...priceAttr}>Rp {formaterPrice(product?.price)}</Text>
-          <Button {...addToCartAttr} />
-        </Flex>
-      </Flex>
-    </GridItem>
+      </GridItem>
+      {isLoading && <LoadingBar />}
+    </>
   );
 }
 

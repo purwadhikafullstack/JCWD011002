@@ -56,7 +56,7 @@ function setWhere(warehouse, year, month, search) {
       [Op.between]: [startDate, endDate],
     },
   };
-  if(warehouse) conditions["$stock_histories.id_warehouse_from$"] = warehouse;
+  if (warehouse) conditions["$stock_histories.id_warehouse_from$"] = warehouse;
   return conditions;
 }
 
@@ -67,8 +67,8 @@ const attributes = {
 async function getTransactions(access, query) {
   const { page = 1, limit = 10, sort = "DESC", status } = query;
   const { warehouse, year, month, search = "" } = query;
-
   const pages = pagination.setPagination(page, limit);
+
   const { count, rows: result } = await transactions.findAndCountAll({
     attributes,
     include: setInclude(status, search),

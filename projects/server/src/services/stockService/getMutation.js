@@ -65,7 +65,7 @@ const getMutation = async (req, res) => {
     let result;
 
     let where = {
-      [Op.or]: [
+      [Op.and]: [
         { id_warehouse_from: { [Op.not]: null } },
         { id_warehouse_to: { [Op.not]: null } }
       ],

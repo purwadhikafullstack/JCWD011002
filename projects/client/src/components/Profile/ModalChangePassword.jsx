@@ -4,9 +4,11 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
 import { changePassword } from '../../api/profile';
 import { useFormik } from 'formik';
 import { passwordValidationSchema } from './Validation';
-
+import { IconContext } from 'react-icons/lib';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import { Icon } from '@chakra-ui/react';
 const ModalChangePassword = ({ isOpen, onClose }) => {
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const toast = useToast();
   const token = localStorage.getItem('token');
@@ -33,11 +35,23 @@ const ModalChangePassword = ({ isOpen, onClose }) => {
     },
   });
 
+  const iconAttr = {
+    color: "white",
+    boxSize: "20px",
+  }
+
+  const btnIconAttr = {
+    variant: "ghost",
+    _hover: {
+      bgColor: "transparent",
+    }
+  }
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg={"secondary"} color={"textPrimary"}>
           <ModalHeader>Edit Password</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -52,9 +66,9 @@ const ModalChangePassword = ({ isOpen, onClose }) => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  <InputRightElement>
-                    <Button onClick={toggleShowPassword} variant="ghost">
-                      {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                  <InputRightElement mr={1}>
+                    <Button onClick={toggleShowPassword} {...btnIconAttr}>
+                      {showPassword ? <Icon as={ViewOffIcon} {...iconAttr} /> : <Icon as={ViewIcon}  {...iconAttr} />}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
@@ -71,9 +85,9 @@ const ModalChangePassword = ({ isOpen, onClose }) => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  <InputRightElement>
-                    <Button onClick={toggleShowPassword} variant="ghost">
-                      {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                  <InputRightElement mr={1}>
+                    <Button onClick={toggleShowPassword} {...btnIconAttr}>
+                      {showPassword ? <Icon as={ViewOffIcon} {...iconAttr} /> : <Icon as={ViewIcon}  {...iconAttr} />}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
@@ -90,9 +104,9 @@ const ModalChangePassword = ({ isOpen, onClose }) => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  <InputRightElement>
-                    <Button onClick={toggleShowPassword} variant="ghost">
-                      {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                  <InputRightElement mr={1}>
+                    <Button onClick={toggleShowPassword} {...btnIconAttr}>
+                      {showPassword ? <Icon as={ViewOffIcon} {...iconAttr} /> : <Icon as={ViewIcon}  {...iconAttr} />}
                     </Button>
                   </InputRightElement>
                 </InputGroup>

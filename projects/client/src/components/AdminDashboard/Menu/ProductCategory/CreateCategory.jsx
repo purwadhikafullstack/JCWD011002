@@ -14,6 +14,7 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 import axios from "axios";
+import LoadingBar from "../../../Utility/LoadingBar";
 
 const FormCreateCategory = ({ isOpen, onClose, fetchCategory, isLoading, setIsLoading }) => {
   const toast = useToast();
@@ -46,6 +47,7 @@ const FormCreateCategory = ({ isOpen, onClose, fetchCategory, isLoading, setIsLo
         isClosable: true,
       });
       fetchCategory();
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       toast({
@@ -56,7 +58,7 @@ const FormCreateCategory = ({ isOpen, onClose, fetchCategory, isLoading, setIsLo
         duration: "2000",
         isClosable: true,
       });
-    } 
+    }
   };
 
   const handleImageChange = (e) => {
@@ -162,6 +164,7 @@ const FormCreateCategory = ({ isOpen, onClose, fetchCategory, isLoading, setIsLo
           </DrawerFooter>
         </DrawerContent>
       </form>
+      {isLoading && <LoadingBar />}
     </Drawer>
   );
 };

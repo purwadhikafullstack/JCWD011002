@@ -52,7 +52,7 @@ const OrderBy = ({
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`${API_URL}/product`, {
+      const response = await axios.get(`${API_URL}/product?limit=10000`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -124,6 +124,7 @@ const OrderBy = ({
       setWarehouseFrom(selectedValue);
     }
   };
+  
   useEffect(() => {
     if (!warehouseFrom && dataWarehouse.length > 0) {
       setWarehouseFrom(dataWarehouse[0].id);
@@ -163,7 +164,10 @@ const OrderBy = ({
 
   useEffect(() => {
     fetchWHAdmin();
-    if (role === "admin warehouse" && wh.id_warehouse) {
+  }, []);
+  
+  useEffect(() => {
+    if (role === "admin warehouse" && wh) {
       setWarehouseFrom(wh.id_warehouse);
     } else {
       setWarehouseFrom("");
@@ -186,6 +190,12 @@ const OrderBy = ({
   useEffect(() => {
     fetchWarehouse();
   }, []);
+
+  function sliceProductName(productName, maxChar) {
+    return productName.length > maxChar
+      ? productName.slice(0, maxChar) + "..."
+      : productName;
+  }
 
   return (
     <>
@@ -223,7 +233,7 @@ const OrderBy = ({
           w={"15vw"}
           color={"black"}
           bg={"white"}
-          placeholder="All Warehouse"
+          placeholder="All Warehouse From"
           value={warehouseFrom || "all"}
           onChange={handleWarehouseFrom}
         >
@@ -261,7 +271,7 @@ const OrderBy = ({
           Search Product
         </MenuButton>
         <MenuList
-          w={"17vw"}
+          w={"21vw"}
           position="absolute"
           top="0"
           left="0"
@@ -292,9 +302,10 @@ const OrderBy = ({
             <MenuItem
               key={item.value}
               value={item.value}
+              w={"20.8vw"}
               onClick={handleProductChange}
             >
-              {item.name}
+              {sliceProductName(item.name, 23)}
             </MenuItem>
           ))}
 

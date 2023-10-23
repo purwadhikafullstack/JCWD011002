@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Pagination from "../Utility/Pagination";
 import { useSearchParams } from "react-router-dom";
+import LoadingBar from "../Utility/LoadingBar";
 
 const container = {
   templateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
@@ -13,6 +14,7 @@ const container = {
 };
 
 function ProductList() {
+  const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [maxPage, setMaxPage] = useState(0);
   const [firstRander, setFirstRander] = useState(true);
@@ -27,7 +29,7 @@ function ProductList() {
 
   const paginationAttr = {
     maxPage,
-    currentPage: currentPage,
+    currentPage,
     setCurrentPage: setSearchParams,
   };
 
@@ -38,17 +40,16 @@ function ProductList() {
       category: currentCategory,
       order: currentOrder,
       sort: currentSort,
+      limit: 10
     };
+    setIsLoading(true);
     const { data } = await getProducts(toast, attributes);
     const { products: productList, pages } = data;
     setMaxPage(pages);
     setProducts(productList);
-    setFirstRander(false)
+    setFirstRander(false);
+    setIsLoading(false);
   }
-
-  useEffect(() => {
-    fetchProducts();
-  }, [search, currentPage, currentCategory, currentOrder, currentSort]);
 
   useEffect(() => {
     setSearchParams((prev) => {
@@ -59,6 +60,11 @@ function ProductList() {
     });
   }, [search, currentCategory, currentOrder, currentSort]);
 
+  useEffect(() => {
+    fetchProducts();
+  }, [search, currentPage, currentCategory, currentOrder, currentSort]);
+
+
   return (
     <>
       <Grid {...container}>
@@ -67,6 +73,7 @@ function ProductList() {
         ))}
       </Grid>
       <Pagination {...paginationAttr} />
+      {isLoading && !firstRander && <LoadingBar />}
     </>
   );
 }

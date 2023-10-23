@@ -7,8 +7,9 @@ import {
   HiOutlineChevronDoubleLeft as IcFirst,
   HiOutlineChevronDoubleRight as IcLast,
 } from "react-icons/hi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Notification, { setToastParams } from "../../helpers/Notification";
+import { useSearchParams } from "react-router-dom";
 
 const mainContainer = {
   w: "full",
@@ -23,7 +24,17 @@ const container = {
 
 function Pagination({ maxPage, currentPage, setCurrentPage }) {
   const [tmpPage, setTmpPage] = useState(currentPage);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParams = searchParams.get("page") || 1;
   const toast = useToast();
+
+  function handleResetPage() {
+    setTmpPage(pageParams);
+  }
+
+  useEffect(() => {
+    handleResetPage();
+  }, [pageParams]);
 
   function handlePageClick(page) {
     setTmpPage(page);

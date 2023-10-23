@@ -3,11 +3,13 @@ import { Flex, Box, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { FaWarehouse } from "react-icons/fa";
 import SeeDetail from "./SeeDetail";
+import jwt_decode from "jwt-decode";
 
 const Summary = () => {
   const API_URL = process.env.REACT_APP_API_BASE_URL;
   const [warehouse, setWarehouse] = useState([]);
   const [wh, setWh] = useState(null);
+  const [idUser, setIdUser] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -29,6 +31,7 @@ const Summary = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      setIdUser(response.data.data.id_user);
       setWh(response.data.data);
     } catch (error) {}
   };
@@ -39,7 +42,7 @@ const Summary = () => {
   }, []);
 
   const filteredWarehouses = warehouse.filter((item) => {
-    if (!wh) {
+    if (wh.id_warehouse === null) {
       return true;
     }
     return item.warehouse_name === wh.warehouse_name;
@@ -48,7 +51,7 @@ const Summary = () => {
   return (
     <>
       <Flex direction={"column"} gap={2} mr={2}>
-        {filteredWarehouses.map((item) => (
+        {filteredWarehouses?.map((item) => (
           <Flex
             key={item.id}
             w={"79vw"}

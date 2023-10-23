@@ -25,28 +25,45 @@ const Category = () => {
   const [warehouseId, setWarehouseId] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [categoryTotals, setCategoryTotals] = useState({});
+  const [wh, setWh] = useState(0);
 
   const API_URL = process.env.REACT_APP_API_BASE_URL;
 
+  const fetchWHAdmin = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/admin/roles/warehouse`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.data.data.id_warehouse > 0) {
+        setWh(response.data.data.id_warehouse);
+      } else {
+        setWh(0);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchWHAdmin();
+  }, []);
+
   const fetchSales = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}/report/sales/category`,
-        {
-          params: {
-            page: currentPage,
-            pageSize: 10,
-            orderBy,
-            filterByMonth,
-            filterByYear,
-            warehouseId,
-            categoryId,
-          },
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+      const response = await axios.get(`${API_URL}/report/sales/category`, {
+        params: {
+          page: currentPage,
+          pageSize: 10,
+          orderBy,
+          filterByMonth,
+          filterByYear,
+          warehouseId,
+          categoryId,
         },
-      );
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setCategory(response.data.categories);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -68,7 +85,7 @@ const Category = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/report/sales/product/permonth`,
+        `${API_URL}/report/sales/product/permonth?warehouseId=${wh}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -84,7 +101,7 @@ const Category = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [categoryTotals]);
 
   const extractCategoryTotals = (data) => {
     const categoryTotals = {};

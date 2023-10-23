@@ -19,6 +19,42 @@ const getSalesProductMonthly = async (
       },
     };
 
+    const includeClause = [
+      {
+        model: models.transaction_product,
+        attributes: ["id", "qty", "price"],
+        include: [
+          {
+            model: models.product,
+            attributes: ["id", "name", "image"],
+            as: "product",
+            include: [
+              {
+                model: models.category,
+                attributes: ["id", "name"],
+                as: "_category",
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    if (warehouseId > 0) {
+      includeClause.push({
+        model: models.stock_history,
+        attributes: ["id_warehouse_from"],
+        where: {
+          id_warehouse_from: warehouseId, // Filter by warehouseId here
+        },
+      });
+    } else {
+      includeClause.push({
+        model: models.stock_history,
+        attributes: ["id_warehouse_from"],
+      });
+    }
+
     if (filterByMonth && filterByYear) {
       whereClause.created_at = {
         [Op.and]: [
@@ -35,30 +71,34 @@ const getSalesProductMonthly = async (
     }
 
     const transactions = await models.transaction.findAll({
-      include: [
-        {
-          model: models.transaction_product,
-          attributes: ["id", "qty", "price"],
-          include: [
-            {
-              model: models.product,
-              attributes: ["id", "name", "image"],
-              as: "product",
-              include: [
-                {
-                  model: models.category,
-                  attributes: ["id", "name"],
-                  as: "_category",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.stock_history,
-          attributes: ["id_warehouse_from"],
-        },
-      ],
+      // include: [
+      //   {
+      //     model: models.transaction_product,
+      //     attributes: ["id", "qty", "price"],
+      //     include: [
+      //       {
+      //         model: models.product,
+      //         attributes: ["id", "name", "image"],
+      //         as: "product",
+      //         include: [
+      //           {
+      //             model: models.category,
+      //             attributes: ["id", "name"],
+      //             as: "_category",
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     model: models.stock_history,
+      //     attributes: ["id_warehouse_from"],
+      //     where: {
+      //       id_warehouse_from: warehouseId, // Filter by warehouseId here
+      //     },
+      //   },
+      // ],
+      include: includeClause,
       where: whereClause,
       limit: pageSize,
       offset: (page - 1) * pageSize,

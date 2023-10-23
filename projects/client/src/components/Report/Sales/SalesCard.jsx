@@ -102,18 +102,24 @@ const SalesCard = () => {
 
   const fetchAllTimeSales = async () => {
     try {
-      const response = await axios.get(`${API_URL}/report/sales/monthly`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      const allTimeTotalSales = response.data.data.reduce(
-        (total, monthData) =>
-          total + parseInt(monthData.total_sales_per_month, 10),
-        0
+      const response = await axios.get(
+        `${API_URL}/report/sales/product/permonth`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
+      const monthlyData = response.data.data;
+      const thisYear = new Date().getFullYear();
 
-      setAllTimeSales(allTimeTotalSales);
+      let totalSalesSum = 0;
+      for (const month of monthlyData) {
+        if (month.year === thisYear) {
+          totalSalesSum += month.total_sales_monthly;
+        }
+      }
+      setAllTimeSales(totalSalesSum);
     } catch (error) {
       console.log(error);
     }

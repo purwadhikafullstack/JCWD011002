@@ -87,6 +87,12 @@ const ToPay = () => {
     setEndDate(end);
   };
 
+  function sliceProductName(productName, maxChar) {
+    return productName.length > maxChar
+      ? productName.slice(0, maxChar) + "..."
+      : productName;
+  }
+
   const breakpoints = {
     sm: "320px",
     md: "768px",
@@ -184,13 +190,19 @@ const ToPay = () => {
                     src={`${API_URL}/${item.product_image}`}
                   />
                   <Flex direction={"column"}>
-                    <Text
-                      ml={4}
-                      fontSize={isMd ? "sm" : "md"}
-                      fontWeight={"bold"}
+                    <Tooltip
+                      bg={"white"}
+                      color={"black"}
+                      label={item.product_name}
                     >
-                      {item.product_name}
-                    </Text>
+                      <Text
+                        ml={4}
+                        fontSize={isMd ? "sm" : "md"}
+                        fontWeight={"bold"}
+                      >
+                        {sliceProductName(item.product_name, isMd ? 15 : 65)}
+                      </Text>
+                    </Tooltip>
                     {item.numProducts > 1 ? (
                       <Text ml={4} fontSize={"sm"}>
                         + {item.numProducts} other

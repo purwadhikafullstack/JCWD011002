@@ -18,6 +18,7 @@ import {
   DrawerFooter,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import LoadingBar from '../../../Utility/LoadingBar';
 
 const CreateProduct = ({ isOpen, onClose, fetchProducts }) => {
   const [categories, setCategories] = useState([]);
@@ -30,8 +31,8 @@ const CreateProduct = ({ isOpen, onClose, fetchProducts }) => {
     id_category: '',
     is_active: true,
   });
-  const [formattedPrice, setFormattedPrice] = useState(''); 
-  const [imagePreview, setImagePreview] = useState(null); 
+  const [formattedPrice, setFormattedPrice] = useState('');
+  const [imagePreview, setImagePreview] = useState(null);
   const toast = useToast();
   const formatPrice = (price) => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -148,6 +149,13 @@ const CreateProduct = ({ isOpen, onClose, fetchProducts }) => {
     }
   };
 
+  const optionAttr = {
+    style: {
+      backgroundColor: '#233947',
+      color: 'white',
+    }
+  }
+
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
       <DrawerOverlay />
@@ -201,14 +209,14 @@ const CreateProduct = ({ isOpen, onClose, fetchProducts }) => {
             />
             <Select
               name="id_category"
-              placeholder="Select Category"
               value={formData.id_category}
               onChange={handleChange}
               mb={4}
               required
             >
+              <option {...optionAttr} value="">Select Category</option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
+                <option {...optionAttr} key={category.id} value={category.id}>
                   {category?.name}
                 </option>
               ))}
@@ -240,6 +248,7 @@ const CreateProduct = ({ isOpen, onClose, fetchProducts }) => {
           </Button>
         </DrawerFooter>
       </DrawerContent>
+      {isLoading && <LoadingBar />}
     </Drawer>
   );
 };

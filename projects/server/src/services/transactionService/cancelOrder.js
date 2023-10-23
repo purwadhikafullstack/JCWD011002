@@ -3,6 +3,7 @@ const {
   transaction_product,
   stock_history,
   product_warehouse,
+  transaction_payment,
   sequelize,
 } = require("../../database");
 
@@ -49,6 +50,16 @@ async function cancelOrder(userId, transactionId) {
     await transaction.update(
       { id_status: 6 },
       { where: { id: transactionId } }
+    );
+
+    await transaction_payment.update(
+      { id_status: 9 },
+      { where: { id_transaction: transactionId } }
+    );
+
+    await stock_history.update(
+      { id_status: 9 },
+      { where: { id_transaction: transactionId } }
     );
 
     return "Order canceled";

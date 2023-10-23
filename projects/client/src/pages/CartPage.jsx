@@ -171,7 +171,7 @@ const CartPage = () => {
 
   return (
     <>
-      <Flex direction={isMd ? "column" : "row"} mt={4}>
+      <Flex mb={12} direction={isMd ? "column" : "row"} mt={4}>
         {isMd ? (
           <CartMobile />
         ) : (

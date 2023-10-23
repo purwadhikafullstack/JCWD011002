@@ -18,6 +18,7 @@ import {
 import jwt_decode from "jwt-decode";
 import { addAddress, getCityByProvince, getProvince } from "../../api/address";
 import Loading from "../Utility/Loading";
+import LoadingBar from "../Utility/LoadingBar";
 const AddAddress = ({ isOpen, onClose, onAddAddress, fetchAddressUser }) => {
   const [city, setCity] = useState([]);
   const [province, setProvince] = useState([]);
@@ -62,6 +63,7 @@ const AddAddress = ({ isOpen, onClose, onAddAddress, fetchAddressUser }) => {
       setIsLoading(true);
       await addAddress(formData, selectedProvinceName, toast, onAddAddress, setFormData, initialFormData, onClose)
       fetchAddressUser()
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -87,9 +89,16 @@ const AddAddress = ({ isOpen, onClose, onAddAddress, fetchAddressUser }) => {
     }
   };
 
+  const optionAttr = {
+    style: {
+      color: "white",
+      backgroundColor: "#233947",
+    }
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      {isLoading && <Loading />}
+      {isLoading && <LoadingBar />}
       <ModalOverlay />
       <ModalContent color={"white"} bgColor={"#233947"}>
         <ModalHeader>Add New Address</ModalHeader>
@@ -109,7 +118,7 @@ const AddAddress = ({ isOpen, onClose, onAddAddress, fetchAddressUser }) => {
             <FormLabel>Province</FormLabel>
             <Select placeholder='Select Province' name="province" value={selectedProvinceId} onChange={handleSelectProvince}>
               {province.map((province) => (
-                <option key={province.province_id} value={province.province_id}>{province.province}</option>
+                <option {...optionAttr} key={province.province_id} value={province.province_id}>{province.province}</option>
               ))}
             </Select>
           </FormControl>
@@ -117,7 +126,7 @@ const AddAddress = ({ isOpen, onClose, onAddAddress, fetchAddressUser }) => {
             <FormLabel>City Name</FormLabel>
             <Select isDisabled={city.length === 0} placeholder='Select City' name="city_name" value={formData.city_name} onChange={handleChange} >
               {city.map((city) => (
-                <option style={{ color: "white" }} key={city.city_id} value={city.city_name}>{city.city_name}</option>
+                <option {...optionAttr} key={city.city_id} value={city.city_name}>{city.city_name}</option>
               ))}
             </Select>
           </FormControl>

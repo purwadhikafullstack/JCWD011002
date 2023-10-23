@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import LoadingBar from '../../../Utility/LoadingBar';
 const DetailProduct = ({ isOpen, onClose, product, fetchProduct }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedProduct, setEditedProduct] = useState({
@@ -239,7 +240,6 @@ const DetailProduct = ({ isOpen, onClose, product, fetchProduct }) => {
               {isEditing ? (
                 <Select
                   name="id_category"
-                  placeholder='Select Category'
                   value={editedProduct.id_category}
                   onChange={handleEditChange}
                 >
@@ -334,6 +334,7 @@ const DetailProduct = ({ isOpen, onClose, product, fetchProduct }) => {
           )}
         </DrawerFooter>
       </DrawerContent>
+      {isLoading && <LoadingBar />}
     </Drawer>
   );
 };

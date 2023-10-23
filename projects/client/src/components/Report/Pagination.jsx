@@ -9,6 +9,7 @@ import {
   useMediaQuery,
   extendTheme,
   Text,
+  Flex,
 } from "@chakra-ui/react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import {
@@ -99,7 +100,13 @@ const Pagination = ({
   };
 
   return (
-    <Box px={isMd ? 2 : 0} mt={2} color={"white"}>
+    <Flex
+      px={isMd ? 2 : 0}
+      mt={2}
+      color={"white"}
+      w={"full"}
+      justifyContent={"center"}
+    >
       <HStack spacing={2}>
         <Button
           onClick={handleFirstPage}
@@ -140,7 +147,7 @@ const Pagination = ({
           onChange={handleInputPageChange}
           onKeyDown={handleInputKeyDown}
         />
-        <Text w={"39px"} fontSize={"md"}>
+        <Text w={"auto"} fontSize={"md"}>
           of {pagesToDisplay}
         </Text>
         <Button
@@ -167,7 +174,7 @@ const Pagination = ({
           Go
         </Button> */}
       </HStack>
-    </Box>
+    </Flex>
   );
 };
 

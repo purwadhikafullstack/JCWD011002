@@ -13,6 +13,7 @@ import { useFormik } from "formik";
 import DrawerAddButton from "./DrawerAddButton";
 import { useState } from "react";
 import { register } from "../../../../api/admin";
+import LoadingBar from "../../../Utility/LoadingBar";
 
 const drawerContentAttr = {
   bgColor: "secondary",
@@ -63,19 +64,22 @@ function DrawerAddAdmin({ isOpen, onClose }) {
   };
 
   return (
-    <Drawer {...drawerAttr}>
-      <DrawerOverlay />
-      <DrawerContent {...drawerContentAttr}>
-        <DrawerHeader {...drawerHeaderAttr}>Add Admin</DrawerHeader>
-        <DrawerCloseButton />
-        <DrawerBody {...drawerBodyAttr}>
-          <DrawerAddForm {...addFormAttr} />
-        </DrawerBody>
-        <DrawerFooter {...drawerFooterAttr}>
-          <DrawerAddButton {...addButtonAttr} />
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+    <>
+      <Drawer {...drawerAttr}>
+        <DrawerOverlay />
+        <DrawerContent {...drawerContentAttr}>
+          <DrawerHeader {...drawerHeaderAttr}>Add Admin</DrawerHeader>
+          <DrawerCloseButton />
+          <DrawerBody {...drawerBodyAttr}>
+            <DrawerAddForm {...addFormAttr} />
+          </DrawerBody>
+          <DrawerFooter {...drawerFooterAttr}>
+            <DrawerAddButton {...addButtonAttr} />
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+      {isLoading && <LoadingBar />}
+    </>
   );
 }
 

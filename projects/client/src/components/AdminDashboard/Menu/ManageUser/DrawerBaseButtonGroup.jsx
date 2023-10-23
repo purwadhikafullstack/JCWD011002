@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { setUserTrigger } from "../../../../storage/TriggerReducer";
 import PopoverConfirmation from "../../../Utility/PopoverConfirmation";
 import { FiEdit as IcEdit } from "react-icons/fi";
+import { useState } from "react";
+import LoadingBar from "../../../Utility/LoadingBar";
 
 const buttonContainer = {
   direction: "column",
@@ -12,6 +14,7 @@ const buttonContainer = {
 };
 
 function DrawerBaseButtonGroup({ editToggle, user, onClose }) {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     isOpen: popIsOpen,
     onOpen: popOpen,
@@ -22,9 +25,11 @@ function DrawerBaseButtonGroup({ editToggle, user, onClose }) {
   const { id, is_active } = user;
 
   async function handleActivation() {
+    setIsLoading(true);
     await updateAdmin(toast, id, { is_active: !is_active });
-    onClose();
     dispatch(setUserTrigger());
+    setIsLoading(false);
+    onClose();
   }
 
   const editButtonAttr = {
@@ -46,10 +51,13 @@ function DrawerBaseButtonGroup({ editToggle, user, onClose }) {
   };
 
   return (
-    <Flex {...buttonContainer}>
-      <Button {...editButtonAttr}>Edit</Button>
-      <PopoverConfirmation {...confirmation} />
-    </Flex>
+    <>
+      <Flex {...buttonContainer}>
+        <Button {...editButtonAttr}>Edit</Button>
+        <PopoverConfirmation {...confirmation} />
+      </Flex>
+      {isLoading && <LoadingBar />}
+    </>
   );
 }
 

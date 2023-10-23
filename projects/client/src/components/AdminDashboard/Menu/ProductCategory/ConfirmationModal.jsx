@@ -13,7 +13,7 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, title, message }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bg={"secondary"} color={"white"}>
         <ModalHeader>{title}</ModalHeader>
         <ModalBody>{message}</ModalBody>
         <ModalFooter gap="3">

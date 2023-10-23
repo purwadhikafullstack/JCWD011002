@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { Box, Divider, Flex, Image, Popover, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Image, Popover, Text, Tooltip } from "@chakra-ui/react";
 import { Badge } from "@chakra-ui/react";
 import Pagination from "../Pagination";
 import SearchBar from "../SearchBar";
@@ -48,6 +48,13 @@ const AllStatus = () => {
     setStartDate(start);
     setEndDate(end);
   };
+
+  function sliceProductName(productName, maxChar) {
+    return productName.length > maxChar
+      ? productName.slice(0, maxChar) + "..."
+      : productName;
+  }
+
   const breakpoints = {
     sm: "320px",
     md: "768px",
@@ -125,7 +132,7 @@ const AllStatus = () => {
               <ViewReceipt transactionId={item.transactionId} />
             )}
           </Flex>
-          <Divider mt={2} mb={2} /> 
+          <Divider mt={2} mb={2} />
           <Flex align={"center"} justifyContent={"space-between"}>
             <Flex>
               <Image
@@ -134,9 +141,15 @@ const AllStatus = () => {
                 src={`${API_URL}/${item.product_image}`}
               />
               <Flex direction={"column"}>
-                <Text ml={4} fontSize={isMd ? "sm" : "md"} fontWeight={"bold"}>
-                  {item.product_name}
-                </Text>
+                <Tooltip bg={"white"} color={"black"} label={item.product_name}>
+                  <Text
+                    ml={4}
+                    fontSize={isMd ? "sm" : "md"}
+                    fontWeight={"bold"}
+                  >
+                    {sliceProductName(item.product_name, isMd ? 15 : 65)}
+                  </Text>
+                </Tooltip>
                 {item.numProducts > 1 ? (
                   <Text ml={4} fontSize={"sm"}>
                     + {item.numProducts} other

@@ -3,6 +3,8 @@ import {
   useToast,
   Box,
   Flex,
+  Spacer,
+  Icon,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getWarehouseList } from "../../../../api/warehouse";
@@ -15,6 +17,7 @@ import WarehouseTable from "./WarehouseTable";
 import UpdateWarehouse from "./UpdateWarehouse";
 import CreateWarehouse from "./CreateWarehouse";
 import Loading from "../../../Utility/Loading";
+import { AddIcon } from "@chakra-ui/icons";
 
 
 
@@ -232,9 +235,9 @@ const WarehouseList = () => {
         duration: 2000,
         isClosable: true,
       })
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
-      setIsLoading(false);
       toast({
         title: "Error",
         description: "An error occurred while creating the warehouse data.",
@@ -242,24 +245,23 @@ const WarehouseList = () => {
         duration: 2000,
         isClosable: true,
       })
-    } finally {
-      setIsLoading(false);
     }
   }
 
   return (
     <>
       {/* Table content */}
-      <Flex flexDirection={"column"} w={"full"} mt={4}>
+      <Flex flexDirection={"column"} w={"full"}>
         {/* {isLoading && <Loading />} */}
         <Flex justifyContent={"space-between"}>
           <Box>
-            <Button bg={"darkBlue"} mb={4} color={"white"} onClick={handleDrawerCreateOpen}>Create Warehouse</Button>
+            <Button _hover={{ bg: "editSecondary" }} bg={"darkBlue"} mb={4} color={"white"} onClick={handleDrawerCreateOpen}><Icon mr={2} boxSize={"12px"} as={AddIcon} /> Create Warehouse</Button>
           </Box>
           <FilterWarehouse
             sort={sort} setSort={setSort} search={search} setSearch={setSearch} searchInput={searchInput} setSearchInput={setSearchInput} name={name} setName={setName} province={filterProvince} setProvince={setFilterProvince} />
         </Flex>
         <WarehouseTable warehouses={warehouses} openEditDrawer={openEditDrawer} openDeleteModal={openDeleteModal} />
+        <Spacer />
         {warehouses.length > 0 ? (
           <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
         ) : null}

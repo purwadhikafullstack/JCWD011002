@@ -32,7 +32,8 @@ const ChangeAvatar = () => {
     setIsEditingAvatar(false);
     setPreviewUrl(`${process.env.REACT_APP_API_BASE_URL}/${userData?.avatar}`);
   };
-
+  console.log(`${ process.env.REACT_APP_API_BASE_URL } / ${ userData?.avatar }`)
+  
   const handleSaveAvatarClick = async () => {
     try {
       if (file) {

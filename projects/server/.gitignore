@@ -1,5 +1,6 @@
 # public
 /public
+/src/public
 
 # dependencies
 /node_modules

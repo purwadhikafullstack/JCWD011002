@@ -18,11 +18,12 @@ import {
   Flex,
   Input,
   ModalFooter,
+  Tooltip,
 } from "@chakra-ui/react";
 import { BsBoxArrowInUpRight } from "react-icons/bs";
 import Pagination from "../../Pagination";
 
-const itemsPerPage = 20;
+const itemsPerPage = 5;
 
 const SeeDetail = ({ mutation, month_name, year, warehouse_name }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,6 +47,17 @@ const SeeDetail = ({ mutation, month_name, year, warehouse_name }) => {
     setCurrentPage(newPage);
   };
 
+  function sliceProductName(productName, maxChar) {
+    return productName.length > maxChar
+      ? productName.slice(0, maxChar) + "..."
+      : productName;
+  }
+
+  const OverlayOne = () => (
+    <ModalOverlay bg="blackAlpha.400" backdropFilter="blur(30px)" />
+  );
+  const [overlay, setOverlay] = React.useState(<OverlayOne />);
+
   return (
     <>
       <Button size={"xs"} variant={"edit"} onClick={onOpen}>
@@ -57,7 +69,7 @@ const SeeDetail = ({ mutation, month_name, year, warehouse_name }) => {
         onClose={onClose}
         isOpen={isOpen}
       >
-        <ModalOverlay />
+        {overlay}
         <ModalContent>
           <ModalHeader bgColor={"primary"} color={"white"}>
             {warehouse_name} {"=>"} {month_name} {year}
@@ -105,7 +117,12 @@ const SeeDetail = ({ mutation, month_name, year, warehouse_name }) => {
                 {currentItems.length === 0 ? (
                   <Tbody>
                     <Tr>
-                      <Td py={6} colSpan={5} align={"center"} textAlign="center">
+                      <Td
+                        py={6}
+                        colSpan={5}
+                        align={"center"}
+                        textAlign="center"
+                      >
                         No Data
                       </Td>
                     </Tr>
@@ -114,7 +131,13 @@ const SeeDetail = ({ mutation, month_name, year, warehouse_name }) => {
                   <Tbody>
                     {currentItems.map((item) => (
                       <Tr key={item.id_product}>
-                        <Td>{item.product_name}</Td>
+                        <Tooltip
+                          bg={"white"}
+                          color={"black"}
+                          label={item.product_name}
+                        >
+                          <Td w={"16vw"}>{sliceProductName(item.product_name, 30)}</Td>
+                        </Tooltip>
                         <Td textAlign={"center"}>{item.subtraction_qty}</Td>
                         <Td textAlign={"center"}>{item.addition_qty}</Td>
                         <Td textAlign={"center"}>{item.final_qty_mutation}</Td>

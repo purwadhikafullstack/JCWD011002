@@ -10,12 +10,16 @@ const getWarehouse = async (search, province, name, sort, page, limit) => {
   const currentPage = parseInt(page) || 1;
   const itemsPerPage = parseInt(limit) || 10;
   let order = [];
-  if (sort) {
+  if (sort === "asc") {
     order.push(orderBy("updated_at", sort));
-  } else if (name) {
-    order.push(orderBy("name", name));
-  } else {
+  } else if (sort === "desc") {
+    order.push(orderBy("updated_at", sort));
+  } else if (sort === "a-z") {
     order.push(orderBy("name", "asc"));
+  } else if (sort === "z-a") {
+    order.push(orderBy("name", "desc"));
+  } else {
+    order.push(orderBy("updated_at", "desc"));
   }
   const whereCondition = {};
   if (search) {

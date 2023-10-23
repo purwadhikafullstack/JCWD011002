@@ -79,7 +79,6 @@ export default function Simple() {
   };
 
   const isLogin = localStorage.getItem("token");
-
   return (
     <>
       <Box
@@ -106,7 +105,7 @@ export default function Simple() {
               </HStack>
             )}
           </HStack>
-          {role === "user" && !profilePath && <Searchbar />}
+          {(role === "user" || role === "") && !profilePath && <Searchbar />}
           <Flex alignItems={"center"}>
             {isLogin ? (
               <>

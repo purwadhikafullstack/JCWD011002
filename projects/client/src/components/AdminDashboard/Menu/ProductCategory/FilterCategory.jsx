@@ -1,7 +1,7 @@
 import React from 'react'
-import {Box, Flex, Input, Select, Button} from '@chakra-ui/react'
+import { Box, Flex, Input, Select, Button } from '@chakra-ui/react'
 import { BsSearch } from 'react-icons/bs'
-const FilterCategory = ({ searchInput, setSearchInput, search, setSearch, sort, setSort, name, setName}) => {
+const FilterCategory = ({ searchInput, setSearchInput, search, setSearch, sort, setSort, name, setName }) => {
   const handleSearch = () => {
     setSearch(searchInput)
   }
@@ -13,6 +13,12 @@ const FilterCategory = ({ searchInput, setSearchInput, search, setSearch, sort, 
   }
   if (searchInput.length <= 0) {
     setSearch(null)
+  }
+  const optionAttr = {
+    style: {
+      backgroundColor: '#2D2D2D',
+      color: 'white'
+    }
   }
   return (
     <>
@@ -43,18 +49,10 @@ const FilterCategory = ({ searchInput, setSearchInput, search, setSearch, sort, 
             mb={{ base: '2', md: '0' }}
             mr={{ base: '0', md: '2' }}
           >
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="">Newest</option>
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="desc">Oldest</option>
-          </Select>
-          <Select
-            // placeholder="Sort by"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            mb={{ base: '2', md: '0' }}
-            mr={{ base: '0', md: '2' }}
-          >
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="asc">A-Z</option>
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="desc">Z-A</option>
+            <option {...optionAttr} value="asc">Newest</option >
+            <option {...optionAttr} value="desc">Oldest</option>
+            <option {...optionAttr} value="a-z">A-Z</option>
+            <option {...optionAttr} value="z-a">Z-A</option>
           </Select>
 
 

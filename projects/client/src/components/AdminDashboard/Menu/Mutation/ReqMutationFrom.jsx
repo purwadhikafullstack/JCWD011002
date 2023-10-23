@@ -1,8 +1,10 @@
-import { Table, Tbody, Td, Text, Th, Thead, Tr, useToast, Popover, PopoverTrigger, Button, PopoverContent, PopoverHeader, PopoverArrow, PopoverCloseButton, PopoverBody } from '@chakra-ui/react'
+import { Table, Tbody, Td, Text, Th, Thead, Tr, useToast, Popover, PopoverTrigger, Button, PopoverContent, PopoverHeader, PopoverArrow, PopoverCloseButton, PopoverBody, Flex, Spacer } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Pagination from '../Product/Pagination'
 import { FilterWhFromMutation } from './FilterMutation'
+import { NotFound } from './MutationList'
+import TableHead from './TableHead'
 
 const ReqMutationFrom = () => {
   const [data, setData] = useState([])
@@ -62,24 +64,13 @@ const ReqMutationFrom = () => {
   }
 
   return (
-    <>
+    <Flex direction="column" w="full">
       <FilterWhFromMutation sort={sort} setSort={setSort} search={search} setSearch={setSearch} warehouse_to={warehouse_to} setWarehouseTo={setWarehouseTo} searchInput={searchInput} setSearchInput={setSearchInput} />
       <Table variant={"striped"} colorScheme="whiteAlpha"
         bgColor={"bgSecondary"}>
-        <Thead bg={"primary"}>
-          <Tr>
-            <Th color={"white"}>No</Th>
-            <Th color={"white"}>User</Th>
-            <Th color={"white"}>From Warehouse</Th>
-            <Th color={"white"}>To Warehouse</Th>
-            <Th color={"white"}>Product</Th>
-            <Th color={"white"}>Qty</Th>
-            <Th color={"white"}>Status</Th>
-          </Tr>
-        </Thead>
-
+        <TableHead />
         <Tbody>
-          {data?.map((item, index) => (
+          {data?.length > 0 && data?.map((item, index) => (
             <Tr key={item.id}>
               <Td>{index + 1}</Td>
               <Td>{item.user?.name}</Td>
@@ -90,9 +81,9 @@ const ReqMutationFrom = () => {
               <Td display={"flex"} justifyContent={"space-between"} alignItems={"center"}><Text>{item.status.name}</Text>
                 <Popover ml={4} placement='bottom-start'>
                   <PopoverTrigger>
-                    <Button bg={"darkBlue"} color={"white"}>Change Status</Button>
+                    <Button bg={"primary"} color={"white"}>Change Status</Button>
                   </PopoverTrigger>
-                  <PopoverContent bg={"darkBlue"} color={"white"}>
+                  <PopoverContent bg={"secondary"} color={"white"}>
                     <PopoverHeader fontWeight='semibold'>Change Status Mutation</PopoverHeader>
                     <PopoverArrow />
                     <PopoverCloseButton />
@@ -101,16 +92,19 @@ const ReqMutationFrom = () => {
                       <Button color={"white"} onClick={() => updateStatusMutation(item.id, 8)} type='submit' ml={4} bg={"green.500"}>Approve</Button>
                     </PopoverBody>
                   </PopoverContent>
-                </Popover></Td>
+                </Popover>
+              </Td>
             </Tr>
           ))}
+          {(!data || data.length) === 0 && <NotFound />}
         </Tbody>
       </Table>
-      {(!data || data.length) === 0 && <Text align={"center"} my={5}>No data request mutation to your warehouse</Text>}
+      <Spacer />
+      
       {data.length > 0 ? (
         <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
       ) : null}
-    </>
+    </Flex>
   )
 }
 

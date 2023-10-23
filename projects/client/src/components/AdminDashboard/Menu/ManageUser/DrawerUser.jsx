@@ -1,5 +1,4 @@
 import {
-  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -7,7 +6,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import DrawerInfo from "./DrawerInfo";
@@ -19,6 +17,7 @@ import { useFormik } from "formik";
 import { updateAdmin } from "../../../../api/admin";
 import { useDispatch } from "react-redux";
 import { setUserTrigger } from "../../../../storage/TriggerReducer";
+import LoadingBar from "../../../Utility/LoadingBar";
 
 const drawerContentAttr = {
   bgColor: "secondary",
@@ -32,6 +31,7 @@ const drawerFooterAttr = {
 };
 
 function DrawerUser({ user, isOpen, onClose }) {
+  const [isLoading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const { role } = user;
   const dispatch = useDispatch();
@@ -44,8 +44,10 @@ function DrawerUser({ user, isOpen, onClose }) {
 
   async function handleSubmit(attributes) {
     // Update Data
+    setLoading(true);
     await updateAdmin(toast, user?.id, attributes);
     dispatch(setUserTrigger());
+    setLoading(false);
     onClose();
   }
 
@@ -85,17 +87,24 @@ function DrawerUser({ user, isOpen, onClose }) {
   }
 
   return (
-    <Drawer {...drawerAttr}>
-      <DrawerOverlay />
-      <DrawerContent {...drawerContentAttr}>
-        <DrawerHeader {...drawerHeaderAttr}>
-          {isEdit ? user?.name : "Information"}
-        </DrawerHeader>
-        <DrawerCloseButton />
-        <DrawerBody py="20px">{setDrawerContent()}</DrawerBody>
-        {role?.name !== "user" && <DrawerFooter {...drawerFooterAttr}>{setDrawerButton()}</DrawerFooter>}
-      </DrawerContent>
-    </Drawer>
+    <>
+      <Drawer {...drawerAttr}>
+        <DrawerOverlay />
+        <DrawerContent {...drawerContentAttr}>
+          <DrawerHeader {...drawerHeaderAttr}>
+            {isEdit ? user?.name : "Information"}
+          </DrawerHeader>
+          <DrawerCloseButton />
+          <DrawerBody py="20px">{setDrawerContent()}</DrawerBody>
+          {role?.name !== "user" && (
+            <DrawerFooter {...drawerFooterAttr}>
+              {setDrawerButton()}
+            </DrawerFooter>
+          )}
+        </DrawerContent>
+      </Drawer>
+      {isLoading && <LoadingBar />}
+    </>
   );
 }
 export default DrawerUser;

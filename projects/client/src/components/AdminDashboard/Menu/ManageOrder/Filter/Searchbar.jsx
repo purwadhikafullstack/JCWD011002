@@ -7,11 +7,12 @@ import { searchOrder } from "../../../../../storage/SearchReducer";
 
 function Searchbar() {
   const [searchParams, setSearchParams] = useSearchParams({});
-  const query = searchParams.get("q");
+  const query = searchParams.get("q") || "";
   const dispatch = useDispatch();
 
   function onChange(event) {
     const { value } = event.target;
+    // console.log("ONCHANGE-MANAGEORDER", value)
     setSearchParams(
       (prev) => {
         prev.set("q", value);
@@ -29,10 +30,13 @@ function Searchbar() {
   };
   const search = {
     placeholder: "Search...",
+    value: query,
     onChange,
   };
 
   useDebounce(() => {
+    console.log("UPDATE QUERY", query);
+    // dispatch(searchOrder("LOL"));
     dispatch(searchOrder(query));
   }, [query]);
 

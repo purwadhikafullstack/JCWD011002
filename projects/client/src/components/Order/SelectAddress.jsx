@@ -54,7 +54,7 @@ const SelectAddress = () => {
   }`;
 
   let add = localStorage.getItem("selectedAddress");
-  
+
   if (dataAddress.length === 0) {
     localStorage.setItem("selectedAddress", emptyAddress);
   } else if (add === "undefined") {
@@ -131,11 +131,11 @@ const SelectAddress = () => {
       const response = await axios.post(`${API_URL}/address/default`, {
         userId: userId,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
       localStorage.setItem(
         "selectedAddress",
         JSON.stringify(response.data.data)
@@ -215,7 +215,7 @@ const SelectAddress = () => {
                       <Text
                         bgColor="white"
                         border={"4px"}
-                        borderColor={address.is_default ? "#C6F7D4" : "white"}
+                        borderColor={address.is_default ? "green.300" : "white"}
                         boxShadow={"xl"}
                         borderRadius={"5px"}
                         mt={3}

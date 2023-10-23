@@ -1,5 +1,6 @@
 import { Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerFooter, DrawerBody, Input, Button, Box, Text, useToast, Image, DrawerCloseButton, Select } from '@chakra-ui/react'
 import React from 'react'
+import LoadingBar from '../../../Utility/LoadingBar';
 
 const UpdateWarehouse = ({ city, isDrawerOpen, closeEditDrawer, handleEditWarehouse, province, selectedProvinceId, handleSelectProvince, editedWarehouse, setEditedWarehouse, isLoading }) => {
   return (
@@ -65,6 +66,7 @@ const UpdateWarehouse = ({ city, isDrawerOpen, closeEditDrawer, handleEditWareho
             </DrawerBody>
           </DrawerContent>
         </DrawerOverlay>
+        {isLoading && <LoadingBar />}
       </Drawer>
     </>
   )

@@ -6,6 +6,21 @@ import "chartjs-plugin-datalabels";
 import SalesCard from "./SalesCard";
 import jwt_decode from "jwt-decode";
 
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const Charts = () => {
   const role = jwt_decode(localStorage.getItem("token")).role;
   const API_URL = process.env.REACT_APP_API_BASE_URL;
@@ -40,29 +55,34 @@ const Charts = () => {
     }
   };
 
+  // per warehouse
   const fetchDataWarehouse = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/report/sales/warehouse/${wh}`,
+        `${API_URL}/report/sales/product/permonth?warehouseId=${wh}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      setData(response.data.warehouse_sales);
+      setData(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
 
+  // all warehouse
   const fetchDataMonthly = async () => {
     try {
-      const response = await axios.get(`${API_URL}/report/sales/monthly`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        `${API_URL}/report/sales/product/permonth`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       setData(response.data.data);
     } catch (error) {
       console.log(error);
@@ -71,15 +91,18 @@ const Charts = () => {
 
   useEffect(() => {
     if (data.length > 0 && chartRef.current) {
+      data.sort((a, b) => a.month - b.month);
       const ctx = chartRef.current.getContext("2d");
 
       if (chartRef.current.chart) {
         chartRef.current.chart.destroy();
       }
-      const labels = data.map((item) => `${item.month} ${item.year}`);
-      const totalSales = data.map((item) =>
-        parseInt(item.total_sales_per_month)
+      // const labels = data.map((item) => `${item.month} ${item.year}`);
+      const labels = data.map(
+        (item) => `${monthNames[item.month - 1]} ${item.year}`
       );
+
+      const totalSales = data.map((item) => parseInt(item.total_sales_monthly));
       const newChart = new Chart(ctx, {
         type: "bar",
         data: {
@@ -125,7 +148,6 @@ const Charts = () => {
       chartRef.current.chart = newChart;
     }
   }, [data]);
-  
 
   return (
     <>

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   Modal,
@@ -18,10 +19,12 @@ import {
   TableContainer,
   Select,
   Flex,
+  TableCaption,
 } from "@chakra-ui/react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import toRupiah from "@develoka/angka-rupiah-js";
+import Pagination from "../../Pagination";
 
 const ModalDetail = ({ detail_product_sales, product_name }) => {
   const API_URL = process.env.REACT_APP_API_BASE_URL;
@@ -93,6 +96,7 @@ const ModalDetail = ({ detail_product_sales, product_name }) => {
       setWh(response.data.data);
     } catch (error) {}
   };
+
   useEffect(() => {
     fetchWHAdmin();
   }, []);
@@ -106,13 +110,27 @@ const ModalDetail = ({ detail_product_sales, product_name }) => {
     }
   }, []);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const totalItems = filteredData.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const onPageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedData = filteredData.slice(startIndex, endIndex);
+
   return (
     <>
       <Button variant="edit" size="sm" onClick={onOpen}>
         Detail
       </Button>
 
-      <Modal size={"3xl"} onClose={onClose} isOpen={isOpen} isCentered>
+      <Modal size={"5xl"} onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent bgColor={"bgSecondary"}>
           <ModalHeader color={"white"} bg={"primary"} mb={2}>
@@ -139,7 +157,8 @@ const ModalDetail = ({ detail_product_sales, product_name }) => {
                   color={"black"}
                   mb={2}
                   size={"sm"}
-                  defaultValue={"1"}
+                  placeholder="Select Warehouse"
+                  // defaultValue={"all"}
                   onChange={(e) => filterByWarehouse(e.target.value)}
                 >
                   <option value="all">All Warehouse</option>
@@ -194,35 +213,52 @@ const ModalDetail = ({ detail_product_sales, product_name }) => {
                     </Th>
                   </Tr>
                 </Thead>
-                <Tbody>
-                  {filteredData.map((detailSale, index) => (
-                    <Tr key={detailSale.data_id}>
-                      <Td textAlign="center" color={"white"}>
-                        {index + 1}
-                      </Td>
-                      <Td textAlign="center" color={"white"}>
-                        MWECG2/ID/TXN{detailSale.transaction_id}
-                      </Td>
-                      <Td textAlign="center" color={"white"}>
-                        {detailSale.transaction_date}
-                      </Td>
-                      <Td textAlign="center" color={"white"}>
-                        {detailSale.qty}
-                      </Td>
-                      <Td textAlign="center" color={"white"}>
-                        {toRupiah(detailSale.price, {
-                          dot: ".",
-                          floatingPoint: 0,
-                        })}
-                      </Td>
-                      <Td textAlign="right" color={"white"}>
-                        {getWarehouseName(detailSale.warehouse_id)}
+                {displayedData.length === 0 ? (
+                  <Tbody>
+                    <Tr>
+                      <Td colSpan={6} textAlign="center" color={"white"}>
+                        No Data or Please Select Warehouse!
                       </Td>
                     </Tr>
-                  ))}
-                </Tbody>
+                  </Tbody>
+                ) : (
+                  <Tbody>
+                    {displayedData.map((detailSale, index) => (
+                      <Tr key={detailSale.data_id}>
+                        <Td textAlign="center" color={"white"}>
+                          {index + 1}
+                        </Td>
+                        <Td textAlign="center" color={"white"}>
+                          MWECG2/ID/TXN{detailSale.transaction_id}
+                        </Td>
+                        <Td textAlign="center" color={"white"}>
+                          {detailSale.transaction_date}
+                        </Td>
+                        <Td textAlign="center" color={"white"}>
+                          {detailSale.qty}
+                        </Td>
+                        <Td textAlign="center" color={"white"}>
+                          {toRupiah(detailSale.price, {
+                            dot: ".",
+                            floatingPoint: 0,
+                          })}
+                        </Td>
+                        <Td textAlign="right" color={"white"}>
+                          {getWarehouseName(detailSale.warehouse_id)}
+                        </Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                )}
               </Table>
             </TableContainer>
+            <Pagination
+              totalItems={totalItems}
+              itemsPerPage={10}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+            />
           </ModalBody>
           <ModalFooter w={"full"}>
             <Button

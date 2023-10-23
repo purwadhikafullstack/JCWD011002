@@ -1,8 +1,11 @@
-import { Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
+import { Flex, Spacer, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Pagination from '../Product/Pagination'
 import { FilterAllMutation } from './FilterMutation'
+import { NotFound } from './MutationList'
+import TableHead from './TableHead'
+import TableBody from './TableBody'
 
 const AllMutation = () => {
   const [data, setData] = useState([])
@@ -46,41 +49,22 @@ const AllMutation = () => {
     fetchData()
   }, [sort, status, warehouse_from, warehouse_to, search, page, limit])
 
+
   return (
-    <>
+    <Flex direction={"column"} w={"full"}>
       <FilterAllMutation sort={sort} setSort={setSort} search={search} setSearch={setSearch} status={status} setStatus={setStatus} warehouse_from={warehouse_from} setWarehouseFrom={setWarehouseFrom} warehouse_to={warehouse_to} setWarehouseTo={setWarehouseTo} searchInput={searchInput} setSearchInput={setSearchInput} />
-      <Table variant={"striped"} colorScheme="whiteAlpha"
-        bgColor={"bgSecondary"}>
-        <Thead bg={"primary"}>
-          <Tr>
-            <Th color={"white"}>No</Th>
-            <Th color={"white"}>User</Th>
-            <Th color={"white"}>From Warehouse</Th>
-            <Th color={"white"}>To Warehouse</Th>
-            <Th color={"white"}>Product</Th>
-            <Th color={"white"}>Qty</Th>
-            <Th color={"white"}>Status</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {data?.map((item, index) => (
-            <Tr key={item.id}>
-              <Td>{index + 1}</Td>
-              <Td>{item.user?.name}</Td>
-              <Td>{item._warehouse_from.name}</Td>
-              <Td>{item._warehouse_to?.name}</Td>
-              <Td>{item.product.name}</Td>
-              <Td>{item.qty}</Td>
-              <Td>{item.status.name}</Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-      {(!data || data.length) === 0 && <Text align={"center"} my={5}>No data mutation</Text>}
+      <TableContainer>
+        <Table variant={"striped"} colorScheme="whiteAlpha"
+          bgColor={"bgSecondary"}>
+          <TableHead />
+          <TableBody data={data} />
+        </Table>
+      </TableContainer>
+      <Spacer />
       {data.length > 0 ? (
         <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
       ) : null}
-    </>
+    </Flex>
   )
 }
 

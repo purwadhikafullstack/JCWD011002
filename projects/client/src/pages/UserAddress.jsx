@@ -17,13 +17,14 @@ import DeleteAddress from "../components/Profile/DeleteAddress";
 import { getAddressUser } from "../api/address";
 import axios from "axios";
 import Loading from "../components/Utility/Loading";
+import LoadingBar from "../components/Utility/LoadingBar";
 
 const UserAddress = () => {
   const [isAddAddressModalOpen, setIsAddAddressModalOpen] = useState(false);
   const [isEditAddressModalOpen, setIsEditAddressModalOpen] = useState(false);
   const [editAddressData, setEditAddressData] = useState(null);
   const [address, setAddress] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const toast = useToast();
   const openAddAddressModal = () => {
     setIsAddAddressModalOpen(true);
@@ -89,16 +90,32 @@ const UserAddress = () => {
     }
   }
 
+  const handleLimitAddress = () => {
+    if (address.length === 10) {
+      toast({
+        title: "your address reached the limit.",
+        description: "please delete some address first.",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      })
+    } else {
+      openAddAddressModal()
+    }
+  }
+
   const fetchAddressUser = async () => {
+    setIsLoading(false)
     await getAddressUser(toast, setAddress)
   }
   useEffect(() => {
     fetchAddressUser()
   }, [])
+
   return (
     <Flex justifyContent={"center"} alignItems={"center"}>
       {isLoading && (
-        <Loading />
+        <LoadingBar />
       )}
       <Card w={["100%", "80%"]} bg={"blueCold"} py={10}>
         <Flex alignItems={"center"} justifyContent={"center"}>
@@ -121,7 +138,7 @@ const UserAddress = () => {
             <Button
               color={"white"}
               bg={"darkBlue"}
-              onClick={openAddAddressModal}
+              onClick={handleLimitAddress}
               w={"100%"}
               _hover={{ bgColor: "white", color: "#34638A" }}
               variant={"outline"}
@@ -135,20 +152,20 @@ const UserAddress = () => {
                 </Text>
               ) : (
                 address.sort((a, b) => (a.is_default === b.is_default ? 0 : a.is_default ? -1 : 1)).map((address) => (
-                  <Box bgColor={"white"} color={"#34638A"} boxShadow={"xl"} borderRadius={"5px"} mt={3} border={"4px"}
-                    borderColor={address.is_default ? "primary" : "white"} key={address.id}>
+                  <Box bgColor={"white"} boxShadow={"xl"} borderRadius={"5px"} mt={3} border={"4px"}
+                    borderColor={address.is_default ? "green.300" : "white"} key={address.id}>
                     <Flex flexDirection={"column"}>
                       <Flex alignItems={"center"} justifyContent={"space-between"} mr={5}>
                         <Text px={3} py={2} fontSize={"md"} fontWeight={"bold"}>
                           {address.name}&nbsp;
                           {address.is_default && (
-                            <Badge colorScheme="green.300">Default</Badge>
+                            <Badge colorScheme="green">Default</Badge>
                           )}
                         </Text>
                         <DeleteAddress addressData={address} fetchAddressUser={fetchAddressUser} />
                       </Flex>
                       <Divider />
-                      <Text color={"#34638A"} px={3} mt={1} fontSize={"lg"} fontWeight={"bold"}>
+                      <Text px={3} mt={1} fontSize={"lg"} fontWeight={"bold"}>
                         {address.user.name}
                       </Text>
                       <Text px={3} fontSize={"sm"}>{address.user.phone}</Text>

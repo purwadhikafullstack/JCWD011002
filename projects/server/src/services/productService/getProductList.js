@@ -21,12 +21,15 @@ const getProductList = async (id, role, sort, price, name, id_category, search, 
     const itemsPerPage = parseInt(limit) || 10;
 
     let orderCriteria = [];
-    if (sort) {
+    console.log("test sort", sort)
+    if (sort === "asc") {
       orderCriteria.push(orderBy("created_at", sort));
-    } else if (price) {
-      orderCriteria.push(orderBy("price", price));
-    } else if (name) {
-      orderCriteria.push(orderBy("name", name));
+    } else if (sort === "desc") {
+      orderCriteria.push(orderBy("created_at", sort));
+    } else if (sort === "a-z") {
+      orderCriteria.push(orderBy("name", "asc"));
+    } else if (sort === "z-a") {
+      orderCriteria.push(orderBy("name", "desc"));
     } else {
       orderCriteria.push(orderBy("created_at", "desc"));
     }

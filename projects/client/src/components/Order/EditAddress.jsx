@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { getCityByProvince, getProvince, updateAddressUser } from "../../api/address";
 import Loading from "../Utility/Loading";
+import LoadingBar from "../Utility/LoadingBar";
 
 const EditAddress = ({ isOpen, onClose, onEditAddress, addressData, fetchAddressUser }) => {
   const [city, setCity] = useState([]);
@@ -98,14 +99,22 @@ const EditAddress = ({ isOpen, onClose, onEditAddress, addressData, fetchAddress
       setIsLoading(true);
       await updateAddressUser(addressData, formData, toast, onEditAddress, onClose, selectedProvinceName);
       fetchAddressUser()
+      setIsLoading(false);
     } catch (error) {
       console.error("Error editing address:", error);
     }
   };
 
+  const optionAttr = {
+    style: {
+      color: "white",
+      backgroundColor: "#233947",
+    },
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      {isLoading && <Loading />}
+      {isLoading && <LoadingBar />}
       <ModalOverlay />
       <ModalContent color={"white"} bgColor={"#233947"}>
         <ModalHeader>Edit Address</ModalHeader>
@@ -124,7 +133,7 @@ const EditAddress = ({ isOpen, onClose, onEditAddress, addressData, fetchAddress
             <FormLabel>Province</FormLabel>
             <Select placeholder={formData.province} name="province" value={selectedProvinceId} onChange={handleSelectProvince}>
               {province.map((province) => (
-                <option key={province.province_id} value={province.province_id}>{province.province}</option>
+                <option {...optionAttr} key={province.province_id} value={province.province_id}>{province.province}</option>
               ))}
             </Select>
           </FormControl>
@@ -132,7 +141,7 @@ const EditAddress = ({ isOpen, onClose, onEditAddress, addressData, fetchAddress
             <FormLabel>City Name</FormLabel>
             <Select isDisabled={!selectedProvinceId} placeholder={selectedProvinceId ? "select city" : formData.city_name} name="city_name" value={formData.city_name} onChange={handleChange} >
               {city.map((city) => (
-                <option style={{ color: "white" }} key={city.city_id} value={city.city_name}>{city.city_name}</option>
+                <option {...optionAttr} key={city.city_id} value={city.city_name}>{city.city_name}</option>
               ))}
             </Select>
           </FormControl>

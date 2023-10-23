@@ -18,6 +18,13 @@ const fetchWarehouse = async () => {
   }
 }
 
+const optionAttr = {
+  style: {
+    backgroundColor: '#2D2D2D',
+    color: 'white'
+  }
+}
+
 export const FilterAllMutation = ({ sort, setSort, search, setSearch, status, setStatus, warehouse_from, warehouse_to, setWarehouseFrom, setWarehouseTo, searchInput, setSearchInput }) => {
   const [data, setData] = useState([])
   const fetchData = async () => {
@@ -42,7 +49,7 @@ export const FilterAllMutation = ({ sort, setSort, search, setSearch, status, se
   }
   return (
     <>
-      <Box p="4" mb="4" borderWidth="1px" rounded="lg">
+      <Box py="4">
         <Flex flexDirection={{ base: 'column', md: 'row' }} alignItems={{ base: 'flex-start', md: 'center' }}
           justifyContent="space-between" mb="2" >
           <Input
@@ -66,9 +73,9 @@ export const FilterAllMutation = ({ sort, setSort, search, setSearch, status, se
             mb={{ base: '2', md: '0' }}
             mr={{ base: '0', md: '2' }}
           >
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="">All Warehouse To</option>
+            <option {...optionAttr} value="">All Warehouse To</option>
             {data.map((item) => (
-              <option style={{ backgroundColor: 'white', color: 'black' }} key={item.id} value={item.id}>{item.name}</option>
+              <option {...optionAttr} key={item.id} value={item.id}>{item.name}</option>
             ))}
 
           </Select>
@@ -79,9 +86,9 @@ export const FilterAllMutation = ({ sort, setSort, search, setSearch, status, se
             mb={{ base: '2', md: '0' }}
             mr={{ base: '0', md: '2' }}
           >
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="">All Warehouse To</option>
+            <option {...optionAttr} value="">All Warehouse To</option>
             {data.map((item) => (
-              <option style={{ backgroundColor: 'white', color: 'black' }} key={item.id} value={item.id}>{item.name}</option>
+              <option {...optionAttr} key={item.id} value={item.id}>{item.name}</option>
             ))}
 
           </Select>
@@ -92,17 +99,17 @@ export const FilterAllMutation = ({ sort, setSort, search, setSearch, status, se
             mb={{ base: '2', md: '0' }}
             mr={{ base: '0', md: '2' }}
           >
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="">Newest</option>
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="oldest">Oldest</option>
+            <option {...optionAttr} value="">Newest</option>
+            <option {...optionAttr} value="oldest">Oldest</option>
           </Select>
 
           <Select value={status} mr="2" onChange={(e) => setStatus(e.target.value)}>
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="">All Status</option>
+            <option {...optionAttr} value="">All Status</option>
             {role === 'admin' && (
-              <option style={{ backgroundColor: 'white', color: 'black' }} value="7">Pending</option>
+              <option {...optionAttr} value="7">Pending</option>
             )}
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="8">Approve</option>
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="9">Reject</option>
+            <option {...optionAttr} value="8">Approve</option>
+            <option {...optionAttr} value="9">Reject</option>
           </Select>
         </Flex>
       </Box>
@@ -134,7 +141,7 @@ export const FilterWhFromMutation = ({ sort, setSort, search, setSearch, searchI
   }
   return (
     <>
-      <Box p="4" mb="4" borderWidth="1px" rounded="lg" color={'white'}>
+      <Box py="4">
         <Flex flexDirection={{ base: 'column', md: 'row' }} alignItems={{ base: 'flex-start', md: 'center' }}
           justifyContent="space-between" mb="2" >
           {/* <InputGroup> */}
@@ -167,9 +174,9 @@ export const FilterWhFromMutation = ({ sort, setSort, search, setSearch, searchI
             mb={{ base: '2', md: '0' }}
             mr={{ base: '0', md: '2' }}
           >
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="">All Warehouse To</option>
+            <option {...optionAttr} value="">All Warehouse To</option>
             {data.map((item) => (
-              <option style={{ backgroundColor: 'white', color: 'black' }} key={item.id} value={item.id}>{item.name}</option>
+              <option {...optionAttr} key={item.id} value={item.id}>{item.name}</option>
             ))}
 
           </Select>
@@ -193,8 +200,8 @@ export const FilterWhFromMutation = ({ sort, setSort, search, setSearch, searchI
             mb={{ base: '2', md: '0' }}
             mr={{ base: '0', md: '2' }}
           >
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="">Newest</option>
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="oldest">Oldest</option>
+            <option {...optionAttr} value="">Newest</option>
+            <option {...optionAttr} value="oldest">Oldest</option>
           </Select>
         </Flex>
       </Box>
@@ -226,7 +233,7 @@ export const FilterWhToMutation = ({ sort, setSort, search, setSearch, searchInp
   }
   return (
     <>
-      <Box p="4" mb="4" borderWidth="1px" rounded="lg" color={'white'}>
+      <Box py="4">
         <Flex flexDirection={{ base: 'column', md: 'row' }} alignItems={{ base: 'flex-start', md: 'center' }}
           justifyContent="space-between" mb="2" >
           {/* <InputGroup> */}
@@ -259,9 +266,9 @@ export const FilterWhToMutation = ({ sort, setSort, search, setSearch, searchInp
             mb={{ base: '2', md: '0' }}
             mr={{ base: '0', md: '2' }}
           >
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="">All Warehouse From</option>
+            <option {...optionAttr} value="">All Warehouse From</option>
             {data.map((item) => (
-              <option style={{ backgroundColor: 'white', color: 'black' }} key={item.id} value={item.id}>{item.name}</option>
+              <option {...optionAttr} key={item.id} value={item.id}>{item.name}</option>
             ))}
 
           </Select>
@@ -285,8 +292,8 @@ export const FilterWhToMutation = ({ sort, setSort, search, setSearch, searchInp
             mb={{ base: '2', md: '0' }}
             mr={{ base: '0', md: '2' }}
           >
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="">Newest</option>
-            <option style={{ backgroundColor: 'white', color: 'black' }} value="oldest">Oldest</option>
+            <option {...optionAttr} value="">Newest</option>
+            <option {...optionAttr} value="oldest">Oldest</option>
           </Select>
         </Flex>
       </Box>

@@ -16,6 +16,7 @@ import {
   Image,
   useDisclosure,
   Popover,
+  Tooltip,
 } from "@chakra-ui/react";
 import { TbListDetails } from "react-icons/tb";
 import { LiaShippingFastSolid } from "react-icons/lia";
@@ -41,6 +42,7 @@ const SeeDetailTxn = ({ transactionId }) => {
         }
       );
       setDatas(response.data.data);
+      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -67,6 +69,13 @@ const SeeDetailTxn = ({ transactionId }) => {
 
     return rupiah;
   }
+
+  function sliceProductName(productName, maxChar) {
+    return productName.length > maxChar
+      ? productName.slice(0, maxChar) + "..."
+      : productName;
+  }
+
   const breakpoints = {
     sm: "320px",
     md: "768px",
@@ -99,13 +108,27 @@ const SeeDetailTxn = ({ transactionId }) => {
           <ModalBody bgColor={"bgSecondary"}>
             <Flex fontSize={"sm"} direction={"column"}>
               <Box mb={2} mt={2} color={"white"} bgColor={"bgSecondary"}>
-                {datas.status === "Dibatalkan" ? (
+                {datas?.status === "Dibatalkan" ? (
                   <Badge alignSelf={"center"} colorScheme="red">
-                    Dibatalkan
+                    Cancelled
                   </Badge>
                 ) : (
                   <Badge alignSelf={"center"} colorScheme="green">
-                    {datas.status}
+                    {datas?.status === "Menunggu Pembayaran" ? (
+                      <Text>To Pay</Text>
+                    ) : datas?.status === "Menunggu Konfirmasi Pembayaran" ? (
+                      <Text>To Confirm</Text>
+                    ) : datas?.status === "Diproses" ? (
+                      <Text>Processed</Text>
+                    ) : datas?.status === "Dikirim" ? (
+                      <Text>Shipped</Text>
+                    ) : datas?.status === "Pesanan Dikonfirmasi" ? (
+                      <Text>Completed</Text>
+                    ) : (
+                      // ) : datas?.status === "Dibatalkan" ? (
+                      //   <Text>Cancelled</Text>
+                      <></>
+                    )}
                   </Badge>
                 )}
                 <Flex mt={1} justifyContent={"space-between"}>
@@ -114,7 +137,7 @@ const SeeDetailTxn = ({ transactionId }) => {
                 </Flex>
                 <Flex justifyContent={"space-between"}>
                   <Text>Date</Text>
-                  <Text>{datas.created_at}</Text>
+                  <Text>{datas?.created_at}</Text>
                 </Flex>
               </Box>
               <Text bg={"#3D3D3D"} h={2}>
@@ -126,7 +149,7 @@ const SeeDetailTxn = ({ transactionId }) => {
                   &nbsp;Product Detail
                 </Text>
               </Flex>
-              {datas.transaction_products?.map((item) => (
+              {datas?.transaction_products?.map((item) => (
                 <Box
                   mt={1}
                   key={item.id_product}
@@ -137,7 +160,15 @@ const SeeDetailTxn = ({ transactionId }) => {
                     <Flex>
                       <Image w={"4rem"} src={`${API_URL}/${item.image}`} />
                       <Flex direction={"column"} justifyContent={"center"}>
-                        <Text ml={3}>{item.name}</Text>
+                        <Tooltip
+                          bg={"white"}
+                          color={"black"}
+                          label={item.name}
+                        >
+                          <Text ml={3}>
+                            {sliceProductName(item.name, isMd ? 19 : 78)}
+                          </Text>
+                        </Tooltip>
                         <Text ml={3} fontSize={"xs"}>
                           {item.qty} x {formatToRupiah(item.price)}
                         </Text>
@@ -166,11 +197,11 @@ const SeeDetailTxn = ({ transactionId }) => {
                 </Flex>
                 <Flex display={"flex"}>
                   <Text>Courier&nbsp;&nbsp;:&nbsp;</Text>
-                  <Text>{datas.shipping_method}</Text>
+                  <Text>{datas?.shipping_method}</Text>
                 </Flex>
                 <Flex>
                   <Text>Address&nbsp;&nbsp;:&nbsp;</Text>
-                  <Text>{datas.shipping_address}</Text>
+                  <Text>{datas?.shipping_address}</Text>
                 </Flex>
               </Box>
               <Text bg={"#3D3D3D"} h={2}>
@@ -179,16 +210,16 @@ const SeeDetailTxn = ({ transactionId }) => {
               <Box mb={2} mt={2} color={"white"} bgColor={"bgSecondary"}>
                 <Flex justifyContent={"space-between"}>
                   <Text>Payment Method</Text>
-                  <Text>{datas.payment_method}</Text>
+                  <Text>{datas?.payment_method}</Text>
                 </Flex>
                 <Flex mb={1} justifyContent={"space-between"}>
                   <Text>Shipping Cost</Text>
-                  <Text>{formatToRupiah(datas.shipping_cost)}</Text>
+                  <Text>{formatToRupiah(datas?.shipping_cost)}</Text>
                 </Flex>
                 <Divider />
                 <Flex mt={1} justifyContent={"space-between"}>
                   <Text>Total</Text>
-                  <Text>{formatToRupiah(datas.total)}</Text>
+                  <Text>{formatToRupiah(datas?.total)}</Text>
                 </Flex>
               </Box>
             </Flex>

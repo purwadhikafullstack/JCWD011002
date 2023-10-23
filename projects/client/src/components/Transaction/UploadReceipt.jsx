@@ -127,7 +127,7 @@ const UploadReceipt = ({ isOpen, onClose, onSave, txnid }) => {
                   }}
                 />
                 <Text fontSize={"11px"} ml={2}>
-                  | PT. PURWADHIKA JAYAJAYAJAYA
+                  | PT. PREDIKSI JAYAJAYAJAYA
                 </Text>
               </Flex>
               4. Input amount of the transfer <br /> 5. Make sure the recipient

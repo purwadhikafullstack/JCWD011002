@@ -80,7 +80,10 @@ const OrderBy = ({
 
   useEffect(() => {
     fetchWHAdmin();
-    if (role === "admin warehouse" && wh.id_warehouse) {
+  }, []);
+  
+  useEffect(() => {
+    if (role === "admin warehouse" && wh) {
       setWarehouseId(wh.id_warehouse);
     } else {
       setWarehouseId("");
@@ -116,7 +119,7 @@ const OrderBy = ({
           value={warehouseId || "all"}
           onChange={handleWarehouseChange}
         >
-          {dataWarehouse.map((warehouse) => (
+          {dataWarehouse?.map((warehouse) => (
             <option key={warehouse.id} value={warehouse.id}>
               {warehouse.name}
             </option>

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Box, Select, Flex, Input, Button, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { Box, Select, Flex, Input, Button } from '@chakra-ui/react';
 import axios from 'axios';
 import { BsSearch } from 'react-icons/bs';
 const FilterProducts = ({
@@ -8,11 +8,9 @@ const FilterProducts = ({
   setSearchInput,
   categoryId,
   setCategoryId,
-  price,
   setPrice,
   sort,
   setSort,
-  name,
   setName,
   status,
   setStatus,
@@ -24,15 +22,9 @@ const FilterProducts = ({
   const handleCategoryChange = (e) => {
     setCategoryId(e.target.value);
   };
-  const handlePriceChange = (e) => {
-    setPrice(e.target.value);
-  };
   const handleSortChange = (e) => {
     setSort(e.target.value);
   };
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  }
   const handleStatusChange = (e) => {
     setStatus(e.target.value);
   }
@@ -72,8 +64,15 @@ const FilterProducts = ({
   useEffect(() => {
     categories();
   }, []);
+
+  const optionAttr = {
+    style: {
+      backgroundColor: '#2D2D2D',
+      color: 'white'
+    }
+  }
   return (
-    <Box p="4" mb="4" borderWidth="1px" rounded="lg" color={'white'}>
+    <Box py="4">
       <Flex flexDirection={{ base: 'column', md: 'row' }} alignItems={{ base: 'flex-start', md: 'center' }}
         justifyContent="space-between" mb="2" >
         {/* <InputGroup> */}
@@ -83,13 +82,8 @@ const FilterProducts = ({
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           onKeyDown={handleEnterKey}
-        // mb={{ base: '2', md: '0' }}
-        // mr={{ base: '0', md: '2' }}
         />
-        {/* <InputRightElement width={'4.5rem'}>
-            
-          </InputRightElement> */}
-        {/* </InputGroup> */}
+
         <Button
           bg={"darkBlue"}
           color={"white"}
@@ -100,48 +94,32 @@ const FilterProducts = ({
           mr={{ base: '0', md: '2' }}
         ><BsSearch /></Button>
         <Select
-          placeholder="Select Category"
           value={categoryId}
           onChange={handleCategoryChange}
           mb={{ base: '2', md: '0' }}
           mr={{ base: '0', md: '2' }}
         >
-          <option value="">All Categories</option>
+          <option {...optionAttr} value="">All Categories</option>
           {category.map((item) => (
-            <option key={item.id} value={item.id}>{item.name}</option>
+            <option  {...optionAttr} key={item.id} value={item.id}>{item.name}</option>
           ))}
 
         </Select>
-        {/* <Select
-          placeholder="Select Price"
-          value={price}
-          onChange={handlePriceChange}
-          mb={{ base: '2', md: '0' }}
-          mr={{ base: '0', md: '2' }}
-        >
-          <option value="">All Prices</option>
-          <option value="asc">Lowest Price</option>
-          <option value="desc">Highest Price</option>
-        </Select> */}
         <Select
-          placeholder="Sort by"
           value={sort}
           onChange={handleSortChange}
           mb={{ base: '2', md: '0' }}
           mr={{ base: '0', md: '2' }}
         >
-          <option value="">Default</option>
-          <option value="asc">Oldest</option>
-          <option value="desc">Newest</option>
+          <option {...optionAttr} value="desc">Newest</option>
+          <option {...optionAttr} value="asc">Oldest</option>
+          <option {...optionAttr} value="a-z">A-Z</option>
+          <option {...optionAttr} value="z-a">Z-A</option>
         </Select>
-        <Select placeholder="Name" value={name} mr="2" onChange={handleNameChange}>
-          <option value="asc">A-Z</option>
-          <option value="desc">Z-A</option>
-        </Select>
-        <Select placeholder="Status" value={status} mr="2" onChange={handleStatusChange}>
-          <option value="">All Status</option>
-          <option value="1">Active</option>
-          <option value="0">Inactive</option>
+        <Select value={status} mr="2" onChange={handleStatusChange}>
+          <option {...optionAttr} value="">All Status</option>
+          <option {...optionAttr} value="1">Active</option>
+          <option {...optionAttr} value="0">Inactive</option>
         </Select>
       </Flex>
     </Box>

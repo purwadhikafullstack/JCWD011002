@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { BsTrash3 } from "react-icons/bs";
 import axios from "axios";
 import {
@@ -12,9 +12,11 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import LoadingBar from "../Utility/LoadingBar";
 
 function DeleteAddress({ addressData, fetchAddressUser }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isLoading, setIsLoading] = useState(false);
   const cancelRef = useRef();
   const toast = useToast();
   const handleDelete = async () => {
@@ -24,6 +26,7 @@ function DeleteAddress({ addressData, fetchAddressUser }) {
       },
     }
     try {
+      setIsLoading(true);
       const response = await axios.delete(
         `${process.env.REACT_APP_API_BASE_URL}/address/${addressData.id}`, headers);
       if (response.status === 200) {
@@ -37,15 +40,26 @@ function DeleteAddress({ addressData, fetchAddressUser }) {
         });
         fetchAddressUser();
       } else {
+        toast({
+          title: "Error",
+          description: "Failed to delete address.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        })
+
         console.error("Failed to delete address");
       }
     } catch (error) {
       console.error("Error deleting address:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
+      {isLoading && <LoadingBar />}
       <BsTrash3 onClick={onOpen} size={25} cursor={"pointer"} color={"red"} />
       <AlertDialog
         isOpen={isOpen}
@@ -53,7 +67,7 @@ function DeleteAddress({ addressData, fetchAddressUser }) {
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent bg={"darkBlue"} color={"white"}>
+          <AlertDialogContent bg={"secondary"} color={"white"}>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete Address
             </AlertDialogHeader>

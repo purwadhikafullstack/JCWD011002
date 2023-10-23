@@ -34,7 +34,7 @@ function Searchbar() {
   }
 
   const inputAttr = {
-    placeholder: "Search Product...",
+    placeholder: "Search...",
     value: query,
     onChange,
   };

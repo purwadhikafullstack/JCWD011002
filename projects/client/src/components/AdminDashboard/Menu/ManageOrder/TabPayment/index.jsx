@@ -16,6 +16,7 @@ import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getRole } from "../../../../../helpers/Roles";
 import { getAdminWarehouse } from "../../../../../api/admin";
+import LoadingBar from "../../../../Utility/LoadingBar";
 
 const date = new Date();
 
@@ -41,19 +42,17 @@ const thAttr = {
   color: "textPrimary",
 };
 
-function TabPayment({ status }) {
+function TabPayment({ status, search, params }) {
+  const [isLoading, setLoading] = useState(false);
   const [firstRander, setFirstRander] = useState(true);
   const [transactions, setTransaction] = useState([]);
   const [maxPage, setMaxPage] = useState(1);
-  const [searchParams, setSearchParams] = useSearchParams({});
+  const { searchParams, setSearchParams } = search;
+  const {currentSort, currentMonth, currentYear, currentWarehouse, currentSearch} = params
   const currentPage = searchParams.get("page") || 1;
-  const currentSort = searchParams.get("sort") || "DESC";
-  const currentMonth = searchParams.get("month") || date.getMonth();
-  const currentYear = searchParams.get("year") || date.getFullYear();
-  const currentWarehouse = searchParams.get("warehouse") || "0";
-  const currentSearch = useSelector((state) => state.search.orders);
   const updateStatus = useSelector((state) => state.trigger.orderStatus);
   const dependancies = [
+    currentPage,
     currentSort,
     currentMonth,
     currentYear,
@@ -81,35 +80,23 @@ function TabPayment({ status }) {
       warehouse: await selectWarehouse(),
     };
     if (parseInt(attributes?.warehouse) === 0) delete attributes.warehouse;
+    setLoading(true);
     const { data } = await getTransactions(toast, attributes);
     const { transactions: transactionList, pages } = data;
+    setLoading(false);
     setTransaction(transactionList);
     setMaxPage(pages);
-    setFirstRander(true);
+    setFirstRander(false);
   }
 
-  
   const paginationAttr = {
     maxPage,
     currentPage,
     setCurrentPage: setSearchParams,
   };
-  
-  function resetPage() {
-    if (!firstRander) {
-      setSearchParams((prev) => {
-        prev.set("page", 1);
-        return prev;
-      });
-    }
-  }
 
   useEffect(() => {
     fetchTransactions();
-  }, [currentPage, ...dependancies]);
-
-  useEffect(() => {
-    resetPage();
   }, dependancies);
 
   const headers = ["Invoice", "Date", "User", "Payment", "Total", "Action"];
@@ -120,24 +107,27 @@ function TabPayment({ status }) {
   };
 
   return (
-    <Flex {...mainContainer}>
-      <TableContainer>
-        <Table {...tableAttr}>
-          <Thead {...tHeadAttr}>
-            <Tr>
-              {headers.map((header, index) => (
-                <Th {...thAttr} key={index}>
-                  {header}
-                </Th>
-              ))}
-            </Tr>
-          </Thead>
-          <TransactionList {...transactionsAttr} />
-        </Table>
-      </TableContainer>
-      <Spacer />
-      <Pagination {...paginationAttr} />
-    </Flex>
+    <>
+      <Flex {...mainContainer}>
+        <TableContainer>
+          <Table {...tableAttr}>
+            <Thead {...tHeadAttr}>
+              <Tr>
+                {headers.map((header, index) => (
+                  <Th {...thAttr} key={index}>
+                    {header}
+                  </Th>
+                ))}
+              </Tr>
+            </Thead>
+            <TransactionList {...transactionsAttr} />
+          </Table>
+        </TableContainer>
+        <Spacer />
+        <Pagination {...paginationAttr} />
+      </Flex>
+      {isLoading && !firstRander && <LoadingBar />}
+    </>
   );
 }
 

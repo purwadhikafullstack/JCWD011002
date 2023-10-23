@@ -233,7 +233,8 @@ const CartMobile = () => {
                 justifyContent={"center"}
                 alignItems={"center"}
                 bg={"#E53E3E"}
-                w={"2rem"}
+                minW={"2rem"}
+                maxW={"2rem"}
                 h={"5rem"}
                 onClick={() => handleDelete(item.productId)}
               >

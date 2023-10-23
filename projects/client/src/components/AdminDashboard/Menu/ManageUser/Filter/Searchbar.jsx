@@ -7,7 +7,7 @@ import { searchUser } from "../../../../../storage/SearchReducer";
 
 function Searchbar() {
   const [searchParams, setSearchParams] = useSearchParams({});
-  const query = searchParams.get("q");
+  const query = searchParams.get("q") || "";
   const dispatch = useDispatch();
 
   function onChange(event) {
@@ -29,6 +29,7 @@ function Searchbar() {
   };
   const search = {
     placeholder: "Search...",
+    value: query,
     onChange,
   };
 

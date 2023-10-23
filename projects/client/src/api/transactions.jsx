@@ -37,7 +37,6 @@ async function getTransaction(toast, id_transaction) {
       `${TRANSACTION_URL}/detail/${id_transaction}`,
       setHeaders()
     );
-    // console.log("GET TRANSCTION", response.data.data);
     return response.data;
   } catch (error) {
     const { response } = error;
