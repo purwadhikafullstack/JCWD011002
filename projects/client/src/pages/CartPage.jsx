@@ -19,6 +19,7 @@ import {
   Flex,
   useToast,
   useMediaQuery,
+  Tooltip,
 } from "@chakra-ui/react";
 import OrderSummary from "../components/Order/OrderSummary";
 import { Link } from "react-router-dom";
@@ -158,6 +159,12 @@ const CartPage = () => {
     }
   };
 
+  function sliceProductName(productName, maxChar) {
+    return productName.length > maxChar
+      ? productName.slice(0, maxChar) + "..."
+      : productName;
+  }
+
   const breakpoints = {
     sm: "320px",
     md: "768px",
@@ -236,7 +243,9 @@ const CartPage = () => {
                             src={`${API_URL}/${item.image}`}
                           />
                         </Td>
-                        <Td>{item.name}</Td>
+                        <Tooltip bg={"white"} color={"black"} label={item.name}>
+                          <Td>{sliceProductName(item.name, 25)}</Td>
+                        </Tooltip>
                         <Td textAlign={"center"}>
                           {toRupiah(item.price, { dot: ".", floatingPoint: 0 })}
                         </Td>

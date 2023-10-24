@@ -23,7 +23,6 @@ const CheckoutAlert = () => {
         h={"50px"}
         borderRadius={"none"}
         variant={"success"}
-        isLoading={isLoading}
       >
         Place Order
       </Button>

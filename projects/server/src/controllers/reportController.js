@@ -14,6 +14,7 @@ const getStockHistory = async (req, res) => {
       orderBy,
       searchProduct,
       productId,
+      id_status
     } = req.query;
     const result = await reportService.getStockHistory({
       warehouseFrom,
@@ -26,6 +27,7 @@ const getStockHistory = async (req, res) => {
       orderBy,
       searchProduct,
       productId,
+      id_status
     });
     return res.status(200).json(result);
   } catch (error) {

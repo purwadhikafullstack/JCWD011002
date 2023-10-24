@@ -241,7 +241,7 @@ const CheckoutMobile = () => {
 
   return (
     <>
-      <Flex direction={"column"} alignItems={"center"}>
+      <Flex direction={"column"} mb={"79px"} alignItems={"center"}>
         <Text fontSize={isMd ? "2xl" : "3xl"} mt={4} mb={4}>
           Checkout
         </Text>

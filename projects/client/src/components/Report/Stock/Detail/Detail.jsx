@@ -29,6 +29,7 @@ const Detail = () => {
   const [warehouseTo, setWarehouseTo] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [id_status, setId_status] = useState(0);
 
   const fetchDetail = async () => {
     try {
@@ -38,6 +39,7 @@ const Detail = () => {
           pageSize: 10,
           orderBy,
           productId,
+          id_status,
           transactionId,
           warehouseFrom,
           warehouseTo,
@@ -61,6 +63,7 @@ const Detail = () => {
     orderBy,
     currentPage,
     productId,
+    id_status,
     transactionId,
     warehouseFrom,
     warehouseTo,
@@ -95,6 +98,8 @@ const Detail = () => {
           setTransactionId={setTransactionId}
           warehouseFrom={warehouseFrom}
           setWarehouseFrom={setWarehouseFrom}
+          id_status={id_status}
+          setId_status={setId_status}
           warehouseTo={warehouseTo}
           setWarehouseTo={setWarehouseTo}
           onDateRangeFilter={handleDateRangeFilter}
@@ -150,18 +155,28 @@ const Detail = () => {
                   <Td textAlign={"center"}>
                     {(currentPage - 1) * 10 + index + 1}
                   </Td>
-                  <Td>{item.wh_from}</Td>
+                  {/* <Td> */}
+                  {item.wh_from === null ? (
+                    <Td textAlign={"center"}>-</Td>
+                  ) : (
+                    <Td>{item.wh_from}</Td>
+                  )}
+                  {/* </Td> */}
                   <Td>{item.wh_to}</Td>
-                  <Tooltip
-                    bg={"white"}
-                    color={"black"}
-                    label={item.product}
-                  >
-                    <Td textAlign={"center"}>{sliceProductName(item.product, 25)}</Td>
+                  <Tooltip bg={"white"} color={"black"} label={item.product}>
+                    <Td textAlign={"center"}>
+                      {sliceProductName(item.product, 22)}
+                    </Td>
                   </Tooltip>
                   <Td textAlign={"center"}>{item.qty}</Td>
                   <Td textAlign={"center"}>{item.status}</Td>
-                  <Td textAlign={"center"}>MWECG2/ID/TXN{item.txn_id}</Td>
+                  <Td textAlign={"center"}>
+                    {item.txn_id === null ? (
+                      <Text>-</Text>
+                    ) : (
+                      <Text>MWECG2/ID/TXN{item.txn_id}</Text>
+                    )}
+                  </Td>
                   <Td textAlign={"center"}>{item.txn_date}</Td>
                 </Tr>
               ))}

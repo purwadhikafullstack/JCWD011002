@@ -11,6 +11,7 @@ async function getStockHistory({
   endDate,
   searchProduct,
   productId,
+  id_status,
   page = 1,
   pageSize = 10,
   orderBy = "desc",
@@ -51,6 +52,12 @@ async function getStockHistory({
       };
     }
 
+    if (id_status > 0) {
+      whereConditions.id_status = id_status;
+    } else {
+      delete whereConditions.id_status;
+    }
+
     const totalItems = await stock_history.count({
       where: whereConditions,
       include: [
@@ -74,7 +81,7 @@ async function getStockHistory({
     const limit = pageSize;
 
     const stockHistories = await stock_history.findAll({
-      attributes: ["id_user", "qty", "created_at", "id"],
+      attributes: ["id_user", "qty", "created_at", "id", "id_status"],
       where: whereConditions,
       include: [
         {

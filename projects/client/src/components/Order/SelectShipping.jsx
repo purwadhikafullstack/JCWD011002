@@ -7,6 +7,7 @@ import {
   MenuGroup,
   MenuDivider,
   Box,
+  Spinner,
   Text,
   Button,
   Flex,
@@ -147,7 +148,7 @@ const SelectShipping = () => {
       <CalcDistance />
       <Menu>
         <MenuButton
-          w={isMd ? "" : "210px"}
+          w={isMd ? "" : "225px"}
           size={isMd ? "sm" : "md"}
           as={Button}
           textAlign={"left"}
@@ -156,34 +157,40 @@ const SelectShipping = () => {
         >
           Shipping Methods
         </MenuButton>
-        <MenuList>
-          {Object.entries(groupService()).map(
-            ([courier, methods], index, array) => (
-              <React.Fragment key={courier}>
-                <MenuGroup
-                  w={isMd ? "81vw" : ""}
-                  color={"black"}
-                  title={courier.toUpperCase()}
-                >
-                  {methods.map((method) => (
-                    <MenuItem
-                      px={isMd ? 4 : 4}
-                      py={isMd ? 1 : 1}
-                      color={"black"}
-                      fontSize={isMd ? "sm" : "md"}
-                      key={method.service}
-                      onClick={() => handleMenuItemSelect(method.service)}
-                    >
-                      {method.service} - {method.description}{" "}
-                      {/* {method.cost[0].value} {method.cost[0].etd} */}
-                    </MenuItem>
-                  ))}
-                </MenuGroup>
-                {index !== array.length - 1 && <MenuDivider />}{" "}
-              </React.Fragment>
-            )
-          )}
-        </MenuList>
+        {Object.keys(groupService()).length === 0 ? (
+          <MenuList display={"flex"} justifyContent={"center"} alignContent={"center"}>
+            <Spinner mt={1} mb={1} size="md" color="black" />
+          </MenuList>
+        ) : (
+          <MenuList>
+            {Object.entries(groupService()).map(
+              ([courier, methods], index, array) => (
+                <React.Fragment key={courier}>
+                  <MenuGroup
+                    w={isMd ? "81vw" : ""}
+                    color={"black"}
+                    title={courier.toUpperCase()}
+                  >
+                    {methods.map((method) => (
+                      <MenuItem
+                        px={isMd ? 4 : 4}
+                        py={isMd ? 1 : 1}
+                        color={"black"}
+                        fontSize={isMd ? "sm" : "md"}
+                        key={method.service}
+                        onClick={() => handleMenuItemSelect(method.service)}
+                      >
+                        {method.service} - {method.description}{" "}
+                        {/* {method.cost[0].value} {method.cost[0].etd} */}
+                      </MenuItem>
+                    ))}
+                  </MenuGroup>
+                  {index !== array.length - 1 && <MenuDivider />}{" "}
+                </React.Fragment>
+              )
+            )}
+          </MenuList>
+        )}
       </Menu>
       {isMd ? (
         <Flex

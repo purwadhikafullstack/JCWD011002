@@ -39,6 +39,8 @@ const OrderBy = ({
   setWarehouseFrom,
   warehouseTo,
   setWarehouseTo,
+  id_status,
+  setId_status,
   onDateRangeFilter,
 }) => {
   const API_URL = process.env.REACT_APP_API_BASE_URL;
@@ -124,7 +126,7 @@ const OrderBy = ({
       setWarehouseFrom(selectedValue);
     }
   };
-  
+
   useEffect(() => {
     if (!warehouseFrom && dataWarehouse.length > 0) {
       setWarehouseFrom(dataWarehouse[0].id);
@@ -143,6 +145,11 @@ const OrderBy = ({
   const handleEndDateChange = (e) => {
     const value = e.target.value;
     setEndDate(value);
+  };
+
+  const handleStatusChange = (e) => {
+    const value = e.target.value;
+    setId_status(value);
   };
 
   const handleApplyDateFilter = () => {
@@ -165,7 +172,7 @@ const OrderBy = ({
   useEffect(() => {
     fetchWHAdmin();
   }, []);
-  
+
   useEffect(() => {
     if (role === "admin warehouse" && wh) {
       setWarehouseFrom(wh.id_warehouse);
@@ -258,6 +265,21 @@ const OrderBy = ({
             {wh.name}
           </option>
         ))}
+      </Select>
+      <Select
+        ml={2}
+        w={"15vw"}
+        color={"black"}
+        bg={"white"}
+        placeholder="Status"
+        value={id_status}
+        onChange={handleStatusChange}
+      >
+        <option value={7}>Pending</option>
+        <option value={8}>Approved</option>
+        <option value={9}>Rejected</option>
+        <option value={10}>Added by Admin</option>
+        <option value={11}>Reduced by Admin</option>
       </Select>
       <Menu closeOnBlur={true} closeOnSelect={false}>
         <MenuButton

@@ -33,6 +33,7 @@ import toRupiah from "@develoka/angka-rupiah-js";
 import { useNavigate } from "react-router-dom";
 import { extendTheme } from "@chakra-ui/react";
 import CheckoutMobile from "../components/Order/CheckoutMobile";
+import LoadingBar from "../components/Utility/LoadingBar";
 
 const Checkout = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -86,10 +87,9 @@ const Checkout = () => {
         console.log(error);
       }
     };
-  
+
     fetchData();
   }, []);
-  
 
   const fetchAddress = async () => {
     try {
@@ -252,7 +252,7 @@ const Checkout = () => {
       {isMd ? (
         <CheckoutMobile />
       ) : (
-        <Flex direction={"column"} alignItems={"center"}>
+        <Flex mb={64} direction={"column"} alignItems={"center"}>
           <Text fontSize={"3xl"} mt={8} mb={4}>
             Checkout
           </Text>
@@ -447,6 +447,7 @@ const Checkout = () => {
           </>
         </Flex>
       )}
+      {isLoading && <LoadingBar />}
     </>
   );
 };
