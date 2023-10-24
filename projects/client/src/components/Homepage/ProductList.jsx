@@ -1,4 +1,4 @@
-import { Grid, useToast } from "@chakra-ui/react";
+import { Grid, useMediaQuery, useToast } from "@chakra-ui/react";
 import ProductCard from "./ProductCard";
 import { getProducts } from "../../api/product";
 import { useEffect, useState } from "react";
@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import Pagination from "../Utility/Pagination";
 import { useSearchParams } from "react-router-dom";
 import LoadingBar from "../Utility/LoadingBar";
+
+const breakpoints = ["320px", "768px", "960px", "1200px", "1536px"];
 
 const container = {
   templateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
@@ -27,11 +29,22 @@ function ProductList() {
   const currentOrder = searchParams.get("order") || "name";
   const currentSort = searchParams.get("sort") || "ASC";
 
+  const [isSm, isMd, isLg, isXl, is2Xl] = useMediaQuery(
+    breakpoints.map((breakpoint) => `(max-width: ${breakpoint})`)
+  );
+
   const paginationAttr = {
     maxPage,
     currentPage,
     setCurrentPage: setSearchParams,
   };
+
+  function setLimit() {
+    const screen = isSm ? "sm" : isMd ? "md" : "base";
+    switch(screen) {
+      default : return 10;
+    }
+  }
 
   async function fetchProducts() {
     const attributes = {
@@ -40,7 +53,7 @@ function ProductList() {
       category: currentCategory,
       order: currentOrder,
       sort: currentSort,
-      limit: 10
+      limit: setLimit(),
     };
     setIsLoading(true);
     const { data } = await getProducts(toast, attributes);

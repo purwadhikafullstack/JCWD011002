@@ -6,7 +6,14 @@ const logoAttr = {
 };
 
 // function CardAdminMenu({ name, logo, selected = false, setSelected, url }) {
-function CardAdminMenu({ name, logo, selected = false, setSelected, display, url }) {
+function CardAdminMenu({
+  name,
+  logo,
+  selected = false,
+  setSelected,
+  display,
+  url,
+}) {
   const container = {
     display,
     templateColumns: "1fr 3fr",
@@ -20,6 +27,10 @@ function CardAdminMenu({ name, logo, selected = false, setSelected, display, url
       bgColor: selected ? "primary" : "secondary",
     },
   };
+  const menuName = {
+    children: name,
+    textTransform: "capitalize",
+  };
   const navigate = useNavigate();
   function handleClick() {
     setSelected();
@@ -32,7 +43,7 @@ function CardAdminMenu({ name, logo, selected = false, setSelected, display, url
         <Flex {...logoAttr}>{logo}</Flex>
       </GridItem>
       <GridItem>
-        <Text>{name}</Text>
+        <Text {...menuName} />
       </GridItem>
     </Grid>
   );

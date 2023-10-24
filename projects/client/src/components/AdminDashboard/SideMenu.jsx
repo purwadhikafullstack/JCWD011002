@@ -18,11 +18,11 @@ const iconAttr = {
   direction: "column",
   alignItems: "center",
   justifyContent: "center",
-  gap: "8px"
-}
+  gap: "8px",
+};
 const logoImg = {
   src: "/logo.png",
-  w: "128px"
+  w: "128px",
 };
 const logoAttr = {
   variant: "title",
@@ -33,7 +33,13 @@ const menuAttr = {
   w: "full",
 };
 
-function SideMenu({ selected, setSelected, menuList }) {
+function isSelected(menu) {
+  const currentPath = document.location.pathname.replace("/", "");
+  if (currentPath === "" && menu === "dashboard") return true;
+  return menu === currentPath;
+}
+
+function SideMenu({ setSelected, menuList }) {
   const role = getRole();
   return (
     <Flex {...containerAttr}>
@@ -46,7 +52,8 @@ function SideMenu({ selected, setSelected, menuList }) {
           <CardAdminMenu
             {...menu}
             display={menu["access"].includes(role) ? "grid" : "none"}
-            selected={index === selected ? true : false}
+            // selected={index === selected ? true : false}
+            selected={isSelected(menu.name)}
             setSelected={() => setSelected(index)}
             key={index}
           />

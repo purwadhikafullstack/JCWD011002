@@ -47,7 +47,7 @@ export default function Simple() {
   }, [dispatch]);
 
   useEffect(() => {
-    viewCart();
+    if(token) viewCart();
   });
 
   let userId = "";

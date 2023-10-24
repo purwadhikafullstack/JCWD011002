@@ -16,9 +16,10 @@ import { useState } from "react";
 import LoadingBar from "../Utility/LoadingBar";
 
 const container = {
+  bgColor: "white",
   direction: "column",
   w: "full",
-  bgColor: "white",
+  h: "full",
   color: "textReversePrimary",
   pos: "relative",
 };
@@ -26,13 +27,6 @@ const container = {
 const detailAttr = {
   direction: "column",
   p: "8px",
-};
-
-const addCartPos = {
-  base: "4px",
-  sm: "0px",
-  md: "4px",
-  lg: "8px",
 };
 
 const nameAttr = {
@@ -124,7 +118,7 @@ function ProductCard({ product }) {
 
   const imageSectionAttr = {
     pos: "relative",
-    minH: "240px"
+    minH: "240px",
   };
 
   const addToCartAttr = {
@@ -150,6 +144,11 @@ function ProductCard({ product }) {
     objectFit: "cover",
     p: "16px",
     display: !isReady() ? "block" : "none",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    m: "auto"
   };
 
   return (

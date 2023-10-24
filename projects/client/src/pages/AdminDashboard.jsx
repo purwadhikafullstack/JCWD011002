@@ -34,20 +34,19 @@ function createMenuSet(name, logo, access, url) {
 
 
 const menuList = [
-  createMenuSet("Dashboard", <IcHome />, ACCESS_ALL_ADMIN, ""),
-  createMenuSet("Users", <IcUser />, ACCESS_ADMIN, "/user"),
-  createMenuSet("Warehouses", <IcWarehouse />, ACCESS_ADMIN, "/warehouse"),
-  createMenuSet("Categories", <IcCategory />, ACCESS_ALL_ADMIN, "/category"),
-  createMenuSet("Products", <IcProduct />, ACCESS_ALL_ADMIN, "/product"),
-  createMenuSet("Mutations", <IcMutation />, ACCESS_ALL_ADMIN, "/stockmutation"),
-  createMenuSet("Orders", <IcOrder />, ACCESS_ALL_ADMIN, "/order"),
-  createMenuSet("Reports", <IcReport />, ACCESS_ALL_ADMIN, "/report"),
+  createMenuSet("dashboard", <IcHome />, ACCESS_ALL_ADMIN, ""),
+  createMenuSet("users", <IcUser />, ACCESS_ADMIN, "/users"),
+  createMenuSet("warehouses", <IcWarehouse />, ACCESS_ADMIN, "/warehouses"),
+  createMenuSet("categories", <IcCategory />, ACCESS_ALL_ADMIN, "/categories"),
+  createMenuSet("products", <IcProduct />, ACCESS_ALL_ADMIN, "/products"),
+  createMenuSet("mutations", <IcMutation />, ACCESS_ALL_ADMIN, "/mutations"),
+  createMenuSet("orders", <IcOrder />, ACCESS_ALL_ADMIN, "/orders"),
+  createMenuSet("reports", <IcReport />, ACCESS_ALL_ADMIN, "/reports"),
 ];
 
 function AdminDashboard() {
   const [selected, setSelected] = useState(0);
   const sideMenuAttr = {
-    selected,
     setSelected,
     menuList,
   };
