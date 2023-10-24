@@ -9,11 +9,26 @@ const transaction_payments = db["transaction_payment"];
 const payment_methods = db["payment_method"];
 const stock_histories = db["stock_history"];
 
-function setInclude(transactionStatus) {
+function setInclude(transactionStatus, warehouse, search) {
+  const conditions = {
+    [Op.or]: {
+      [Op.and]: {
+        id_warehouse_from: warehouse,
+        id_warehouse_to: { [Op.is]: null },
+      },
+      [Op.and]: {
+        id_warehouse_from: { [Op.not]: null },
+        id_warehouse_to: warehouse,
+      },
+    },
+  };
   return [
     {
       model: users,
       attributes: ["id", "username"],
+      where: {
+        username: { [Op.like]: `%${search}%` },
+      },
     },
     {
       model: statuses,
@@ -36,6 +51,7 @@ function setInclude(transactionStatus) {
     {
       model: stock_histories,
       attributes: ["id_product", ["id_warehouse_from", "warehouse"]],
+      where: warehouse ? conditions : {},
     },
   ];
 }
@@ -44,19 +60,16 @@ function setDate(year, month) {
   return new Date(year, month);
 }
 
-function setWhere(warehouse, year, month, search) {
+function setWhere(year, month, search) {
   const startDate = setDate(year, month);
   const endDate = setDate(year, parseInt(month) + 1);
   const conditions = {
-    [Op.or]: {
-      "$user.username$": { [Op.like]: `%${search}%` },
-      id: { [Op.like]: `%${search}%` },
-    },
+    id: { [Op.like]: `%${search}%` },
     created_at: {
       [Op.between]: [startDate, endDate],
     },
   };
-  if (warehouse) conditions["$stock_histories.id_warehouse_from$"] = warehouse;
+  // if (warehouse) conditions["$stock_histories.id_warehouse_from$"] = warehouse;
   return conditions;
 }
 
@@ -71,10 +84,11 @@ async function getTransactions(access, query) {
 
   const { count, rows: result } = await transactions.findAndCountAll({
     attributes,
-    include: setInclude(status, search),
+    include: setInclude(status, warehouse, search),
     order: [["created_at", sort]],
-    where: setWhere(warehouse, year, month, search),
-    subQuery: false,
+    where: setWhere(year, month, search),
+    // subQuery: false,
+    distinct: true,
     ...pages,
   });
 

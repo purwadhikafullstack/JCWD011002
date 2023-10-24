@@ -39,12 +39,12 @@ function ProductList() {
     setCurrentPage: setSearchParams,
   };
 
-  function setLimit() {
-    const screen = isSm ? "sm" : isMd ? "md" : "base";
-    switch(screen) {
-      default : return 10;
-    }
-  }
+  // function setLimit() {
+  //   const screen = isSm ? "sm" : isMd ? "md" : "base";
+  //   switch(screen) {
+  //     default : return 10;
+  //   }
+  // }
 
   async function fetchProducts() {
     const attributes = {
@@ -53,7 +53,7 @@ function ProductList() {
       category: currentCategory,
       order: currentOrder,
       sort: currentSort,
-      limit: setLimit(),
+      limit: 12,
     };
     setIsLoading(true);
     const { data } = await getProducts(toast, attributes);

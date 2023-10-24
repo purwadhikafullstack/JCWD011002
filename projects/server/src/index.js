@@ -61,7 +61,6 @@ if(__dirname.split("/").includes("www")) {
 } else{
   app.use("/api/public", express.static(path.resolve(__dirname, "../public")))
 }
-
 // ===========================
 
 // not found

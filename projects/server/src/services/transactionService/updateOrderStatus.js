@@ -18,13 +18,14 @@ async function updateOrderStatus(id, status) {
     const attr = { id_status: status };
     if (status === 5) attr["is_confirm"] = true;
     await transactions.update(attr, { where: { id }, transaction: t });
-    if (status === 3)
+    if (status === 3) {
       await transaction_payments.update(
         { id_status: 8 },
         { where: { id_transaction: id }, t }
       );
-    if (status === 4) {
       await updateStatusMutation(id, t);
+    }
+    if (status === 4) {
       cronJob.startCronJob();
     }
     return messages.success("Status successfully updated");

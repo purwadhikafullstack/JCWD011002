@@ -120,7 +120,10 @@ const Detail = () => {
                 FROM WAREHOUSE
               </Th>
               <Th textAlign={"center"} color={"white"}>
-                TO WAREHOUSE/USER
+                TO WAREHOUSE
+              </Th>
+              <Th textAlign={"center"} color={"white"}>
+                TO USER
               </Th>
               <Th textAlign={"center"} color={"white"}>
                 PRODUCT
@@ -143,7 +146,7 @@ const Detail = () => {
           {data.length === 0 ? (
             <Tbody>
               <Tr>
-                <Td colSpan={8} align={"center"} textAlign="center">
+                <Td colSpan={9} align={"center"} textAlign="center">
                   No Data
                 </Td>
               </Tr>
@@ -155,14 +158,17 @@ const Detail = () => {
                   <Td textAlign={"center"}>
                     {(currentPage - 1) * 10 + index + 1}
                   </Td>
-                  {/* <Td> */}
                   {item.wh_from === null ? (
                     <Td textAlign={"center"}>-</Td>
                   ) : (
                     <Td>{item.wh_from}</Td>
                   )}
-                  {/* </Td> */}
-                  <Td>{item.wh_to}</Td>
+                  <Td textAlign={"center"}>{item.wh_to}</Td>
+                  {item.txn_id === null ? (
+                    <Td textAlign={"center"}>-</Td>
+                  ) : (
+                    <Td textAlign={"center"}>{item.id_user}</Td>
+                  )}
                   <Tooltip bg={"white"} color={"black"} label={item.product}>
                     <Td textAlign={"center"}>
                       {sliceProductName(item.product, 22)}

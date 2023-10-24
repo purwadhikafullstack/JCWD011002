@@ -77,7 +77,10 @@ const getSalesCategory = async (
         [sequelize.col("product._category.id"), "id_category"],
         [sequelize.fn("SUM", sequelize.col("qty")), "total_qty_sold"],
         [
-          sequelize.fn("SUM", sequelize.literal("transaction_product.price * qty")),
+          sequelize.fn(
+            "SUM",
+            sequelize.literal("transaction_product.price * qty")
+          ),
           "total_price_sold",
         ],
         [sequelize.col("product._category.name"), "category_name"],
@@ -122,7 +125,7 @@ const getSalesCategory = async (
       total_qty_sold: sales.getDataValue("total_qty_sold"),
       total_sales: sales.getDataValue("total_price_sold"),
       month_year: sales.getDataValue("month_year"),
-      warehouse_id: sales.getDataValue("warehouse_ids").split(","),
+      warehouse_id: sales.getDataValue("warehouse_ids"),
     }));
 
     const total_count = categories.length;

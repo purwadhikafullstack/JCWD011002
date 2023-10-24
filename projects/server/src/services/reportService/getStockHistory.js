@@ -137,8 +137,9 @@ async function getStockHistory({
         return {
           id: history.id,
           name: history.user.name,
+          id_user: history.id_user,
           wh_from: result.warehouseFromName || null,
-          wh_to: result.warehouseToName || "User",
+          wh_to: result.warehouseToName || "-",
           product: history.product.name,
           qty: history.qty,
           status: history.status.name,

@@ -3,6 +3,7 @@ const {
   sequelize,
   transaction_product,
   product,
+  category,
 } = require("../../database");
 
 const getBestSellerProduct = async () => {
@@ -18,13 +19,24 @@ const getBestSellerProduct = async () => {
       include: [
         {
           model: product,
-          attributes: ["name"],
+          attributes: ["name", "id_category"], 
+          include: [
+            {
+              model: category,
+              as: "_category",
+              attributes: ["name"], 
+            },
+          ],
         },
       ],
     });
 
     if (bestSellerProduct.length > 0) {
-      return bestSellerProduct[0].product.name;
+      const bestProduct = bestSellerProduct[0];
+      return {
+        name: bestProduct.product.name,
+        category: bestProduct.product._category.name,
+      };
     } else {
       return "No best-selling product found";
     }
@@ -80,6 +92,8 @@ const getSummary = async () => {
       ],
     });
 
+    const bestSellerInfo = await getBestSellerProduct();
+
     const popular_shipping = courierCount(summary);
 
     return {
@@ -88,7 +102,8 @@ const getSummary = async () => {
           user_active: activeUserCount || 0,
           order_success: summary.dataValues.order_success || 0,
           popular_shipping: popular_shipping,
-          best_seller_product: await getBestSellerProduct(),
+          best_seller_product: bestSellerInfo.name,
+          best_seller_category: bestSellerInfo.category,
         },
       ],
     };

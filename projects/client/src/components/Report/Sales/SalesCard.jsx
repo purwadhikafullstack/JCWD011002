@@ -71,6 +71,7 @@ const SalesCard = () => {
         },
       });
       setBestSeller(response.data.data[0]);
+      setCatBestSeller(response.data.data[0]);
     } catch (error) {
       console.log(error);
     }
@@ -80,25 +81,31 @@ const SalesCard = () => {
       ? bestSeller?.best_seller_product?.slice(0, 10) + "..."
       : bestSeller?.best_seller_product;
 
-  const fetchCatBestSeller = async () => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/report/sales/category?orderBy=total_qty_sold desc`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      setCatBestSeller(response.data.categories[0]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchCatBestSeller = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_URL}/report/sales/category?orderBy=total_qty_sold desc`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //     setCatBestSeller(response.data.categories[0]);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const cat_best =
+  //   catBestSeller?.category_name?.length > 10
+  //     ? catBestSeller?.category_name?.slice(0, 10) + "..."
+  //     : catBestSeller?.category_name;
+  
   const cat_best =
-    catBestSeller?.category_name?.length > 10
-      ? catBestSeller?.category_name?.slice(0, 10) + "..."
-      : catBestSeller?.category_name;
+    catBestSeller?.best_seller_category?.length > 10
+      ? catBestSeller?.best_seller_category?.slice(0, 10) + "..."
+      : catBestSeller?.best_seller_category;
 
   const fetchAllTimeSales = async () => {
     try {
@@ -141,7 +148,7 @@ const SalesCard = () => {
   useEffect(() => {
     fetchSalesMonth();
     fetchBestSeller();
-    fetchCatBestSeller();
+    // fetchCatBestSeller();
     fetchAllTimeSales();
     fetchData();
   }, []);
