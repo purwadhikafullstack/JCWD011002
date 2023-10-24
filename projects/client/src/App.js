@@ -24,6 +24,7 @@ import Report from "./pages/Report";
 import Dashboard from "./components/AdminDashboard/Menu/Dashboard";
 import MutationList from "./components/AdminDashboard/Menu/Mutation/MutationList";
 import ManageOrder from "./components/AdminDashboard/Menu/ManageOrder";
+import NotFound from "./pages/NotFound";
 
 
 const ADMIN_PATH = ["/", "/category", "/profile"];
@@ -90,6 +91,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/category" element={<ProductCategory />} />
             <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Flex>
         <Footer />

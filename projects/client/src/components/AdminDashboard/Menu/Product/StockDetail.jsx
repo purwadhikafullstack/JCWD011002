@@ -175,7 +175,7 @@ const EditStockDrawer = ({ isOpen, onClose, products, fetchProducts, fetchDetail
             </Accordion>
           </DrawerBody>
           <DrawerFooter>
-            {role === "admin warehouse" && <Button bg={"green.500"} color={"white"} w={"full"} onClick={handleRequestMutationClick}>Request Mutation</Button>
+            {role === "admin warehouse" && <Button colorScheme='green' w={"full"} onClick={handleRequestMutationClick}>Request Mutation</Button>
             }
           </DrawerFooter>
         </DrawerContent>

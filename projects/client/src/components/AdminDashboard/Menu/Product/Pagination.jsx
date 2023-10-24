@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Flex, Text, Input, useToast } from '@chakra-ui/react';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import {
@@ -9,6 +9,10 @@ import Notification from '../../../../helpers/Notification';
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const [newPage, setNewPage] = useState(currentPage);
   const toast = useToast();
+
+  useEffect(() => {
+    setNewPage(currentPage);
+  }, [currentPage]);
   const handlePageChange = (page) => {
     onPageChange(page);
   };

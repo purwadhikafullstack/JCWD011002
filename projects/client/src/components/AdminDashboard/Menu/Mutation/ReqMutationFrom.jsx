@@ -1,10 +1,12 @@
-import { Table, Tbody, Td, Text, Th, Thead, Tr, useToast, Popover, PopoverTrigger, Button, PopoverContent, PopoverHeader, PopoverArrow, PopoverCloseButton, PopoverBody, Flex, Spacer } from '@chakra-ui/react'
+import { Table, Tbody, Td, Text, Tr, useToast, Flex, Spacer } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Pagination from '../Product/Pagination'
 import { FilterWhFromMutation } from './FilterMutation'
 import { NotFound } from './MutationList'
 import TableHead from './TableHead'
+import PopoverUpdateStatus from './PopoverUpdateStatus'
+import { formatDate } from './TableBody'
 
 const ReqMutationFrom = () => {
   const [data, setData] = useState([])
@@ -79,28 +81,15 @@ const ReqMutationFrom = () => {
               <Td>{item.product.name}</Td>
               <Td>{item.qty}</Td>
               <Td display={"flex"} justifyContent={"space-between"} alignItems={"center"}><Text>{item.status.name}</Text>
-                <Popover ml={4} placement='bottom-start'>
-                  <PopoverTrigger>
-                    <Button bg={"primary"} color={"white"}>Change Status</Button>
-                  </PopoverTrigger>
-                  <PopoverContent bg={"secondary"} color={"white"}>
-                    <PopoverHeader fontWeight='semibold'>Change Status Mutation</PopoverHeader>
-                    <PopoverArrow />
-                    <PopoverCloseButton />
-                    <PopoverBody textAlign={"center"}>
-                      <Button color={"white"} onClick={() => updateStatusMutation(item.id, 9)} type='submit' mr={4} bg={"red.500"}>Reject</Button>
-                      <Button color={"white"} onClick={() => updateStatusMutation(item.id, 8)} type='submit' ml={4} bg={"green.500"}>Approve</Button>
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
+                <PopoverUpdateStatus approve={() => updateStatusMutation(item.id, 8)} reject={() => updateStatusMutation(item.id, 9)} />
               </Td>
+              <Td>{formatDate(item.updated_at)}</Td>
             </Tr>
           ))}
           {(!data || data.length) === 0 && <NotFound />}
         </Tbody>
       </Table>
       <Spacer />
-      
       {data.length > 0 ? (
         <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
       ) : null}

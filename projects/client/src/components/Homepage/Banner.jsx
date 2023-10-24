@@ -10,14 +10,9 @@ import {
 } from "@chakra-ui/react"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// Here we have used react-icons package for the icons
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi"
-// And react-slick as our Carousel Lib
 import Slider from "react-slick"
-// import banner1 from "../../../public/images/banner1.jpg"
-// import banner2 from "../../../public/images/banner2.jpg"
-// import banner3 from "../../../public/images/banner3.jpg"
-// Settings for the slider
+
 const settings = {
   dots: true,
   arrows: false,

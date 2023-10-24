@@ -18,7 +18,7 @@ const ProductList = () => {
   const [status, setStatus] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [isDetailOpen, setIsDetailOpen] = useState(false)
   const [isDetailStockOpen, setIsDetailStockOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -32,9 +32,10 @@ const ProductList = () => {
   }
   const fetchProducts = async () => {
     try {
+      console.log("fetchProduct", search)
       const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/product/admin`, {
         params: {
-          search: search || '',
+          search,
           id_category: categoryId,
           sort,
           status,
@@ -54,7 +55,7 @@ const ProductList = () => {
 
   useEffect(() => {
     fetchProducts()
-  }, [search, searchInput, categoryId, sort, status, page, limit])
+  }, [search, categoryId, sort, status, page, limit])
 
   const handleDetailClick = async (id) => {
     try {

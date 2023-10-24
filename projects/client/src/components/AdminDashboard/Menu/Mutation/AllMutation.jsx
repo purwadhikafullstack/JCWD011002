@@ -1,9 +1,8 @@
-import { Flex, Spacer, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import { Flex, Spacer, Table, TableContainer} from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Pagination from '../Product/Pagination'
 import { FilterAllMutation } from './FilterMutation'
-import { NotFound } from './MutationList'
 import TableHead from './TableHead'
 import TableBody from './TableBody'
 
@@ -18,6 +17,8 @@ const AllMutation = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10)
   const [totalPages, setTotalPages] = useState(1)
+  const [month, setMonth] = useState('')
+  const [year, setYear] = useState('')
 
   const handlePageChange = (newPage) => {
     setPage(newPage)
@@ -31,6 +32,8 @@ const AllMutation = () => {
           warehouse_from,
           warehouse_to,
           search: search || '',
+          month,
+          year,
           page,
           limit
         },
@@ -47,12 +50,13 @@ const AllMutation = () => {
 
   useEffect(() => {
     fetchData()
-  }, [sort, status, warehouse_from, warehouse_to, search, page, limit])
+  }, [sort, status, warehouse_from, warehouse_to, search, page, limit, month, year])
+
 
 
   return (
     <Flex direction={"column"} w={"full"}>
-      <FilterAllMutation sort={sort} setSort={setSort} search={search} setSearch={setSearch} status={status} setStatus={setStatus} warehouse_from={warehouse_from} setWarehouseFrom={setWarehouseFrom} warehouse_to={warehouse_to} setWarehouseTo={setWarehouseTo} searchInput={searchInput} setSearchInput={setSearchInput} />
+      <FilterAllMutation sort={sort} setSort={setSort} search={search} setSearch={setSearch} status={status} setStatus={setStatus} warehouse_from={warehouse_from} setWarehouseFrom={setWarehouseFrom} warehouse_to={warehouse_to} setWarehouseTo={setWarehouseTo} searchInput={searchInput} setSearchInput={setSearchInput} month={month} setMonth={setMonth} year={year} setYear={setYear} />
       <TableContainer>
         <Table variant={"striped"} colorScheme="whiteAlpha"
           bgColor={"bgSecondary"}>

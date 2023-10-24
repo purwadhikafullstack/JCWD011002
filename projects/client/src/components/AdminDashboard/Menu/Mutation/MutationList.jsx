@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import ReqMutationFrom from './ReqMutationFrom'
 import ReqMutationTo from './ReqMutationTo'
 import AllMutation from './AllMutation'
-import { Divider, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Td, Tr } from '@chakra-ui/react'
+import { Tab, TabList, TabPanel, TabPanels, Tabs, Td, Tr } from '@chakra-ui/react'
 import jwtDecode from 'jwt-decode'
 export function NotFound() {
   const container = {
     textAlign: "center",
     fontWeight: "semibold",
-    colSpan: 7,
+    colSpan: 8,
   };
   return (
     <Tr>

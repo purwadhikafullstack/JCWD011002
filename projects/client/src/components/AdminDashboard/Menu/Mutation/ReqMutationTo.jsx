@@ -1,9 +1,8 @@
-import { Flex, Spacer, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
+import { Flex, Spacer, Table } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Pagination from '../Product/Pagination'
 import { FilterWhToMutation } from './FilterMutation'
-import { NotFound } from './MutationList'
 import TableHead from './TableHead'
 import TableBody from './TableBody'
 

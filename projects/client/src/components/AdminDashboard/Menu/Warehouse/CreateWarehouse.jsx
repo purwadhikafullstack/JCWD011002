@@ -1,4 +1,4 @@
-import { Drawer, FormControl, FormLabel, Input, Select, DrawerBody, DrawerCloseButton, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, Button, Box } from '@chakra-ui/react';
+import { Drawer, FormControl, FormLabel, Input, Select, DrawerBody, DrawerCloseButton, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, Button, Box, Textarea } from '@chakra-ui/react';
 import React from 'react'
 import LoadingBar from '../../../Utility/LoadingBar';
 
@@ -26,19 +26,6 @@ const CreateWarehouse = ({ isDrawerCreateOpen, setIsDrawerCreateOpen, handleCrea
                     setEditedWarehouse({
                       ...editedWarehouse,
                       name: e.target.value,
-                    })
-                  }
-                />
-              </FormControl>
-              <FormControl mb={2}>
-                <FormLabel>Full Address :</FormLabel>
-                <Input
-                  placeholder="Address"
-                  value={editedWarehouse.address}
-                  onChange={(e) =>
-                    setEditedWarehouse({
-                      ...editedWarehouse,
-                      address: e.target.value,
                     })
                   }
                 />
@@ -88,6 +75,19 @@ const CreateWarehouse = ({ isDrawerCreateOpen, setIsDrawerCreateOpen, handleCrea
                     </option>
                   ))}
                 </Select>
+              </FormControl>
+              <FormControl mb={2}>
+                <FormLabel>Full Address :</FormLabel>
+                <Textarea
+                  placeholder="Address"
+                  value={editedWarehouse.address}
+                  onChange={(e) =>
+                    setEditedWarehouse({
+                      ...editedWarehouse,
+                      address: e.target.value,
+                    })
+                  }
+                />
               </FormControl>
               <FormControl mb={4}>
                 <FormLabel>Postal Code :</FormLabel>

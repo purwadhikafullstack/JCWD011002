@@ -19,14 +19,14 @@ const Footer = () => {
         align="center"
         direction={["column", "row"]}
       >
-        <VStack spacing={2} textAlign={["center", "left"]}>
+        <VStack my={[4, 0]} spacing={2} align={["center", "flex-start"]}>
           <Text fontSize="lg" fontWeight="bold">
             Sitemap
           </Text>
-          <Link href="/">Beranda</Link>
-          <Link href="/produk">Produk</Link>
-          <Link href="/tentang">Tentang Kami</Link>
-          <Link href="/kontak">Kontak</Link>
+          <Link href="#">Home</Link>
+          <Link href="#">Product</Link>
+          <Link href="#">About Us</Link>
+          <Link href="#">Contact</Link>
         </VStack>
         <HStack spacing={4}>
           <Link href="https://www.facebook.com">
@@ -41,7 +41,7 @@ const Footer = () => {
         </HStack>
         <Image src="/logo.png" alt="Logo Perusahaan" boxSize={16} />
       </Flex>
-    </Box>
+    </Box >
   );
 };
 

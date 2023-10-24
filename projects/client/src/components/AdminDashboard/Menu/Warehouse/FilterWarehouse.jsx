@@ -32,6 +32,15 @@ const FilterWarehouse = ({ searchInput, setSearchInput, search, setSearch, sort,
       color: 'white'
     }
   }
+  const btnSearchAttr = {
+    bg: 'primary',
+    color: 'white',
+    height: '2.75rem',
+    px: '2',
+    _hover: {
+      bg: 'editSecondary'
+    }
+  }
   return (
     <>
       <Box>
@@ -45,10 +54,7 @@ const FilterWarehouse = ({ searchInput, setSearchInput, search, setSearch, sort,
             onKeyDown={handleEnterKey}
           />
           <Button
-            bg={"darkBlue"}
-            color={"white"}
-            height={"2.75rem"}
-            px={2}
+            {...btnSearchAttr}
             onClick={handleSearch}
             mb={{ base: '2', md: '0' }}
             mr={{ base: '0', md: '2' }}

@@ -1,4 +1,4 @@
-import { Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerFooter, DrawerBody, Input, Button, Box, Text, useToast, Image, DrawerCloseButton, Select } from '@chakra-ui/react'
+import { Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerFooter, DrawerBody, Input, Button, Box, Text, useToast, Image, DrawerCloseButton, Select, Textarea } from '@chakra-ui/react'
 import React from 'react'
 import LoadingBar from '../../../Utility/LoadingBar';
 
@@ -27,16 +27,7 @@ const UpdateWarehouse = ({ city, isDrawerOpen, closeEditDrawer, handleEditWareho
                     })
                   }
                 />
-                <Input my={2}
-                  placeholder="Address"
-                  value={editedWarehouse.address}
-                  onChange={(e) =>
-                    setEditedWarehouse({
-                      ...editedWarehouse,
-                      address: e.target.value,
-                    })
-                  }
-                />
+
                 <Select my={2} name="province" value={selectedProvinceId} onChange={handleSelectProvince}>
                   {province.map((province) => (
                     <option style={{ color: "white", backgroundColor: "#233947" }} key={province.province_id} value={province.province_id}>{province.province}</option>
@@ -47,6 +38,16 @@ const UpdateWarehouse = ({ city, isDrawerOpen, closeEditDrawer, handleEditWareho
                     <option style={{ color: "white", backgroundColor: "#233947" }} key={city.city_id} value={city.city_name}>{city.city_name}</option>
                   ))}
                 </Select>
+                <Textarea mb={4}
+                  placeholder="Address"
+                  value={editedWarehouse.address}
+                  onChange={(e) =>
+                    setEditedWarehouse({
+                      ...editedWarehouse,
+                      address: e.target.value,
+                    })
+                  }
+                />
                 <Input mb={4}
                   placeholder="Postal Code"
                   value={editedWarehouse.postal_code}

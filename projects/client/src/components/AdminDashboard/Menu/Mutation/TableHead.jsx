@@ -2,7 +2,7 @@ import { Thead, Tr, Th } from '@chakra-ui/react'
 import React from 'react'
 
 const TableHead = () => {
-  const head = ["No", "User", "From Warehouse", "To Warehouse", "Product", "Qty", "Status"]
+  const head = ["No", "User", "From Warehouse", "To Warehouse", "Product", "Qty", "Status", "Mutation Date"]
   const thAttr = {
     color: "white"
   }

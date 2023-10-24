@@ -47,7 +47,7 @@ const includeModel = () => {
 
 const getMutation = async (req, res) => {
   try {
-    const { sort, status, warehouse_from, warehouse_to, search, page, limit } = req.query;
+    const { sort, status, warehouse_from, warehouse_to, search, page, limit, month, year } = req.query;
     const { id, role } = req.account;
     const admin = await getAdmin(id);
 
@@ -98,6 +98,23 @@ const getMutation = async (req, res) => {
       };
     }
 
+    if (month && year) {
+      const targetDate = new Date(year, month - 1, 1);
+      const nextMonth = new Date(year, month, 1);
+
+      where = {
+        [Op.and]: [
+          where,
+          {
+            updated_at: {
+              [Op.gte]: targetDate,
+              [Op.lt]: nextMonth,
+            },
+          },
+        ],
+      };
+    }
+
     if (role === "admin warehouse") {
       where = {
         [Op.and]: [
@@ -116,6 +133,10 @@ const getMutation = async (req, res) => {
               }
             }
           )
+        ],
+        [Op.or]: [
+          { id_status: 8 },
+          { id_status: 9 }
         ]
       };
     }

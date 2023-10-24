@@ -1,10 +1,8 @@
 import { useToast, FormControl, FormLabel, Input, InputGroup, InputRightElement, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, FormErrorMessage } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
 import { changePassword } from '../../api/profile';
 import { useFormik } from 'formik';
 import { passwordValidationSchema } from './Validation';
-import { IconContext } from 'react-icons/lib';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { Icon } from '@chakra-ui/react';
 const ModalChangePassword = ({ isOpen, onClose }) => {

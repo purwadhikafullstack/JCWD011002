@@ -71,16 +71,19 @@ const RequestMutation = ({ isOpen, onClose, products, fetchProducts, fetchDetail
       console.log(error)
     }
   }
+
+  const optionAttr = {
+    style: {
+      color: "white",
+      backgroundColor: "#233947",
+    }
+  }
   return (
     <>
-      {/* <Button ref={btnRef} colorScheme='teal' onClick={onOpen}>
-        Open
-      </Button> */}
       <Drawer
         isOpen={isOpen}
         placement='right'
         onClose={onClose}
-      // finalFocusRef={btnRef}
       >
         <DrawerOverlay />
         <DrawerContent bg={"secondary"} color={"white"}>
@@ -95,12 +98,13 @@ const RequestMutation = ({ isOpen, onClose, products, fetchProducts, fetchDetail
             <Input type='number' name='qty' placeholder='0' value={qty} onChange={(e) => setQty(parseInt(e.target.value, 10))} />
             <Divider my={4} />
             <Text>Choose Warehouse :</Text>
-            <Select placeholder='Choose Warehouse' value={warehouseId} onChange={(e) => setWarehouseId(e.target.value)}>
+            <Select value={warehouseId} onChange={(e) => setWarehouseId(e.target.value)}>
+              <option {...optionAttr} key={0} value={0}>Select Warehouse</option>
               {warehouse?.map((item) => (
-                <option key={item.id} value={item?.warehouse?.id}>{item?.warehouse?.name} ({item?.stock} pcs)</option>
+                <option {...optionAttr} key={item.id} value={item?.warehouse?.id}>{item?.warehouse?.name} ({item?.stock} pcs)</option>
               ))}
               {warehouse.length === 0 && (
-                <option key={0} value={0}>No warehouse</option>
+                <option {...optionAttr} key={0} value={0}>No warehouse</option>
               )}
             </Select>
           </DrawerBody>
