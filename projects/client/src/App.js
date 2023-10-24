@@ -27,7 +27,7 @@ import NotFound from "./pages/NotFound";
 
 const ADMIN_WAREHOUSE_PATH = [
   "/",
-  "/catogories",
+  "/categories",
   "/products",
   "/mutations",
   "/orders",

@@ -17,7 +17,7 @@ function Filter() {
       <FilterRole />
       <FilterWarehouse />
       <Searchbar />
-      <FilterSort />
+      <FilterSort defaultSort={"ASC"}/>
     </Flex>
   );
 }

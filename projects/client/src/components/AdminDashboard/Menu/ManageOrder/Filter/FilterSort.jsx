@@ -5,9 +5,9 @@ import {
 } from "react-icons/lia";
 import { Icon } from "@chakra-ui/react";
 
-function FilterSort() {
+function FilterSort({defaultSort = "DESC"}) {
   const [searchParams, setSearchParams] = useSearchParams({});
-  const currentSort = searchParams.get("sort") || "DESC";
+  const currentSort = searchParams.get("sort") || defaultSort;
 
   function handleChange() {
     setSearchParams((prev) => {
