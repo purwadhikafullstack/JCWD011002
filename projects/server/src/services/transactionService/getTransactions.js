@@ -9,7 +9,7 @@ const transaction_payments = db["transaction_payment"];
 const payment_methods = db["payment_method"];
 const stock_histories = db["stock_history"];
 
-function setInclude(transactionStatus, warehouse, search) {
+function setInclude(transactionStatus, warehouse, search="") {
   const conditions = {
     [Op.or]: {
       [Op.and]: {
@@ -60,11 +60,10 @@ function setDate(year, month) {
   return new Date(year, month);
 }
 
-function setWhere(year, month, search) {
+function setWhere(year, month) {
   const startDate = setDate(year, month);
   const endDate = setDate(year, parseInt(month) + 1);
   const conditions = {
-    id: { [Op.like]: `%${search}%` },
     created_at: {
       [Op.between]: [startDate, endDate],
     },
@@ -86,7 +85,7 @@ async function getTransactions(access, query) {
     attributes,
     include: setInclude(status, warehouse, search),
     order: [["created_at", sort]],
-    where: setWhere(year, month, search),
+    where: setWhere(year, month),
     // subQuery: false,
     distinct: true,
     ...pages,

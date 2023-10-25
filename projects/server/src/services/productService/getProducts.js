@@ -48,7 +48,7 @@ async function getProducts(query) {
     },
     group: [col("product_warehouses.id_product")],
     // group: [col("product_warehouses.id_product"), col("product.id")],
-    order: [["is_active", "ASC"], ["stock", "DESC"], [order, sort]],
+    order: [["is_active", "ASC"], [order, sort], ["stock", "DESC"]],
     where,
     subQuery: false,
     ...pages,
