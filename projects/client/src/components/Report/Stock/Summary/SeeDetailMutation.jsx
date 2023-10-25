@@ -19,6 +19,7 @@ import {
   Input,
   ModalFooter,
   Tooltip,
+  Text,
 } from "@chakra-ui/react";
 import { BsBoxArrowInUpRight } from "react-icons/bs";
 import Pagination from "../../Pagination";
@@ -136,13 +137,19 @@ const SeeDetail = ({ mutation, month_name, year, warehouse_name }) => {
                           color={"black"}
                           label={item.product_name}
                         >
-                          <Td w={"16vw"}>{sliceProductName(item.product_name, 30)}</Td>
+                          <Td w={"16vw"}>
+                            {sliceProductName(item.product_name, 30)}
+                          </Td>
                         </Tooltip>
                         <Td textAlign={"center"}>{item.subtraction_qty}</Td>
                         <Td textAlign={"center"}>{item.addition_qty}</Td>
                         <Td textAlign={"center"}>{item.final_qty_mutation}</Td>
                         <Td textAlign={"center"}>
-                          {item.last_stock_in_warehouse}
+                          {item.last_stock_in_warehouse === null ? (
+                            <Text>0</Text>
+                          ) : (
+                            <Text>{item.last_stock_in_warehouse}</Text>
+                          )}
                         </Td>
                       </Tr>
                     ))}

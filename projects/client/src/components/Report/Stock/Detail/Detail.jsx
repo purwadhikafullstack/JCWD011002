@@ -171,7 +171,7 @@ const Detail = () => {
                   )}
                   <Tooltip bg={"white"} color={"black"} label={item.product}>
                     <Td textAlign={"center"}>
-                      {sliceProductName(item.product, 22)}
+                      {sliceProductName(item.product, 19)}
                     </Td>
                   </Tooltip>
                   <Td textAlign={"center"}>{item.qty}</Td>
