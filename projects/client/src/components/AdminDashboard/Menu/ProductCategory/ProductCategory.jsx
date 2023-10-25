@@ -40,7 +40,7 @@ const ProductCategory = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(10);
   const {
     isOpen: isConfirmationOpen,
     onOpen: onConfirmationOpen,

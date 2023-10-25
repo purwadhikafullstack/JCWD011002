@@ -18,7 +18,7 @@ const ProductList = () => {
   const [status, setStatus] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [limit, setLimit] = useState(4);
+  const [limit, setLimit] = useState(10);
   const [isDetailOpen, setIsDetailOpen] = useState(false)
   const [isDetailStockOpen, setIsDetailStockOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
