@@ -45,7 +45,6 @@ async function login(toast, attributes) {
   try {
     const response = await axios.post(`${AUTH_URL}/login`, attributes);
     notification(toast, setToastParams(response));
-    console.log(response);
     // Set token to localStorage
     const { token } = response.data.data;
     localStorage.setItem("token", token);

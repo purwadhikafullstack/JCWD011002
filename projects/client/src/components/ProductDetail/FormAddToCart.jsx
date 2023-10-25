@@ -89,7 +89,6 @@ function FormAddToCart({ product }) {
       productId: product.id,
       quantity: qty,
     };
-    // Add to Cart
     await addToCart(toast, attr);
     navigate("/cart");
   }

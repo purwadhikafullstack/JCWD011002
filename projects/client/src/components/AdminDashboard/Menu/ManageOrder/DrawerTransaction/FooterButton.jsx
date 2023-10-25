@@ -103,12 +103,6 @@ function FooterButton({ status, id_user, id_transaction }) {
           <PopoverConfirmation {...cancelAttr} />
         </>
       );
-    // case 4:
-    //   return "Sent";
-    // case 5:
-    //   return "Finish";
-    // default:
-    //   return "Canceled";
   }
 }
 

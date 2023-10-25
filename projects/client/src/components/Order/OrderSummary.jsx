@@ -37,7 +37,6 @@ const OrderSummary = ({ userId, cartLength }) => {
   return (
     <>
       <Flex
-        // borderRightRadius={"10px"}
         display={"flex"}
         direction={"column"}
         alignSelf={"flex-end"}

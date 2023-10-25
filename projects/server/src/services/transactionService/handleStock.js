@@ -48,7 +48,6 @@ const handleStock = async (
         if (nearestWarehouse) {
           const { id: nearestWarehouseId, name: nearestWarehouseName } =
             nearestWarehouse;
-          console.log("Nearest Warehouse:", nearestWarehouseName);
 
           // Reduce stock from the nearest warehouse first
           const nearestProductWarehouse = productWarehouses.find(

@@ -38,6 +38,7 @@ function ManageOrder() {
   const currentYear = searchParams.get("year") || date.getFullYear();
   const currentWarehouse = searchParams.get("warehouse") || "0";
   const currentSearch = useSelector((state) => state.search.orders) || "";
+  const currentInvoice = useSelector((state) => state.search.invoice) || "";
   const search = { searchParams, setSearchParams, resetPage };
   const params = {
     currentSort,
@@ -45,6 +46,7 @@ function ManageOrder() {
     currentYear,
     currentWarehouse,
     currentSearch,
+    currentInvoice
   };
   const dependancies = [
     selectedTab,
@@ -52,6 +54,7 @@ function ManageOrder() {
     currentMonth,
     currentYear,
     currentSearch,
+    currentInvoice,
     currentWarehouse,
   ];
 

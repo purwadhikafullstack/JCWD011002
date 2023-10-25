@@ -73,7 +73,6 @@ const FilterWarehouse = ({ searchInput, setSearchInput, search, setSearch, sort,
           </Select>
 
           <Select
-            // placeholder="Sort by"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
             mb={{ base: '2', md: '0' }}

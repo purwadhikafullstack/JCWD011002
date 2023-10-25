@@ -52,7 +52,6 @@ function SideMenu({ setSelected, menuList }) {
           <CardAdminMenu
             {...menu}
             display={menu["access"].includes(role) ? "grid" : "none"}
-            // selected={index === selected ? true : false}
             selected={isSelected(menu.name)}
             setSelected={() => setSelected(index)}
             key={index}

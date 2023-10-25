@@ -32,7 +32,6 @@ const ProductList = () => {
   }
   const fetchProducts = async () => {
     try {
-      console.log("fetchProduct", search)
       const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/product/admin`, {
         params: {
           search,

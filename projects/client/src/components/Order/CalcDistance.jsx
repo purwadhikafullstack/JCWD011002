@@ -20,7 +20,6 @@ function CalcDistance() {
           },
         }
       );
-      console.log("Nearest Warehouse", response.data.data.nearestWH);
       localStorage.setItem("wh_city", response.data.data.nearestWH);
     } catch (error) {
       console.error("Error calculating nearest warehouse:", error);

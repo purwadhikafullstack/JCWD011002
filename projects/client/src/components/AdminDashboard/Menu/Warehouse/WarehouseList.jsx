@@ -92,7 +92,6 @@ const WarehouseList = () => {
     const selectedName = e.target.options[e.target.selectedIndex].text;
     setSelectedProvinceId(selectedId);
     setSelectedProvinceName(selectedName);
-    // setCity([]);
     setEditedWarehouse({
       ...editedWarehouse,
       province: selectedName,

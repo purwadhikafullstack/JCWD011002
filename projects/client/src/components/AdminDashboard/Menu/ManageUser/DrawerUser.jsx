@@ -43,7 +43,6 @@ function DrawerUser({ user, isOpen, onClose }) {
   };
 
   async function handleSubmit(attributes) {
-    // Update Data
     setLoading(true);
     await updateAdmin(toast, user?.id, attributes);
     dispatch(setUserTrigger());

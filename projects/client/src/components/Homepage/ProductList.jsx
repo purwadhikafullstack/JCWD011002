@@ -11,7 +11,6 @@ const breakpoints = ["320px", "768px", "960px", "1200px", "1536px"];
 
 const container = {
   templateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-  // px: ["16px", "8px", "16px", "32px"],
   gap: "16px",
 };
 
@@ -38,13 +37,6 @@ function ProductList() {
     currentPage,
     setCurrentPage: setSearchParams,
   };
-
-  // function setLimit() {
-  //   const screen = isSm ? "sm" : isMd ? "md" : "base";
-  //   switch(screen) {
-  //     default : return 10;
-  //   }
-  // }
 
   async function fetchProducts() {
     const attributes = {

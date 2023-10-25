@@ -1,7 +1,7 @@
 import { Flex, Icon, Select, Text } from "@chakra-ui/react";
 import {
-  LiaSortAlphaDownSolid as IcASC,
-  LiaSortAlphaUpSolid as IcDESC,
+  LiaSortAlphaDownSolid as IcDESC,
+  LiaSortAlphaUpSolid as IcASC,
 } from "react-icons/lia";
 import { useSearchParams } from "react-router-dom";
 

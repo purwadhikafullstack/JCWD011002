@@ -60,7 +60,6 @@ async function cancelOrder(toast, attributes) {
 
 async function updateOrderStatus(toast, id_transaction, status) {
   try {
-    // console.log("UPDATE STATUS ORDER", id_transaction, status)
     const attributes = { status };
     const response = await axios.patch(
       `${TRANSACTION_URL}/status/${id_transaction}`,

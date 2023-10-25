@@ -49,7 +49,6 @@ const FilterCategory = ({ searchInput, setSearchInput, search, setSearch, sort, 
           ><BsSearch /></Button>
 
           <Select
-            // placeholder="Sort by"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
             mb={{ base: '2', md: '0' }}

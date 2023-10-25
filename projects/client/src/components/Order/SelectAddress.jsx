@@ -93,7 +93,6 @@ const SelectAddress = () => {
   };
 
   const handleAddAddress = (formData) => {
-    console.log("Adding address:", formData);
     closeAddAddressModal();
   };
 
@@ -109,7 +108,6 @@ const SelectAddress = () => {
   };
 
   const handleEditAddress = (formData) => {
-    console.log("Editing address:", formData);
     closeEditAddressModal();
   };
 

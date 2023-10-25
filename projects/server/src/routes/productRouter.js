@@ -8,7 +8,6 @@ const disableProduct = require('../services/productService/deleteProduct');
 
 const router = require("express").Router();
 
-// router.patch("/stock", authentication, updateStock)
 // category routes
 router.get("/category", getAllCategory)
 router.get("/category/:id", getCategoryById)

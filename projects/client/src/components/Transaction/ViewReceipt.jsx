@@ -41,7 +41,6 @@ const ViewReceipt = ({ transactionId }) => {
     // path = path.replaceAll("\\", "/");
     return `${API_URL}/${path}`;
   };
-  console.log(path);
   return (
     <Popover>
       <PopoverTrigger>

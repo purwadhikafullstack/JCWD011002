@@ -34,7 +34,6 @@ function setOption(item) {
 }
 
 function DrawerEdit({ user, formik }) {
-  // const { user, warehouse: defaultWarehouse } = user;
   const {warehouse: defaultWarehouse} = user?.admin?.warehouse || {};
   const [roles, setRoles] = useState([]);
   const [warehouses, setWarehouses] = useState([]);

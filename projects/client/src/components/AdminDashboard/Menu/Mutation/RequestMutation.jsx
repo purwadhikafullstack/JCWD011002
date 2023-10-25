@@ -19,7 +19,7 @@ import axios from 'axios'
 const RequestMutation = ({ isOpen, onClose, products, fetchProducts, fetchDetailStock }) => {
   const [warehouse, setWarehouse] = useState([])
   const [warehouseId, setWarehouseId] = useState()
-  const [qty, setQty] = useState(0)
+  const [qty, setQty] = useState(null)
   const toast = useToast()
   const fetchWarehouse = async () => {
     try {

@@ -44,7 +44,6 @@ function DrawerAddAdmin({ isOpen, onClose }) {
   };
 
   async function handleSubmit(attributes) {
-    // Send Data
     setIsLoading(true);
     await register(toast, attributes);
     setIsLoading(false);

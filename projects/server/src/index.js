@@ -28,8 +28,6 @@ app.use(
 );
 
 app.use(express.json());
-// const db = require("./database");
-// db.sequelize.sync({ alter: true });
 
 //#region API ROUTES
 
@@ -46,15 +44,6 @@ app.use("/api/report", reportRouter);
 app.use("/api/warehouse", warehouseRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/stock", stockRouter);
-app.get("/api", (req, res) => {
-  res.send(`Hello, this is my API`);
-});
-
-app.get("/api/greetings", (req, res, next) => {
-  res.status(200).json({
-    message: "Hello, Student !",
-  });
-});
 
 if(__dirname.split("/").includes("www")) {
   app.use("/api/public", express.static(path.resolve(__dirname, "../../../public")))

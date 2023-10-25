@@ -31,11 +31,11 @@ const AllMutation = () => {
           status,
           warehouse_from,
           warehouse_to,
-          search: search || '',
+          search,
+          page,
+          limit,
           month,
           year,
-          page: search ? null : page,
-          limit
         },
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -56,7 +56,7 @@ const AllMutation = () => {
 
   return (
     <Flex direction={"column"} w={"full"}>
-      <FilterAllMutation sort={sort} setSort={setSort} search={search} setSearch={setSearch} status={status} setStatus={setStatus} warehouse_from={warehouse_from} setWarehouseFrom={setWarehouseFrom} warehouse_to={warehouse_to} setWarehouseTo={setWarehouseTo} searchInput={searchInput} setSearchInput={setSearchInput} month={month} setMonth={setMonth} year={year} setYear={setYear} />
+      <FilterAllMutation sort={sort} setSort={setSort} search={search} setSearch={setSearch} status={status} setStatus={setStatus} warehouse_from={warehouse_from} setWarehouseFrom={setWarehouseFrom} warehouse_to={warehouse_to} setWarehouseTo={setWarehouseTo} searchInput={searchInput} setSearchInput={setSearchInput} month={month} setMonth={setMonth} year={year} setYear={setYear} fetchMutation={fetchData} />
       <TableContainer>
         <Table variant={"striped"} colorScheme="whiteAlpha"
           bgColor={"bgSecondary"}>

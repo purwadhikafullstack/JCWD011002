@@ -33,7 +33,6 @@ const nameAttr = {
   fontWeight: "semibold",
   noOfLines: 1,
   fontSize: "lg",
-  //   fontFamily: "Fira Sans",
 };
 
 const categoryAttr = {

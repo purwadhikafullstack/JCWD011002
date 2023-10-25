@@ -15,7 +15,7 @@ const JWT_KEY = process.env.JWT_KEY;
 async function findUser(identifier) {
   const user = await users.findOne({
     include: [{ model: roles, attributes: ["name"] }],
-    where: { [Op.or]: { username: identifier, email: identifier } },
+    where: { [Op.or]: { username: identifier, email: identifier }, is_active: true },
   });
   return user;
 }

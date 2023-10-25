@@ -4,6 +4,7 @@ import Searchbar from "./Searchbar";
 import FilterDate from "./FilterDate";
 import FilterSort from "./FilterSort";
 import { getRole } from "../../../../../helpers/Roles";
+import SearchInvoice from "./SearchInvoice";
 
 const container = {
   direction: "row",
@@ -18,6 +19,7 @@ function Filter() {
     <Flex {...container}>
       {role === "admin" && <FilterWarehouse />}
       <FilterDate />
+      <SearchInvoice />
       <Searchbar />
       <FilterSort />
     </Flex>

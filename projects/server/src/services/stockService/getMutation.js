@@ -50,7 +50,7 @@ const getMutation = async (req, res) => {
     const { sort, status, warehouse_from, warehouse_to, search, page, limit, month, year } = req.query;
     const { id, role } = req.account;
     const admin = await getAdmin(id);
-
+    console.log("year month", year, month);
     if (!admin) {
       return res.status(404).json({
         message: "Admin not found"
@@ -145,7 +145,7 @@ const getMutation = async (req, res) => {
     const limitInt = parseInt(limit) || 10;
 
     const offset = (pageInt - 1) * limitInt;
-    const totalCount = await stockHistory.count({ where, include: includeModel() });
+    const totalCount = await stockHistory.count({ where, include: { model: Product, attributes: ["name"] } });
 
     const totalPages = Math.ceil(totalCount / limitInt);
 

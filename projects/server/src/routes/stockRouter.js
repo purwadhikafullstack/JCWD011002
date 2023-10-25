@@ -5,7 +5,6 @@ const { getPendingStatusWhFrom, getPendingStatusWhTo } = require("../services/st
 const getMutation = require("../services/stockService/getMutation");
 const getWarehouseStock = require("../services/stockService/getWarehouseStock");
 const { updateStock } = require("../controllers/productController");
-// const updateStock = require("../services/stockService/updateStock")
 
 const router = require("express").Router();
 

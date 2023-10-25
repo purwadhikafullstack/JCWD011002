@@ -61,7 +61,6 @@ const EditAddress = ({ isOpen, onClose, onEditAddress, addressData, fetchAddress
     const selectedName = e.target.options[e.target.selectedIndex].text;
     setSelectedProvinceId(selectedId);
     setSelectedProvinceName(selectedName);
-    // setCity([]);
   }
 
   const initialFormData = {

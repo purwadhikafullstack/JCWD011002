@@ -6,7 +6,6 @@ import { useSearchParams } from "react-router-dom";
 
 const container = {
   templateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-  // px: ["16px", "8px", "16px", "32px"],
   gap: "16px",
 };
 

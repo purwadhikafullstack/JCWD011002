@@ -5,7 +5,6 @@ const logoAttr = {
   justifyContent: "center",
 };
 
-// function CardAdminMenu({ name, logo, selected = false, setSelected, url }) {
 function CardAdminMenu({
   name,
   logo,

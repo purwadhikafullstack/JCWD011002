@@ -32,7 +32,6 @@ function MenuList() {
   const role = getRole();
   const menuList = role === "admin" ? menus : menus.slice(2);
   const container = {
-    // templateColumns: `repeat(${role === "admin" ? 2 : 3}, 1fr)`,
     h: "full",
     templateRows: "repeat(2, 1fr)",
     autoFlow: "column",

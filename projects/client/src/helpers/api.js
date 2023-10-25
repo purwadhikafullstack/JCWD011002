@@ -1,5 +1,4 @@
 function getQueries(queries) {
-  // dafault => page=1, limit=10
   if (!queries["page"]) queries["page"] = 1;
   if (!queries["limit"]) queries["limit"] = 10;
   let query = "";

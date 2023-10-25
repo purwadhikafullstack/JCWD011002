@@ -3,18 +3,18 @@ import { FiSearch } from "react-icons/fi";
 import { useSearchParams } from "react-router-dom";
 import useDebounce from "../../../../../helpers/useDebounce";
 import { useDispatch } from "react-redux";
-import { searchOrder } from "../../../../../storage/SearchReducer";
+import { searchInvoice } from "../../../../../storage/SearchReducer";
 
-function Searchbar() {
+function SearchInvoice() {
   const [searchParams, setSearchParams] = useSearchParams({});
-  const query = searchParams.get("q") || "";
+  const query = searchParams.get("invoice") || "";
   const dispatch = useDispatch();
 
   function onChange(event) {
     const { value } = event.target;
     setSearchParams(
       (prev) => {
-        prev.set("q", value);
+        prev.set("invoice", value);
         return prev;
       },
       { replace: true }
@@ -28,13 +28,13 @@ function Searchbar() {
     children: <FiSearch />,
   };
   const search = {
-    placeholder: "Search Name...",
+    placeholder: "Search Invoice...",
     value: query,
     onChange,
   };
 
   useDebounce(() => {
-    dispatch(searchOrder(query));
+    dispatch(searchInvoice(query));
   }, [query]);
 
   return (
@@ -45,4 +45,4 @@ function Searchbar() {
   );
 }
 
-export default Searchbar;
+export default SearchInvoice;

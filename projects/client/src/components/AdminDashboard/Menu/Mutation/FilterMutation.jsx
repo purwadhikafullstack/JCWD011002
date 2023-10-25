@@ -33,17 +33,22 @@ const btnSearchAttr = {
     bg: 'editSecondary'
   }
 }
-export const FilterAllMutation = ({ sort, setSort, search, setSearch, status, setStatus, warehouse_from, warehouse_to, setWarehouseFrom, setWarehouseTo, searchInput, setSearchInput, month, setMonth, year, setYear }) => {
+export const FilterAllMutation = ({ sort, setSort, search, setSearch, status, setStatus, warehouse_from, warehouse_to, setWarehouseFrom, setWarehouseTo, searchInput, setSearchInput, month, setMonth, year, setYear, fetchMutation }) => {
   const [data, setData] = useState([])
   const currentMonth = new Date().getMonth() + 1
   const currentYear = new Date().getFullYear()
-
   const fetchData = async () => {
     const warehouse = await fetchWarehouse()
     setData(warehouse)
   }
   useEffect(() => {
     fetchData()
+  }, [])
+
+  useEffect(() => {
+    fetchMutation()
+    setMonth(currentMonth)
+    setYear(currentYear)
   }, [])
 
   const handleSearch = () => {
@@ -104,7 +109,6 @@ export const FilterAllMutation = ({ sort, setSort, search, setSearch, status, se
 
           </Select>
           <Select
-            // placeholder="Sort by"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
             mb={{ base: '2', md: '0' }}
@@ -180,7 +184,6 @@ export const FilterWhFromMutation = ({ sort, setSort, search, setSearch, searchI
             mr={{ base: '0', md: '2' }}
           ><BsSearch /></Button>
           <Select
-            // placeholder="Warehouse To"
             value={warehouse_to}
             onChange={(e) => setWarehouseTo(e.target.value)}
             mb={{ base: '2', md: '0' }}
@@ -192,7 +195,6 @@ export const FilterWhFromMutation = ({ sort, setSort, search, setSearch, searchI
             ))}
           </Select>
           <Select
-            // placeholder="Sort by"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
             mb={{ base: '2', md: '0' }}
@@ -248,7 +250,6 @@ export const FilterWhToMutation = ({ sort, setSort, search, setSearch, searchInp
             mr={{ base: '0', md: '2' }}
           ><BsSearch /></Button>
           <Select
-            // placeholder="Warehouse From"
             value={warehouse_from}
             onChange={(e) => setWarehouseFrom(e.target.value)}
             mb={{ base: '2', md: '0' }}
@@ -261,7 +262,6 @@ export const FilterWhToMutation = ({ sort, setSort, search, setSearch, searchInp
 
           </Select>
           <Select
-            // placeholder="Sort by"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
             mb={{ base: '2', md: '0' }}

@@ -65,7 +65,6 @@ const UploadReceipt = ({ isOpen, onClose, onSave, txnid }) => {
         duration: 4000,
         isClosable: true,
       });
-      console.log("Error upload receipt:", error);
     }
   };
 

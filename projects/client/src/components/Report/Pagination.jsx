@@ -30,11 +30,6 @@ const Pagination = ({
   const [inputPage, setInputPage] = useState(currentPage);
   const toast = useToast();
 
-  // const handlePageClick = (page) => {
-  //   onPageChange(page);
-  //   setInputPage(page);
-  // };
-
   const handleFirstPage = () => {
     const firstPage = 1;
     onPageChange(firstPage);
@@ -139,7 +134,6 @@ const Pagination = ({
           borderRadius={7}
           color="white"
           size={isMd ? "sm" : "sm"}
-          // borderRadius={"none"}
           _hover={{ color: "black", bgColor: "white" }}
           w={"60px"}
           placeholder="Page"

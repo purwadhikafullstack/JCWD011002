@@ -6,7 +6,6 @@ const addToCart = async (req, res) => {
   try {
     const { productId, quantity, userId } = req.body;
     const result = await userOrderService.addToCart(
-      // req.user.id,
       userId,
       productId,
       quantity

@@ -58,7 +58,6 @@ const getDetailTransaction = async (transactionId) => {
       transactionId: txn.id,
       created_at: txn.created_at.toLocaleDateString("id-ID", options),
       total: txn.total,
-      //   id_status: txn.id_status,
       status: txn.status.name,
       is_confirm: txn.is_confirm,
       payment_method: payment.payment_method.name,

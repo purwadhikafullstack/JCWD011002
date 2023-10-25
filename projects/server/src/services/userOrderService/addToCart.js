@@ -57,7 +57,6 @@ const addToCart = async (userId, productId, quantity) => {
           }
         );
       }
-      console.log("SINI>>")
 
       return "Product added to cart successfully";
     });

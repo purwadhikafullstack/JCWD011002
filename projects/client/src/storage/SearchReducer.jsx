@@ -4,6 +4,7 @@ const initialState = {
   users: "",
   products: "",
   orders: "",
+  invoice: "",
 };
 
 export const SearchReducer = createSlice({
@@ -22,8 +23,13 @@ export const SearchReducer = createSlice({
       const keyword = action.payload;
       state.orders = keyword;
     },
+    searchInvoice: (state, action) => {
+      const keyword = action.payload;
+      state.invoice = keyword;
+    },
   },
 });
 
-export const { searchUser, searchProduct, searchOrder } = SearchReducer.actions;
+export const { searchUser, searchProduct, searchOrder, searchInvoice } =
+  SearchReducer.actions;
 export default SearchReducer.reducer;
