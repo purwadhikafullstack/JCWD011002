@@ -9,7 +9,7 @@ const transaction_payments = db["transaction_payment"];
 const payment_methods = db["payment_method"];
 const stock_histories = db["stock_history"];
 
-function setInclude(transactionStatus, warehouse, search="") {
+function setInclude(transactionStatus, warehouse, search = "") {
   const conditions = {
     [Op.or]: {
       [Op.and]: {
@@ -17,7 +17,7 @@ function setInclude(transactionStatus, warehouse, search="") {
         id_warehouse_to: { [Op.is]: null },
       },
       [Op.and]: {
-        id_warehouse_from: { [Op.not]: null },
+        id_warehouse_from: { [Op.not]: warehouse },
         id_warehouse_to: warehouse,
       },
     },
