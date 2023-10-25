@@ -77,8 +77,8 @@ async function getProducts(req, res) {
 const getProductList = async (req, res) => {
   try {
     const { id, role } = req.account
-    const { sort, price, name, id_category, search, page, limit, status } = req.query;
-    const result = await productService.getProductList(id, role, sort, price, name, id_category, search, page, limit, status);
+    const { sort, id_category, search, page, limit, status } = req.query;
+    const result = await productService.getProductList(id, role, sort, id_category, search, page, limit, status);
     res.status(result.status).json(messages.response(result));
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -7,7 +7,7 @@ const Admin = db.admin;
 const { messages } = require("../../helpers");
 const { Op } = require('sequelize')
 
-const getProductList = async (id, role, sort, price, name, id_category, search, page, limit, status) => {
+const getProductList = async (id, role, sort, id_category, search, page, limit, status) => {
   try {
     const admin = await Admin.findOne({
       where: {
@@ -21,7 +21,6 @@ const getProductList = async (id, role, sort, price, name, id_category, search, 
     const itemsPerPage = parseInt(limit) || 10;
 
     let orderCriteria = [];
-    console.log("test sort", sort)
     if (sort === "asc") {
       orderCriteria.push(orderBy("created_at", sort));
     } else if (sort === "desc") {
@@ -50,6 +49,7 @@ const getProductList = async (id, role, sort, price, name, id_category, search, 
     });
 
     const totalPages = Math.ceil(totalCount / itemsPerPage);
+    const offset = (currentPage - 1) * itemsPerPage;
 
     const productList = await Product.findAll({
       where: whereCondition,
@@ -57,7 +57,7 @@ const getProductList = async (id, role, sort, price, name, id_category, search, 
       include: [{ model: Category, as: "_category", attributes: ["name"] }, {
         model: ProductWarehouse, where: { id_warehouse: role === "admin warehouse" ? admin.id_warehouse : { [Op.not]: null } }, attributes: ["id_warehouse", "id_product", "stock"], include: { model: Warehouse, attributes: ["id", "name"] }
       }],
-      offset: (currentPage - 1) * itemsPerPage,
+      offset: offset,
       limit: itemsPerPage,
     });
 

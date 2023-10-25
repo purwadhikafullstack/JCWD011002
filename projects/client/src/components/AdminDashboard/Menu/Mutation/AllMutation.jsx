@@ -1,4 +1,4 @@
-import { Flex, Spacer, Table, TableContainer} from '@chakra-ui/react'
+import { Flex, Spacer, Table, TableContainer } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Pagination from '../Product/Pagination'
@@ -34,7 +34,7 @@ const AllMutation = () => {
           search: search || '',
           month,
           year,
-          page,
+          page: search ? null : page,
           limit
         },
         headers: {

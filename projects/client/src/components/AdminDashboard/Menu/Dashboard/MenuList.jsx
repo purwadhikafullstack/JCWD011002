@@ -16,7 +16,8 @@ import { getRole } from "../../../../helpers/Roles";
 function createMenu(icon, name) {
   return { icon, name, path: `/${name}` };
 }
-const menus = [
+
+let menus = [
   createMenu(IcUser, "users"),
   createMenu(IcWarehouse, "warehouses"),
   createMenu(IcCategory, "categories"),
@@ -26,8 +27,10 @@ const menus = [
   createMenu(IcReport, "reports"),
 ];
 
+
 function MenuList() {
   const role = getRole();
+  const menuList = role === "admin" ? menus : menus.slice(2);
   const container = {
     // templateColumns: `repeat(${role === "admin" ? 2 : 3}, 1fr)`,
     h: "full",
@@ -37,7 +40,7 @@ function MenuList() {
   };
   return (
     <Grid {...container}>
-      {menus.map((menu, index) => (
+      {menuList.map((menu, index) => (
         <MenuCard {...menu} key={index} />
       ))}
     </Grid>

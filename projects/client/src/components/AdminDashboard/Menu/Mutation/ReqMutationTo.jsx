@@ -13,6 +13,7 @@ const ReqMutationTo = () => {
   const [searchInput, setSearchInput] = useState('')
   const [warehouse_from, setWarehouseFrom] = useState('')
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10)
   const [totalPages, setTotalPages] = useState(1);
   const fetchData = async () => {
     try {
@@ -20,13 +21,16 @@ const ReqMutationTo = () => {
         params: {
           sort,
           search: search || '',
-          warehouse_from
+          warehouse_from,
+          page: search ? null : page,
+          limit
         },
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       })
       setData(data.data)
+      setTotalPages(data.totalPages)
     } catch (error) {
       console.log(error)
     }
@@ -34,7 +38,7 @@ const ReqMutationTo = () => {
 
   useEffect(() => {
     fetchData()
-  }, [sort, search, warehouse_from, page])
+  }, [sort, search, warehouse_from, page, limit])
 
   const handlePageChange = (newPage) => {
     setPage(newPage)

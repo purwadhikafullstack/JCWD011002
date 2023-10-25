@@ -112,7 +112,6 @@ const getPendingStatusWhFrom = async (req, res) => {
     const { id } = req.account;
     const admin = await getAdmin(id);
     const { sort, warehouse_to, search, page, limit } = req.query
-
     let order = [["created_at", "DESC"]];
     if (sort === "oldest") {
       order = [["created_at", "ASC"]];

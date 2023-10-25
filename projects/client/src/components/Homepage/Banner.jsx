@@ -1,17 +1,14 @@
 import React from "react"
 import {
   Box,
+  Icon,
   IconButton,
   useBreakpointValue,
-  Stack,
-  Heading,
-  Text,
-  Container
 } from "@chakra-ui/react"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi"
 import Slider from "react-slick"
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 const settings = {
   dots: true,
@@ -44,51 +41,58 @@ export default function Banner() {
     }
   ]
 
+  const iconBtnAttr = {
+    bg: "primary",
+    color: "white",
+    position: "absolute",
+    top: top,
+    transform: "translate(0%, -50%)",
+    zIndex: 2,
+    _hover: {
+      bg: "editSecondary"
+    }
+  }
+
   return (
     <Box
       position={"relative"}
-      height={"600px"}
+      height={["300px", "400px", "500px"]}
+      // minHeight={"300px"}
       width={"full"}
       overflow={"hidden"}
     >
       {/* Left Icon */}
       <IconButton
         aria-label="left-arrow"
-        variant="ghost"
-        position="absolute"
+        {...iconBtnAttr}
         left={side}
-        top={top}
-        transform={"translate(0%, -50%)"}
-        zIndex={2}
         onClick={() => slider?.slickPrev()}
       >
-        <BiLeftArrowAlt size="40px" />
+        <Icon as={ChevronLeftIcon} boxSize={"30px"} />
       </IconButton>
       {/* Right Icon */}
       <IconButton
         aria-label="right-arrow"
-        variant="ghost"
-        position="absolute"
+        {...iconBtnAttr}
         right={side}
-        top={top}
-        transform={"translate(0%, -50%)"}
-        zIndex={2}
         onClick={() => slider?.slickNext()}
       >
-        <BiRightArrowAlt size="40px" />
+        <Icon as={ChevronRightIcon} boxSize={"30px"} />
       </IconButton>
       {/* Slider */}
       <Slider {...settings} ref={slider => setSlider(slider)}>
         {cards.map((card, index) => (
           <Box
             key={index}
-            height={"6xl"}
+            // height={"6xl"}
             position="relative"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"
             backgroundSize="cover"
             backgroundImage={`url(${card.image})`}
             borderRadius={"xl"}
+            height={["300px", "400px", "500px"]}
+            width={"full"}
           >
           </Box>
         ))}

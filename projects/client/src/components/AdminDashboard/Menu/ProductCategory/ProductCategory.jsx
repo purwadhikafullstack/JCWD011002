@@ -40,6 +40,7 @@ const ProductCategory = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [limit, setLimit] = useState(3);
   const {
     isOpen: isConfirmationOpen,
     onOpen: onConfirmationOpen,
@@ -60,10 +61,11 @@ const ProductCategory = () => {
         `${process.env.REACT_APP_API_BASE_URL}/product/category`,
         {
           params: {
-            page,
+            page: search ? null : page,
             sort,
             name,
-            search
+            search,
+            limit
           },
           headers
         }
@@ -77,7 +79,7 @@ const ProductCategory = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, [sort, name, search, page]);
+  }, [sort, name, search, page, limit]);
 
   const handleDelete = (categoryId) => {
     setSelectedCategoryId(categoryId);
