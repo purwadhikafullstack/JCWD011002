@@ -275,7 +275,6 @@ const CheckoutMobile = () => {
                         {toRupiah(item.price, { dot: ".", floatingPoint: 0 })}
                       </Text>
                       <Text ml={3} fontSize={"xs"}>
-                        {/* From: aaaaaaa */}
                       </Text>
                       <Box ml={3} mb={1} mt={1}></Box>
                     </Flex>
@@ -298,8 +297,6 @@ const CheckoutMobile = () => {
             px={6}
             py={6}
             color={"white"}
-            // h={"15vh"}
-            // w={"70vw"}
             w={"100vw"}
             bgColor="bgSecondary"
           >

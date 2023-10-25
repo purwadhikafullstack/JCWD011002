@@ -82,7 +82,6 @@ const FilterBy = ({ onFilterChange, onDateRangeFilter }) => {
                   fontSize={"sm"}
                   size={"sm"}
                   w={"40vw"}
-                  // h={10}
                   borderRadius={6}
                   bg={"white"}
                   color={"black"}
@@ -91,7 +90,6 @@ const FilterBy = ({ onFilterChange, onDateRangeFilter }) => {
                   DATE FILTER
                 </Button>
                 <IconButton
-                  // h={10}
                   bg={"white"}
                   borderRadius={6}
                   color={"black"}

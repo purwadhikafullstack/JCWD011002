@@ -12,13 +12,10 @@ import TransactionList from "./TransactionList";
 import { useEffect, useState } from "react";
 import { getTransactions } from "../../../../../api/transactions";
 import Pagination from "../../../../Utility/Pagination";
-import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getRole } from "../../../../../helpers/Roles";
 import { getAdminWarehouse } from "../../../../../api/admin";
 import LoadingBar from "../../../../Utility/LoadingBar";
-
-const date = new Date();
 
 const mainContainer = {
   direction: "column",

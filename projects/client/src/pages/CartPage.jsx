@@ -195,7 +195,6 @@ const CartPage = () => {
               mr={1}
               variant="simple"
               color={"white"}
-              // w={"69vw"}
               bgColor="bgSecondary"
               w={"69vw"}
             >

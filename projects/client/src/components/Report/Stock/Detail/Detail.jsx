@@ -143,17 +143,8 @@ const Detail = () => {
             </Tr>
           </Thead>
           {/* <Tbody> */}
-          {data?.length === 0 ? (
             <Tbody>
-              <Tr>
-                <Td colSpan={9} align={"center"} textAlign="center">
-                  No Data
-                </Td>
-              </Tr>
-            </Tbody>
-          ) : (
-            <Tbody>
-              {data?.map((item, index) => (
+              {data.map((item, index) => (
                 <Tr key={item.id}>
                   <Td textAlign={"center"}>
                     {(currentPage - 1) * 10 + index + 1}
@@ -171,7 +162,7 @@ const Detail = () => {
                   )}
                   <Tooltip bg={"white"} color={"black"} label={item.product}>
                     <Td textAlign={"center"}>
-                      {sliceProductName(item.product, 20)}
+                      {sliceProductName(item.product, 22)}
                     </Td>
                   </Tooltip>
                   <Td textAlign={"center"}>{item.qty}</Td>
@@ -187,17 +178,16 @@ const Detail = () => {
                 </Tr>
               ))}
             </Tbody>
-          )}
           {/* </Tbody> */}
         </Table>
       </TableContainer>
-      <Pagination
-        totalItems={data?.length}
-        itemsPerPage={10}
-        onPageChange={handlePageChange}
-        currentPage={currentPage}
-        totalPages={totalPages}
-      />
+        <Pagination
+          totalItems={data.length}
+          itemsPerPage={10}
+          onPageChange={handlePageChange}
+          currentPage={currentPage}
+          totalPages={totalPages}
+        />
     </>
   );
 };

@@ -176,7 +176,6 @@ const CartMobile = () => {
                     {toRupiah(item.price, { dot: ".", floatingPoint: 0 })}
                   </Text>
                   <Text ml={3} fontSize={"xs"}>
-                    {/* From: aaaaaaa */}
                   </Text>
                   <Box ml={3} mb={2} mt={1}>
                     <HStack textAlign={"center"} w="200px">
@@ -224,9 +223,6 @@ const CartMobile = () => {
                     floatingPoint: 0,
                   })}
                 </Text>
-                {/* <Text align={"right"} fontWeight={"bold"} fontSize={"sm"}>
-            aaaaaaaa
-          </Text> */}
               </Flex>
               <Box
                 display={"flex"}

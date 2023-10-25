@@ -119,14 +119,6 @@ const Pagination = ({
         >
           <Icon as={IoIosArrowBack} />
         </Button>
-        {/* <Button
-          key={currentPage}
-          onClick={() => handlePageClick(currentPage)}
-          variant="solid"
-          size={isMd ? "sm" : "sm"}
-        >
-          {currentPage}
-        </Button> */}
         <Input
           textAlign={"center"}
           type="number"
@@ -160,13 +152,6 @@ const Pagination = ({
         >
           <HiOutlineChevronDoubleRight />
         </Button>
-        {/* <Button
-          size={isMd ? "sm" : "sm"}
-          onClick={handleGoToPage}
-          variant="solid"
-        >
-          Go
-        </Button> */}
       </HStack>
     </Flex>
   );

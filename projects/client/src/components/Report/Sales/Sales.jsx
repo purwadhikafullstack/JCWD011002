@@ -8,7 +8,6 @@ import {
   Box,
   Divider,
 } from "@chakra-ui/react";
-import Summary from "./Summary/Summary";
 import Product from "./Product/Product";
 import Category from "./Category/Category";
 import Chart from "./Chart";
@@ -32,14 +31,10 @@ const Sales = () => {
         variant="enclosed"
       >
         <TabList>
-          {/* <Tab>Summary</Tab> */}
           <Tab>Product Sales</Tab>
           <Tab>Category Sales</Tab>
         </TabList>
         <TabPanels color={"white"}>
-          {/* <TabPanel>
-            <Summary />
-          </TabPanel> */}
           <TabPanel>
             <Product />
           </TabPanel>

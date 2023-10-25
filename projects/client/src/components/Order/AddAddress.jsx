@@ -150,7 +150,6 @@ const AddAddress = ({ isOpen, onClose, onAddAddress, fetchAddressUser }) => {
               placeholder="your full address"
             />
           </FormControl>
-          {/* <Checkbox mt={4} name="is_default" defaultChecked isChecked={formData.is_default} onChange={handleChange}>Default Address</Checkbox> */}
         </ModalBody>
         <ModalFooter>
           <Button

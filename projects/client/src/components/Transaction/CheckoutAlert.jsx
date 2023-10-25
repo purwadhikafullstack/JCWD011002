@@ -16,7 +16,6 @@ const CheckoutAlert = () => {
 
   return (
     <>
-      {/* <Button onClick={onOpen}>Discard</Button> */}
       <Button
         onClick={onOpen}
         w={"100%"}

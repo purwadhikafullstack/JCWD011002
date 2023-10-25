@@ -12,7 +12,6 @@ const RenderDataUser = ({ userData, renderField }) => {
         <Box border={'2px'} borderColor={'primary'}></Box>
         {renderField('phone', 'Phone', 'number')}
         <Box border={'2px'} borderColor={'primary'}></Box>
-        {/* {userData.role.name === 'admin' ? renderField('role', 'Role', 'text') : null} */}
         {renderField('password', 'Password', 'password')}
         <Box border={'2px'} borderColor={'primary'}></Box>
       </Box>

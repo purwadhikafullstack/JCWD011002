@@ -113,7 +113,6 @@ const Cancelled = () => {
                     </Text>
                   )}
                 </Flex>
-                {/* <ViewReceipt transactionId={item.transactionId} /> */}
               </Flex>
               <Divider mt={2} mb={2} />
               <Flex align={"center"} justifyContent={"space-between"}>

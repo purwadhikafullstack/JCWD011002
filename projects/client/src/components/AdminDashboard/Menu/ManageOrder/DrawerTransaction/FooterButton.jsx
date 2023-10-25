@@ -6,8 +6,11 @@ import {
 } from "../../../../../api/transactions";
 import { useDispatch } from "react-redux";
 import { setOrderTrigger } from "../../../../../storage/TriggerReducer";
+import { useState } from "react";
+import LoadingBar from "../../../../Utility/LoadingBar";
 
 function FooterButton({ status, id_user, id_transaction }) {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     isOpen: firstIsOpen,
     onOpen: firstOnOpen,
@@ -53,6 +56,8 @@ function FooterButton({ status, id_user, id_transaction }) {
     children: "Reject Payment",
     variant: "error",
     onClick: secondOnOpen,
+    isLoading,
+    loadingText: "Submitting",
   };
   const btnSent = {
     children: "Send",
@@ -75,7 +80,11 @@ function FooterButton({ status, id_user, id_transaction }) {
   };
   const paymentRejectAttr = {
     trigger: <Button {...btnPaymentReject} />,
-    confirm: async () => await handleUpadateStatus(1),
+    confirm: async () => {
+      setIsLoading(true);
+      await handleUpadateStatus(1);
+      setIsLoading(false);
+    },
     isOpen: secondIsOpen,
     onClose: secondOnClose,
   };
@@ -93,7 +102,6 @@ function FooterButton({ status, id_user, id_transaction }) {
         <>
           <PopoverConfirmation {...paymentConfirmAttr} />
           <PopoverConfirmation {...paymentRejectAttr} />
-          {/* <PopoverConfirmation {...cancelAttr}/> */}
         </>
       );
     case 3:

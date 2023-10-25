@@ -97,7 +97,6 @@ const Charts = () => {
       if (chartRef.current.chart) {
         chartRef.current.chart.destroy();
       }
-      // const labels = data.map((item) => `${item.month} ${item.year}`);
       const labels = data.map(
         (item) => `${monthNames[item.month - 1]} ${item.year}`
       );

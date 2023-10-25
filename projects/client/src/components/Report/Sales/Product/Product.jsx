@@ -187,7 +187,7 @@ const Product = () => {
                   <InputRightAddon
                     mt={2}
                     color={"primary"}
-                    children=<Search2Icon />
+                    children={<Search2Icon />}
                   />
                 </InputGroup>
                 <Divider w={"230%"} mt={2} />

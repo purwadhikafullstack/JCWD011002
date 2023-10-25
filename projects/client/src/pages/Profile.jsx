@@ -44,12 +44,10 @@ export default function Profile() {
     <Box w={"full"} mx="auto">
       <Flex>
         <SidebarContent
-          // onClose={() => onClose}
           userData={userData}
           display={{ base: "none", md: "block" }}
         />
         <Box w={"full"} ml={{ base: 0, md: 60 }} p="4">
-          {/* Content */}
           <Outlet />
         </Box>
       </Flex>
@@ -169,7 +167,6 @@ const MobileNav = ({ onOpen, ...rest }) => {
       justifyContent="flex-start"
       display={{ base: "block", md: "none" }}
 
-    // {...rest}
     >
       <IconButton
         position={"absolute"}

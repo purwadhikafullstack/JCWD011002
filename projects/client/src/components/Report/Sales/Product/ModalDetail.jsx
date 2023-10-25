@@ -158,7 +158,6 @@ const ModalDetail = ({ detail_product_sales, product_name }) => {
                   mb={2}
                   size={"sm"}
                   placeholder="Select Warehouse"
-                  // defaultValue={"all"}
                   onChange={(e) => filterByWarehouse(e.target.value)}
                 >
                   <option value="all">All Warehouse</option>

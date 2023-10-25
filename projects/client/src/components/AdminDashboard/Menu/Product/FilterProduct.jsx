@@ -84,7 +84,6 @@ const FilterProducts = ({
     <Box py="4">
       <Flex flexDirection={{ base: 'column', md: 'row' }} alignItems={{ base: 'flex-start', md: 'center' }}
         justifyContent="space-between" mb="2" >
-        {/* <InputGroup> */}
 
         <Input
           placeholder="Search products..."

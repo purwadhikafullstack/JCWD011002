@@ -1,5 +1,4 @@
 import { Divider, Flex, Img, Spacer, Text } from "@chakra-ui/react";
-import getImage from "../../../../../api/GetImage";
 import TransactionProducts from "./TransactionProducts";
 import { formaterPrice } from "../../../../../helpers/formater";
 import { LiaShippingFastSolid as IcShipping } from "react-icons/lia";

@@ -34,7 +34,7 @@ function setOption(item) {
 }
 
 function DrawerEdit({ user, formik }) {
-  const {warehouse: defaultWarehouse} = user?.admin?.warehouse || {};
+  const { warehouse: defaultWarehouse } = user?.admin?.warehouse || {};
   const [roles, setRoles] = useState([]);
   const [warehouses, setWarehouses] = useState([]);
   const toast = useToast();
@@ -92,14 +92,14 @@ function DrawerEdit({ user, formik }) {
     onChange: (e) => handleChange(e, "warehouse"),
   };
 
-  return ( 
+  return (
     <form onSubmit={formik.handleSubmit}>
       <Flex {...mainContainer}>
         <Flex {...container}>
           <Text fontWeight={"semibold"}>Role</Text>
           <Select {...selectRolesAttr}>
             {roles.map((role) => (
-              <option {...setOption(role)}/>
+              <option {...setOption(role)} />
             ))}
           </Select>
         </Flex>
@@ -111,9 +111,8 @@ function DrawerEdit({ user, formik }) {
               required={true}
               _placeholder={{ hidden: true }}
             >
-              {/* <option value="" disabled selected hidden={true}>Select </option> */}
               {warehouses.map((warehouse) => (
-                <option {...setOption(warehouse)}/>
+                <option {...setOption(warehouse)} />
               ))}
             </Select>
           </Flex>

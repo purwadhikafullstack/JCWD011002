@@ -61,17 +61,4 @@ function AdminDashboard() {
   );
 }
 
-/*
-MENU
-  - Dashboard
-  - Manage User
-  - Manage Warehouse
-  - Manage Category
-  - Manage Product
-  - Manage Mutation
-  - Manage Order
-    - approve and make request
-  - Report
-*/
-
 export default AdminDashboard;
