@@ -43,7 +43,7 @@ const ProductTable = ({ products, handleDetailStock, handleDetailClick }) => {
             <Tr key={product?.id}>
               <Td>{index + 1}</Td>
               <Td><Img src={`${process.env.REACT_APP_API_BASE_URL}/${product?.image}`} boxSize={"70px"} objectFit={"cover"} borderRadius={"5px"} /></Td>
-              <Td>{product?.name}</Td>
+              <Td style={{ whiteSpace: 'normal' }}>{product?.name}</Td>
               <Td>{product?._category?.name}</Td>
               <Td>{product?.is_active ? "Active" : "Inactive"}</Td>
               <Td>{product?.product_warehouses?.map((warehouse) => warehouse?.stock).reduce((a, b) => a + b, 0)}

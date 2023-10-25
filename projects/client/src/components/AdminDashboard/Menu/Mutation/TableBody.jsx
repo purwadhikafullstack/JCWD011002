@@ -20,7 +20,7 @@ const TableBody = ({ data }) => {
             <Td>{item.user?.name}</Td>
             <Td>{item._warehouse_from.name}</Td>
             <Td>{item._warehouse_to.name}</Td>
-            <Td>{item.product.name}</Td>
+            <Td style={{ whiteSpace: 'normal' }}>{item.product.name}</Td>
             <Td>{item.qty}</Td>
             <Td>{item.status.name}</Td>
             <Td>{formatDate(item.updated_at)}</Td>

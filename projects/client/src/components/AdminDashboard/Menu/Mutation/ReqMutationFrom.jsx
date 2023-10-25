@@ -81,7 +81,7 @@ const ReqMutationFrom = () => {
               <Td>{item.user?.name}</Td>
               <Td>{item._warehouse_from.name}</Td>
               <Td>{item._warehouse_to.name}</Td>
-              <Td>{item.product.name}</Td>
+              <Td style={{ whiteSpace: 'normal' }}>{item.product.name}</Td>
               <Td>{item.qty}</Td>
               <Td display={"flex"} justifyContent={"space-between"} alignItems={"center"}><Text>{item.status.name}</Text>
                 <PopoverUpdateStatus approve={() => updateStatusMutation(item.id, 8)} reject={() => updateStatusMutation(item.id, 9)} />
